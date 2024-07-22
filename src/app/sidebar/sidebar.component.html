@@ -1,0 +1,51 @@
+<div class="sidebar text-bg-dark" [ngClass]="{'collapsed': isCollapsed}">
+  <button class="btn btn-primary btn-toggle" (click)="toggleSidebar()">
+    <i class="bi" [ngClass]="{'bi-chevron-left': !isCollapsed, 'bi-chevron-right': isCollapsed}"></i>
+  </button>
+
+  <div class="p-3">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <i class="bi bi-bootstrap pe-none me-2" style="font-size: 1.5rem;"></i>
+      <span class="fs-4" *ngIf="!isCollapsed">Sidebar</span>
+    </a>
+
+    <hr>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a routerLink="/mainpage" routerLinkActive="active" class="nav-link text-white">
+          <i class="bi bi-house pe-none me-2"></i>
+          <span *ngIf="!isCollapsed">Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/recipes/list" routerLinkActive="active" class="nav-link text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="bi bi-table pe-none me-2"></i>
+          <span *ngIf="!isCollapsed">Recipes</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/recipes/create" routerLinkActive="active" class="nav-link text-white">
+          <i class="bi bi-file-earmark-plus pe-none me-2"></i>
+          <span *ngIf="!isCollapsed">Create Recipe</span>
+        </a>
+      </li>
+    </ul>
+
+    <hr>
+
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong *ngIf="!isCollapsed">User</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+        <li><a class="dropdown-item" href="#">My recipes</a></li>
+        <li><a class="dropdown-item" href="#">Create recipe</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

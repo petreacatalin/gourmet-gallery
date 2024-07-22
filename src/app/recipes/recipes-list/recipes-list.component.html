@@ -1,0 +1,71 @@
+<div class="recipes-container">
+  <h2 class="mb-4">Recipes List</h2>
+
+  <div class="row mb-4 align-items-center">
+    <!-- Sorting and Filtering Controls -->
+    <div class="col-md-4">
+      <label for="sortSelect" class="form-label">Sort By:</label>
+      <select id="sortSelect" class="form-select" [(ngModel)]="sortBy" (change)="sortRecipes($event)">
+        <option value="title">Name</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="filterInput" class="form-label">Filter:</label>
+      <input type="text" id="filterInput" class="form-control" placeholder="Search by name" [(ngModel)]="filterText" (input)="applyFilter()">
+    </div>
+    <div class="col-md-4">
+      <label for="itemsPerPageSelect" class="form-label">Items per page:</label>
+      <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage($event)">
+        <option value="6">6</option>
+        <option value="9">9</option>
+        <option value="12">12</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Recipe Cards -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let recipe of displayedRecipes">
+      <div class="card h-100 shadow">
+        <img [src]="recipe.imageUrl" class="card-img-top" alt="{{ recipe.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ recipe.title }}</h5>
+          <p class="card-text">{{ recipe.description }}</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Meal type: {{ recipe.mealType }}</small>
+          <a [routerLink]="['/recipes', recipe.id]" class="btn btn-primary float-end">View Recipe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Recipes pagination">
+    <ul class="pagination justify-content-center mt-4">
+      <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+        <a class="page-link" (click)="goToPage(1)" aria-label="First">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+        <a class="page-link" (click)="goToPage(currentPage - 1)" aria-label="Previous">
+          <span aria-hidden="true">&lsaquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [ngClass]="{ 'active': currentPage === page }">
+        <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+        <a class="page-link" (click)="goToPage(currentPage + 1)" aria-label="Next">
+          <span aria-hidden="true">&rsaquo;</span>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+        <a class="page-link" (click)="goToPage(totalPages)" aria-label="Last">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

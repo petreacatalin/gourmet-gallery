@@ -1,0 +1,29 @@
+.recipes-container {
+  padding: 20px;
+}
+
+.card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Example: Add a slight lift effect on hover */
+}
+
+/* Optional: Custom styles for the sort, filter, and pagination controls */
+.form-label {
+  font-weight: bold;
+}
+
+.form-select,
+.form-control {
+  margin-bottom: 10px;
+}
+
+.pagination .page-item .page-link {
+  cursor: pointer;
+}
+
+.pagination .page-item.disabled .page-link {
+  cursor: not-allowed;
+}

@@ -1,0 +1,42 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa; /* Light grey background */
+  padding: 20px; /* Padding for small screens */
+}
+
+.register-form {
+  width: 100%;
+  max-width: 400px; /* Maximum width */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.alert-validation {
+  color: #dc3545; /* Red color for validation messages */
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.btn-primary {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.login-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.login-link a {
+  color: #007bff; /* Blue color for the login link */
+}

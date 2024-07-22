@@ -1,0 +1,20 @@
+.footer {
+  background-color: #343a40; /* Match sidebar background color */
+  color: white; /* Match sidebar text color */
+  //padding: 10px 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1); /* Similar box shadow effect as sidebar */
+}
+
+.footer a {
+  color: #007bff; /* Link color */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #0056b3; /* Hover effect for links */
+}

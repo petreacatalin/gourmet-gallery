@@ -1,0 +1,27 @@
+.recipe-card {
+  margin: 20px;
+}
+
+.recipe-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.mat-card-content ul, .mat-card-content ol {
+  padding-left: 20px;
+}
+
+.mat-card-content ul li, .mat-card-content ol li {
+  margin-bottom: 5px;
+}
+
+.mat-card-subtitle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.mat-elevation-z4 {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12);
+}

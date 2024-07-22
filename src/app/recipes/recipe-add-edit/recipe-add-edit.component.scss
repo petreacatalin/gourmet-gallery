@@ -1,0 +1,53 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Minimum height to cover the viewport */
+  background-color: #f5f5f5; /* Light gray background */
+  padding: 20px; /* Padding for better spacing */
+}
+
+.custom-card {
+  width: 100%; /* Card takes full width of its container */
+  max-width: 600px; /* Maximum width for larger screens */
+  background-color: #fff; /* White background */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.custom-card-content {
+  padding: 24px; /* Padding inside the card */
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column layout for responsiveness */
+  gap: 15px; /* Spacing between form fields */
+}
+
+mat-form-field {
+  width: 100%; /* Full width for form fields */
+}
+
+mat-card-title {
+  font-size: 24px; /* Larger font size for card title */
+  font-weight: bold; /* Bold font weight */
+  text-align: center; /* Center align title */
+  margin-bottom: 10px; /* Bottom margin */
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center; /* Align button to the center */
+  padding: 20px 0; /* Padding for button */
+}
+
+button[type="submit"] {
+  min-width: 120px; /* Minimum width for submit button */
+}
+
+@media (max-width: 768px) {
+  .custom-card {
+    max-width: 90%; /* Adjust card width for smaller screens */
+  }
+}

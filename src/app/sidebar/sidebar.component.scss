@@ -1,0 +1,61 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px; /* Initial width of sidebar */
+  height: 100%; /* Full viewport height */
+  background-color: #343a40; /* Sidebar background color */
+  color: white;
+  z-index: 1000; /* Ensure sidebar stays on top */
+  transition: width 0.3s ease-in-out; /* Smooth width transition */
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1); /* Initial box shadow */
+  overflow-y: auto; /* Allow scrolling if content exceeds sidebar height */
+}
+
+.sidebar.collapsed {
+  width: 80px; /* Collapsed width */
+}
+
+.btn-toggle {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: #758193;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.nav-pills .nav-link {
+  padding: 0.5rem 1rem; /* Adjust padding for better touch target */
+  font-size: 1rem; /* Adjust font size */
+  transition: background-color 0.3s;
+}
+
+.nav-pills .nav-link i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+.nav-pills .nav-link.active {
+  background-color: rgba(0, 123, 255, 0.5); /* Highlight active link */
+}
+
+.dropdown-menu-dark {
+  background-color: #343a40;
+  color: white;
+}
+
+.dropdown-item {
+  font-size: 0.875rem; /* Adjust font size */
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 123, 255, 0.5); /* Highlight hover */
+}

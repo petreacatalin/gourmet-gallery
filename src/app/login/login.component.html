@@ -1,0 +1,32 @@
+<div *ngIf="!isLoggedIn" class="login-container">
+  <div class="bubbles">
+    <div class="bubble" *ngFor="let bubble of bubbles"></div>
+  </div>
+  <div class="form-wrapper">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <h2>Login</h2>
+      <div class="form-group">
+        <label for="userName">Username</label>
+        <input id="userName" formControlName="userName" type="text" class="form-control" placeholder="Enter your username">
+        <div class="alert-validation" *ngIf="loginForm.get('userName')?.invalid && (loginForm.get('userName')?.dirty || loginForm.get('userName')?.touched)">
+          <div *ngIf="loginForm.get('userName')?.errors?.['required']">
+            Username is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter your password">
+        <div class="alert-validation" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+          <div *ngIf="loginForm.get('password')?.errors?.['required']">
+            Password is required.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+      <div class="register-link">
+        Don't have an account? <a [routerLink]="['/register']">Register here!</a>
+      </div>
+    </form>
+  </div>
+</div>

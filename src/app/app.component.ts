@@ -1,4 +1,7 @@
+// Example of role-based access control in AppComponent
+
 import { Component } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'gourmet-gallery';
+  isSidebarCollapsed = false; // Control the state of sidebar collapse
+  constructor(private authService: AuthService) {}
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  get isAdmin(): boolean {
+    
+    return true; 
+  }
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  }
+  logout() {
+    this.authService.logout();
+    
+  }
 }
