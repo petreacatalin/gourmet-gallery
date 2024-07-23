@@ -8,6 +8,8 @@ import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { User } from 'src/app/models/user.interface'; // Import your User interface
 import { Comments } from 'src/app/models/comments.interface';
+import { __values } from 'tslib';
+import { Step } from 'src/app/models/step.interface';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,10 +18,11 @@ import { Comments } from 'src/app/models/comments.interface';
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe$: Observable<Recipe> | undefined;
-  recipe: Recipe | undefined;
+  recipe?: Recipe | undefined;
   comments: Comments[] = [];
+  steps: Step[] = [];
   commentForm: FormGroup;
-  currentUser: User | null = null; // Use User type or null
+  currentUser: User | null = null; 
   private routeSub: Subscription | undefined;
   private recipeSub: Subscription | undefined;
   private userSub: Subscription | undefined;
@@ -38,13 +41,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
-    this.recipe$ = this.recipeService.getRecipeById(id);
-
+    
     this.routeSub = this.route.params.subscribe(params => {
       const id = +params['id'];
       this.recipeSub = this.recipeService.getRecipeById(id).subscribe(recipe => {
-        this.recipe = recipe;
+        this.recipe! = recipe;
+        console.log(this.recipe)
         this.loadComments();
       });
     });
@@ -52,7 +54,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.getUserDetail().subscribe(user => {
       this.currentUser = user;
     });
-    console.log(this.currentUser)
   }
 
   ngOnDestroy(): void {
@@ -66,21 +67,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     if (this.recipe) {
       this.commentSub = this.commentService.getCommentsForRecipe(this.recipe.id!).subscribe(response => {
         console.log('Received response:', response);
-        // Extract the comments array from the response
-        debugger
-        this.comments = response || [];
+        // Extract and map the comments array from the $values property
+        this.comments = response.$values;
+        console.log(this.comments)
       });
     }
   }
 
   onSubmit(): void {
-    debugger
-    console.log(this.currentUser)
     if (this.recipe && this.currentUser) {
       const newComment: Comments = {
         content: this.commentForm.get('content')?.value,
-        user: this.currentUser, // Assuming currentUser has the necessary user details
-        recipeId: this.recipe.id
+        applicationUserId: this.currentUser.id, // Assuming currentUser has the necessary user ID
+        recipeId: this.recipe.id,
+        timestamp: new Date()
       };
 
       this.commentService.addComment(newComment).subscribe(comment => {

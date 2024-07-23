@@ -12,6 +12,10 @@ export class AppComponent {
   isSidebarCollapsed = false; // Control the state of sidebar collapse
   constructor(private authService: AuthService) {}
 
+  ngOnInit(): void {
+    this.authService.loadUserDetails();
+  }
+  
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }

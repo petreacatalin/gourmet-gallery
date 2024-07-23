@@ -33,7 +33,7 @@ export class AuthService {
     );
   }
 
-  private loadUserDetails(): void {
+  loadUserDetails(): void {
     const token = this.getToken();
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -70,9 +70,11 @@ export class AuthService {
     return isTokenExpired;
   }
   
-  logout() {
-    localStorage.removeItem('token'); // Remove JWT token from local storage
-  } 
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.userSubject.next(null);
+  }
+ 
 
   // getUserDetail = () => {
   //   const token = this.getToken();
