@@ -3,9 +3,9 @@ import { Comments } from "./comments.interface";
 import { Ingredient } from "./ingredient.interface";
 import { IngredientsTotal } from "./ingredientsTotal.interface";
 import { Instructions } from "./instructions.interface";
-import { Review } from "./rating.interface";
+import { Rating } from "./rating.interface";
 import { Step } from "./step.interface";
-import { User } from "./user.interface";
+import { ApplicationUser } from "./applicationUser.interface";
 
 export interface Recipe {
   id?: number;
@@ -24,7 +24,8 @@ export interface Recipe {
   difficultyLevel?: DifficultyLevel;
   otherCategories?: OtherCategories;
   applicationUserId?: string;
-  applicationUser: User;
+  applicationUser: ApplicationUser;
   comments?: Comments[];
-  reviews?: Review[];
+  ratings: Rating[];
+  //reviews?: Review[];
 }

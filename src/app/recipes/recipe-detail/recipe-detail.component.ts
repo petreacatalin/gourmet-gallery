@@ -6,10 +6,11 @@ import { AuthService } from 'src/app/auth.service';
 import { CommentService } from 'src/app/comments/comments.service';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
-import { User } from 'src/app/models/user.interface'; // Import your User interface
 import { Comments } from 'src/app/models/comments.interface';
 import { __values } from 'tslib';
 import { Step } from 'src/app/models/step.interface';
+import { Instructions } from 'src/app/models/instructions.interface';
+import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -17,12 +18,10 @@ import { Step } from 'src/app/models/step.interface';
   styleUrls: ['./recipe-detail.component.scss']
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
-  recipe$: Observable<Recipe> | undefined;
-  recipe?: Recipe | undefined;
+  recipe?: Recipe;
   comments: Comments[] = [];
-  steps: Step[] = [];
   commentForm: FormGroup;
-  currentUser: User | null = null; 
+  currentUser: ApplicationUser | null = null; 
   private routeSub: Subscription | undefined;
   private recipeSub: Subscription | undefined;
   private userSub: Subscription | undefined;
@@ -41,12 +40,16 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
     this.routeSub = this.route.params.subscribe(params => {
       const id = +params['id'];
       this.recipeSub = this.recipeService.getRecipeById(id).subscribe(recipe => {
-        this.recipe! = recipe;
-        console.log(this.recipe)
+        this.recipe = recipe;
+
+        // Mapping and processing instructions
+        const instructions = this.recipe.instructions as Instructions;
+        console.log('Instructions:', instructions);
+
+        // Load comments
         this.loadComments();
       });
     });
@@ -66,20 +69,22 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   loadComments(): void {
     if (this.recipe) {
       this.commentSub = this.commentService.getCommentsForRecipe(this.recipe.id!).subscribe(response => {
-        console.log('Received response:', response);
-        // Extract and map the comments array from the $values property
+        // Assuming response contains $values property
         this.comments = response.$values;
-        console.log(this.comments)
+        
+        console.log('Comments:', this.comments);
       });
     }
   }
 
   onSubmit(): void {
+    debugger
     if (this.recipe && this.currentUser) {
       const newComment: Comments = {
         content: this.commentForm.get('content')?.value,
         applicationUserId: this.currentUser.id, // Assuming currentUser has the necessary user ID
         recipeId: this.recipe.id,
+        user: this.currentUser,
         timestamp: new Date()
       };
 
@@ -88,5 +93,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.commentForm.reset();
       });
     }
+  }
+
+  getStarClass(index: number, rating: number): string {
+    return index < rating ? 'star' : 'star-empty';
   }
 }

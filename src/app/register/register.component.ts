@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { User } from '../models/user.interface';
+import { ApplicationUser } from '../models/applicationUser.interface';
 
 @Component({
   selector: 'app-register',
@@ -35,7 +35,7 @@ export class RegisterComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      const userData: User = this.registerForm.value;
+      const userData: ApplicationUser = this.registerForm.value;
       this.authService.register(userData).subscribe(
         response => {
           console.log('Registration successful', response);

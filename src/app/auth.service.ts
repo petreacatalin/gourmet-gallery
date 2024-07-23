@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { User } from './models/user.interface';
+import { ApplicationUser } from './models/applicationUser.interface';
 import { environment } from 'src/environments/environment';
 import { AuthResponse } from './models/authResponse.interface';
 import { Login } from './models/login';
@@ -12,13 +12,13 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
-  public user$: Observable<User | null> = this.userSubject.asObservable();
+  private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
+  public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   private baseUrl = environment.baseUrl;
   private tokenKey = 'token';
   constructor(private http: HttpClient) { }
 
-  register(user:User): Observable<any> {
+  register(user:ApplicationUser): Observable<any> {
     return this.http.post(`${this.baseUrl}/Account/register`, user);
   }
   
@@ -37,7 +37,7 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       const decodedToken: any = jwtDecode(token);
-      const userDetail: User = {
+      const userDetail: ApplicationUser = {
         id: decodedToken.nameid,
         email: decodedToken.email
       };
@@ -47,7 +47,7 @@ export class AuthService {
     }
   }
 
-  getUserDetail(): Observable<User | null> {
+  getUserDetail(): Observable<ApplicationUser | null> {
     return this.user$;
   }
 
@@ -88,12 +88,12 @@ export class AuthService {
   //   return userDetail;
   // }
 
-  updateProfile(profileData: Partial<User>): Observable<any> {
+  updateProfile(profileData: Partial<ApplicationUser>): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/Account/profile`, profileData);
   }
 
-  getFriends(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/Account/friends`);
+  getFriends(): Observable<ApplicationUser[]> {
+    return this.http.get<ApplicationUser[]>(`${this.baseUrl}/Account/friends`);
   }
 
   addFriend(friendId: string): Observable<any> {

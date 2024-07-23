@@ -14,12 +14,12 @@ export class RecipeService {
 
   getRecipes(): Observable<Recipe[]> {
     return this.http.get<{ $values: Recipe[] }>(`${this.baseUrl}`).pipe(
-      map(response => response.$values) // Extract the recipes array from the $values property
+    map(response => response.$values) // Extract the recipes array from the $values property
     )};
   
-    getRecipeById(id: number): Observable<Recipe> {
-      return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
-    }
+  getRecipeById(id: number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
+  }
 
   createRecipe(recipe: Recipe): Observable<Recipe> {
     return this.http.post<Recipe>(this.baseUrl, recipe);
