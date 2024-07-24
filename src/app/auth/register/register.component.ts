@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { ApplicationUser } from '../models/applicationUser.interface';
+import { ApplicationUser } from 'src/app/models/applicationUser.interface';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +27,9 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required]
     }, {
       validators: this.passwordMatchValidator
     });

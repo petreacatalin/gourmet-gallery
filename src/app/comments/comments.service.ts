@@ -19,9 +19,17 @@ export class CommentService {
     return this.http.get<{ $values: Comments[] }>(`${this.baseUrl}/recipe/${recipeId}`);
   }
 
+  getCommentsById(recipeId: number): Observable<Comments[]> {
+    return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`)
+    };
+
+  // addComment(comment: Comments): Observable<Comments> {
+  //   return this.http.post<Comments>(this.baseUrl, comment);
+  // }
+
   // getCommentsForRecipe(recipeId: number): Observable<Comments[]> {
-  //   return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`)
-  //   };
+  //   return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`);
+  // }
 
   addComment(comment: Comments): Observable<Comments> {
     return this.http.post<Comments>(this.baseUrl, comment);

@@ -2,16 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainPageComponent } from './main-page/main-page.component';
 import { FooterComponent } from './footer/footer.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AuthGuard } from './auth.guard';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
 import { RecipeAddEditComponent } from './recipes/recipe-add-edit/recipe-add-edit.component';
@@ -29,6 +26,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CommentsComponent } from './comments/comments/comments.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { JwtModule } from "@auth0/angular-jwt";
+import { LoginComponent } from './auth/login/login.component';
+import { LogoutComponent } from './auth/logout/logout.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");

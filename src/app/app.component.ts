@@ -1,7 +1,9 @@
 // Example of role-based access control in AppComponent
 
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ApplicationUser } from './models/applicationUser.interface';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +12,8 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent {
   isSidebarCollapsed = false; // Control the state of sidebar collapse
+  private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
+  public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -29,6 +33,5 @@ export class AppComponent {
   }
   logout() {
     this.authService.logout();
-    
   }
 }

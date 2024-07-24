@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { ApplicationUser } from './models/applicationUser.interface';
+import { ApplicationUser } from '../models/applicationUser.interface';
 import { environment } from 'src/environments/environment';
-import { AuthResponse } from './models/authResponse.interface';
-import { Login } from './models/login';
+import { AuthResponse } from '../models/authResponse.interface';
+import { Login } from '../models/login';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -12,8 +12,8 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
-  public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
+  //private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
+ // public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   private baseUrl = environment.baseUrl;
   private tokenKey = 'token';
   constructor(private http: HttpClient) { }
@@ -39,16 +39,33 @@ export class AuthService {
       const decodedToken: any = jwtDecode(token);
       const userDetail: ApplicationUser = {
         id: decodedToken.nameid,
-        email: decodedToken.email
+        email: decodedToken.email,
+        lastName: decodedToken.given_name,
+        firstName: decodedToken.family_name,
       };
-      this.userSubject.next(userDetail);
+      //this.userSubject.next(userDetail);
+      alert(1)
+      console.log(userDetail)
     } else {
-      this.userSubject.next(null);
+      alert(2)
+     // this.userSubject.next(null);
     }
   }
 
-  getUserDetail(): Observable<ApplicationUser | null> {
-    return this.user$;
+  getUserDetail(){
+    // return this.user$;
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const userDetail: ApplicationUser = {
+        id: decodedToken.nameid,
+        email: decodedToken.email,
+        lastName: decodedToken.given_name,
+        firstName: decodedToken.family_name,
+      };
+      return userDetail;
+    }
+    return null;
   }
 
   getToken = (): string | null => localStorage.getItem(this.tokenKey) || '';
@@ -72,7 +89,7 @@ export class AuthService {
   
   logout(): void {
     localStorage.removeItem(this.tokenKey);
-    this.userSubject.next(null);
+    //this.userSubject.next(null);
   }
  
 

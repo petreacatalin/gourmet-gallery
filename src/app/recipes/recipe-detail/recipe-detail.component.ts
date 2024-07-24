@@ -1,16 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth.service';
+import { Subscription } from 'rxjs';
 import { CommentService } from 'src/app/comments/comments.service';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { Comments } from 'src/app/models/comments.interface';
-import { __values } from 'tslib';
-import { Step } from 'src/app/models/step.interface';
-import { Instructions } from 'src/app/models/instructions.interface';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -36,26 +33,16 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {
     this.commentForm = this.fb.group({
       content: ['', Validators.required],
+      rating: [null, Validators.required]
     });
   }
 
   ngOnInit(): void {
+    this.getUserSub();
     this.routeSub = this.route.params.subscribe(params => {
       const id = +params['id'];
-      this.recipeSub = this.recipeService.getRecipeById(id).subscribe(recipe => {
-        this.recipe = recipe;
-
-        // Mapping and processing instructions
-        const instructions = this.recipe.instructions as Instructions;
-        console.log('Instructions:', instructions);
-
-        // Load comments
-        this.loadComments();
-      });
-    });
-
-    this.userSub = this.authService.getUserDetail().subscribe(user => {
-      this.currentUser = user;
+      this.getRecipe(id);
+      this.loadComments(id);
     });
   }
 
@@ -66,26 +53,34 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.commentSub?.unsubscribe();
   }
 
-  loadComments(): void {
-    if (this.recipe) {
-      this.commentSub = this.commentService.getCommentsForRecipe(this.recipe.id!).subscribe(response => {
-        // Assuming response contains $values property
-        this.comments = response.$values;
-        
-        console.log('Comments:', this.comments);
-      });
-    }
+  getRecipe(id: number): void {
+    this.recipeSub = this.recipeService.getRecipeById(id).subscribe(recipe => {
+      this.recipe = recipe as Recipe;
+      console.log('recipe:', recipe);
+    });
+  }
+
+  loadComments(recipeId: number): void {
+    this.commentSub = this.commentService.getCommentsForRecipe(recipeId).subscribe(response => {
+      this.comments = response.$values || [];
+      console.log('Comments:', this.comments);
+    });
+  }
+
+  getUserSub(): void {
+    this.currentUser = this.authService.getUserDetail();
   }
 
   onSubmit(): void {
-    debugger
+    this.getUserSub();
     if (this.recipe && this.currentUser) {
       const newComment: Comments = {
         content: this.commentForm.get('content')?.value,
-        applicationUserId: this.currentUser.id, // Assuming currentUser has the necessary user ID
+        applicationUserId: this.currentUser.id,
         recipeId: this.recipe.id,
         user: this.currentUser,
-        timestamp: new Date()
+        timestamp: new Date(),
+        rating: this.commentForm.get('rating')?.value
       };
 
       this.commentService.addComment(newComment).subscribe(comment => {
@@ -93,9 +88,5 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.commentForm.reset();
       });
     }
-  }
-
-  getStarClass(index: number, rating: number): string {
-    return index < rating ? 'star' : 'star-empty';
   }
 }

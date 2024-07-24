@@ -34,7 +34,8 @@
       </mat-card-content>
     </div>
   </div>
-
+  
+  <!-- Comments section -->
   <div class="comments mt-4">
     <mat-card-subtitle>Comments:</mat-card-subtitle>
     <div class="comments-list">
@@ -43,10 +44,10 @@
           <div class="d-flex align-items-center">
             <img *ngIf="comment.user?.profilePictureUrl" [src]="comment.user!.profilePictureUrl" class="profile-picture mr-3" alt="{{ comment.user?.email }}">
             <div>
-              <h5 class="card-title mb-1">{{ comment.user?.email }}</h5>
+              <strong class="card-title mb-1">{{ comment.user?.firstName }} {{ comment.user?.lastName }}</strong>
               <p class="card-text">{{ comment.content }}</p>
               <div *ngIf="comment.rating">
-                <strong>Rating:</strong> {{ comment.rating.rating }} / 5
+                <strong>Rating:</strong> {{ comment.rating }} / 5
               </div>
               <small class="text-muted">{{ comment.timestamp | date:'short' }}</small>
             </div>

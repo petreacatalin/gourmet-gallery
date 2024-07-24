@@ -1,6 +1,7 @@
 <div class="register-container">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
     <h2>Register</h2>
+    <!-- Email -->
     <div class="form-group">
       <label for="email">Email</label>
       <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email">
@@ -16,6 +17,33 @@
         </div>
       </div>
     </div>
+    <!-- FirstName -->
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input id="firstName" formControlName="firstName" class="form-control" placeholder="Enter your First Name">
+      <div class="alert-validation" *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
+        <div *ngIf="registerForm.get('firstName')?.errors?.['required']">
+          First Name is required.
+        </div>
+        <div *ngIf="registerForm.get('firstName')?.errors?.['firstName']">
+          Please enter your First Name.
+        </div>       
+      </div>
+    </div>
+    <!-- LastName -->
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" formControlName="lastName" type="lastName" class="form-control" placeholder="Enter your Last Name">
+      <div class="alert-validation" *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
+        <div *ngIf="registerForm.get('lastName')?.errors?.['required']">
+          Last Name is required.
+        </div>
+        <div *ngIf="registerForm.get('lastName')?.errors?.['lastName']">
+          Please enter your Last Name.
+        </div>
+      </div>
+    </div>
+    <!-- Password -->
     <div class="form-group">
       <label for="password">Password</label>
       <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter your password">
@@ -31,6 +59,7 @@
         </div>
       </div>
     </div>
+    <!-- Confirm Password -->
     <div class="form-group">
       <label for="confirmPassword">Confirm Password</label>
       <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" placeholder="Confirm your password">
