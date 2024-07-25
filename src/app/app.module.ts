@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angu
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainPageComponent } from './main-page/main-page.component';
 import { FooterComponent } from './footer/footer.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
@@ -24,11 +24,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommentsComponent } from './comments/comments/comments.component';
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { JwtModule } from "@auth0/angular-jwt";
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { HeaderComponent } from './header/header/header.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -47,6 +48,7 @@ export function tokenGetter() {
     RecipesListComponent,
     RecipeAddEditComponent,
     CommentsComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

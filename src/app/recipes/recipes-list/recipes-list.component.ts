@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
-import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -10,8 +10,8 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./recipes-list.component.scss']
 })
 export class RecipesListComponent implements OnInit {
-  recipes: Recipe[] = []; // Array to hold all recipes
-  displayedRecipes: Recipe[] = []; // Array to hold currently displayed recipes
+  recipes: Recipe[] = [];
+  displayedRecipes: Recipe[] = [];
   sortBy: string = 'title';
   filterText: string = '';
   itemsPerPage: number = 6;
@@ -19,37 +19,36 @@ export class RecipesListComponent implements OnInit {
   totalPages: number = 1;
   pages: number[] = [];
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.recipeService.getRecipes().pipe(
-      tap(recipes => {
-        this.recipes = recipes;
-        this.updateDisplayedRecipes(); // Initialize displayed recipes
-      })
-    ).subscribe();
+    this.route.queryParams.subscribe(params => {
+      if (params['search']) {
+        this.filterText = params['search'];
+      }
+      this.recipeService.getRecipes().pipe(
+        tap(recipes => {
+          this.recipes = recipes;
+          this.updateDisplayedRecipes();
+        })
+      ).subscribe();
+    });
   }
 
   updateDisplayedRecipes(): void {
-    // Ensure recipes is an array
     if (!Array.isArray(this.recipes)) {
       console.error('Data is not an array:', this.recipes);
       return;
     }
 
-    // Filter recipes
     let filteredRecipes = this.recipes.filter(recipe =>
       recipe.title.toLowerCase().includes(this.filterText.toLowerCase())
     );
 
-    // Sort recipes
     if (this.sortBy === 'title') {
       filteredRecipes.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (this.sortBy === 'mealType') {
-      filteredRecipes.sort((a, b) => (a.mealType || '').localeCompare(b.mealType || ''));
     }
 
-    // Pagination
     this.totalPages = Math.ceil(filteredRecipes.length / this.itemsPerPage);
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
 
@@ -64,13 +63,13 @@ export class RecipesListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.currentPage = 1; // Reset to first page whenever filter is applied
+    this.currentPage = 1;
     this.updateDisplayedRecipes();
   }
 
   changeItemsPerPage(event: Event): void {
     this.itemsPerPage = +(event.target as HTMLSelectElement).value;
-    this.applyFilter(); // Reapply filter and sort to update displayed recipes
+    this.applyFilter();
   }
 
   goToPage(page: number): void {

@@ -1,45 +1,65 @@
+/* CSS for modal */
+.modal-sheet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height */
+  padding: 20px; /* Padding around modal */
+}
+
+.modal-dialog {
+  max-width: 90%; /* Max width for the modal */
+  margin: 0 auto; /* Center horizontally */
+}
+
+.modal-content {
+  border-radius: 12px; /* Rounded corners */
+}
+
+/* CSS for form container */
 .form-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Minimum height to cover the viewport */
+  min-height: 100vh; /* Full viewport height */
   background-color: #f5f5f5; /* Light gray background */
-  padding: 20px; /* Padding for better spacing */
+  padding: 20px; /* Padding */
 }
 
 .custom-card {
-  width: 100%; /* Card takes full width of its container */
-  max-width: 600px; /* Maximum width for larger screens */
+  width: 100%; /* Full width */
+  max-width: 600px; /* Maximum width */
   background-color: #fff; /* White background */
   border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+  padding: 24px; /* Padding inside the card */
 }
 
 .custom-card-content {
-  padding: 24px; /* Padding inside the card */
+  padding: 24px; /* Padding inside content */
 }
 
 .form-fields {
   display: grid;
-  grid-template-columns: 1fr; /* Single column layout for responsiveness */
-  gap: 15px; /* Spacing between form fields */
+  grid-template-columns: 1fr; /* Single column layout */
+  gap: 15px; /* Gap between fields */
 }
 
 mat-form-field {
-  width: 100%; /* Full width for form fields */
+  width: 100%; /* Full width */
 }
 
 mat-card-title {
-  font-size: 24px; /* Larger font size for card title */
-  font-weight: bold; /* Bold font weight */
-  text-align: center; /* Center align title */
-  margin-bottom: 10px; /* Bottom margin */
+  font-size: 24px; /* Title font size */
+  font-weight: bold; /* Bold title */
+  text-align: center; /* Centered title */
+  margin-bottom: 10px; /* Margin below title */
 }
 
 mat-card-actions {
   display: flex;
-  justify-content: center; /* Align button to the center */
-  padding: 20px 0; /* Padding for button */
+  justify-content: center; /* Centered actions */
+  padding: 20px 0; /* Padding around actions */
 }
 
 button[type="submit"] {
@@ -48,6 +68,10 @@ button[type="submit"] {
 
 @media (max-width: 768px) {
   .custom-card {
-    max-width: 90%; /* Adjust card width for smaller screens */
+    max-width: 90%; /* Adjust for smaller screens */
+  }
+
+  .modal-dialog {
+    max-width: 100%; /* Full width for modal on small screens */
   }
 }

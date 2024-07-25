@@ -11,7 +11,6 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
-  bubbles: number[] = Array(20).fill(0); // Create an array of 20 bubbles
 
   constructor(
     private fb: FormBuilder,

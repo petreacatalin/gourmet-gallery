@@ -27,21 +27,21 @@
       <li class="nav-item">
         <a routerLink="/recipes/create" routerLinkActive="active" class="nav-link text-white">
           <i class="bi bi-file-earmark-plus pe-none me-2"></i>
-          <span *ngIf="!isCollapsed">Create Recipe</span>
+          <span *ngIf="!isCollapsed">Publish Your Recipe</span>
         </a>
       </li>
     </ul>
 
     <hr>
 
-    <div class="dropdown">
+    <div class="dropdown" *ngIf="isLoggedIn">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
         <strong *ngIf="!isCollapsed">User</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
         <li><a class="dropdown-item" href="#">My recipes</a></li>
-        <li><a class="dropdown-item" href="#">Create recipe</a></li>
+        <li><a class="dropdown-item" routerLink="/recipes/create">Create recipe</a></li>
         <li><a class="dropdown-item" href="#">Profile</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>

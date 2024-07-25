@@ -6,6 +6,7 @@ import { Recipe } from 'src/app/models/recipe.interface';
 import { Ingredient } from 'src/app/models/ingredient.interface';
 import { Step } from 'src/app/models/step.interface';
 import { MealType, Cuisine, DietaryRestrictions, CookingMethod, MainIngredient, Occasion, DifficultyLevel, OtherCategories } from 'src/app/utils/enums';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -30,12 +31,17 @@ export class RecipeAddEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.initializeForm();
     this.checkEditMode();
+  }
+  
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
   initializeForm(): void {

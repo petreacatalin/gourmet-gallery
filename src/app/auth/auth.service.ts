@@ -16,6 +16,9 @@ export class AuthService {
  // public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   private baseUrl = environment.baseUrl;
   private tokenKey = 'token';
+  public userCurrently?: ApplicationUser;
+  private isloggedIn = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) { }
 
   register(user:ApplicationUser): Observable<any> {
@@ -28,9 +31,14 @@ export class AuthService {
       map((response) => {        
           localStorage.setItem(this.tokenKey, response.token); // Store JWT token in local storage
         
+          this.isloggedIn.next(true);
         return response;
       })
     );
+  }
+
+  loggedIn(): Observable<boolean> {
+    return this.isloggedIn.asObservable();
   }
 
   loadUserDetails(): void {
@@ -44,10 +52,8 @@ export class AuthService {
         firstName: decodedToken.family_name,
       };
       //this.userSubject.next(userDetail);
-      alert(1)
-      console.log(userDetail)
+      this.userCurrently = userDetail;
     } else {
-      alert(2)
      // this.userSubject.next(null);
     }
   }
@@ -89,6 +95,7 @@ export class AuthService {
   
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.isloggedIn.next(false);
     //this.userSubject.next(null);
   }
  

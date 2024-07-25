@@ -1,16 +1,13 @@
 <div *ngIf="!isLoggedIn" class="login-container">
-  <div class="bubbles">
-    <div class="bubble" *ngFor="let bubble of bubbles"></div>
-  </div>
   <div class="form-wrapper">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <h2>Login</h2>
       <div class="form-group">
-        <label for="userName">Username</label>
-        <input id="userName" formControlName="userName" type="text" class="form-control" placeholder="Enter your username">
+        <label for="userName">Email</label>
+        <input id="userName" formControlName="userName" type="text" class="form-control" placeholder="Enter your e-mail">
         <div class="alert-validation" *ngIf="loginForm.get('userName')?.invalid && (loginForm.get('userName')?.dirty || loginForm.get('userName')?.touched)">
           <div *ngIf="loginForm.get('userName')?.errors?.['required']">
-            Username is required.
+            Email is required.
           </div>
         </div>
       </div>

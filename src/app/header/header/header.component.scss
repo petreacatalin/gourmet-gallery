@@ -1,0 +1,22 @@
+header {
+    background-color: #343a40;
+    .text-bg-dark {
+      color: #ffffff;
+    }
+    .btn-outline-light {
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+    .btn-outline-light:hover {
+      background-color: #ffffff;
+      color: #343a40;
+    }
+    .btn-warning {
+      color: #ffffff;
+    }
+    .btn-warning:hover {
+      background-color: #ffc107;
+      color: #343a40;
+    }
+  }
+  
