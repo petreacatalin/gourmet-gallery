@@ -12,11 +12,11 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-  //private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
- // public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
+   private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
+  public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   private baseUrl = environment.baseUrl;
   private tokenKey = 'token';
-  public userCurrently?: ApplicationUser;
+  public userCurrently?: ApplicationUser | undefined;
   private isloggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { }
@@ -32,6 +32,7 @@ export class AuthService {
           localStorage.setItem(this.tokenKey, response.token); // Store JWT token in local storage
         
           this.isloggedIn.next(true);
+          this.loadUserDetails();
         return response;
       })
     );
@@ -51,7 +52,6 @@ export class AuthService {
         lastName: decodedToken.given_name,
         firstName: decodedToken.family_name,
       };
-      //this.userSubject.next(userDetail);
       this.userCurrently = userDetail;
     } else {
      // this.userSubject.next(null);
@@ -96,6 +96,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.isloggedIn.next(false);
+    
     //this.userSubject.next(null);
   }
  

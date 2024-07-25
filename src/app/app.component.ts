@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApplicationUser } from './models/applicationUser.interface';
-import { routeAnimations } from './animation-fade/animation';
+import { routeAnimations } from './utils/animation-fade/animation';
 import { RouterOutlet } from '@angular/router';
 import { trigger, transition, style, animate, query, group } from '@angular/animations';
 import { SidebarService } from './sidebar/sidebar.service';

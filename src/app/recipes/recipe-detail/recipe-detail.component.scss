@@ -1,60 +1,100 @@
+/* recipe-detail.component.scss */
 .recipe-card {
   margin: 20px;
-}
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
 
-.recipe-image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.mat-card-content ul, .mat-card-content ol {
-  padding-left: 20px;
-}
-
-.mat-card-content ul li, .mat-card-content ol li {
-  margin-bottom: 5px;
-}
-
-.mat-card-subtitle {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.mat-elevation-z4 {
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12);
-}
-
-.comments-list {
-  .comment-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  .mat-card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 16px;
+    
   }
-}
 
-.profile-picture {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
+  .recipe-image {
+    display: block;  // Ensure it's treated as a block element
+    width: 60%;      // Set the width as needed
+    height: auto;
+    border-radius: 10px;
+    margin: 0 auto;  // Center horizontally
+    margin-bottom: 20px;
+    margin-top: 29px;
+  }
 
-.comment-form {
-  margin-top: 20px;
-}
+  .mat-card-content {
+    padding: 16px;
+    border-bottom: 1px solid #e9ecef;
+  }
 
-.comment-card {
-  border: none;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+  .mat-card-content p {
+    margin: 10px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+  }
 
-.profile-picture {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 1rem;
+  .mat-card-content ul,
+  .mat-card-content ol {
+    padding-left: 20px;
+  }
+
+  .mat-card-content ul li,
+  .mat-card-content ol li {
+    margin-bottom: 5px;
+  }
+
+  .mat-card-subtitle {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #495057;
+  }
+
+  .comments-list {
+    .comment-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #f8f9fa;
+      margin-bottom: 1rem;
+      padding: 10px;
+    }
+  }
+
+  .profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+  }
+
+  .comment-form {
+    margin-top: 20px;
+  }
+
+  .comment-card {
+    border: none;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background-color: #ffffff;
+  }
+
+  /* Highlighting Categories */
+  .recipe-details {
+    background-color: #f1f3f5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+  }
+
+  .recipe-details p {
+    margin: 10px 0;
+    font-weight: 500;
+  }
 }

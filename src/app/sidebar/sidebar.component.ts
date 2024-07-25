@@ -9,7 +9,7 @@ import { SidebarService } from '../sidebar/sidebar.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  isLoggedIn: boolean = false;
+  isLoggedIn?: boolean;
   isCollapsed: boolean = false;
 
   constructor(public authService: AuthService, private router: Router, private sidebarService: SidebarService) {}

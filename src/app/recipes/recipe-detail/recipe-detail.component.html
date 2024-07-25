@@ -4,53 +4,78 @@
   </mat-card-header>
   <mat-divider></mat-divider>
 
+  <!-- Photo Section -->
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <img *ngIf="recipe?.imageUrl" [src]="recipe?.imageUrl" class="recipe-image mat-elevation-z4" alt="{{ recipe?.title }}">
     </div>
-    <div class="col-md-6">
+  </div>
+
+  <!-- Description Section -->
+  <div class="row mt-4">
+    <div class="col-md-12">
       <mat-card-content>
         <p><strong>Description:</strong> {{ recipe?.description }}</p>
-        <p><strong>Ingredients:</strong></p>
-        <ul>
-          <li *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
-            {{ ingredient.name }} - {{ ingredient.quantity }}
-          </li>
-        </ul>
+      </mat-card-content>
+    </div>
+  </div>
+
+  <!-- Instructions Section -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <mat-card-content>
         <p><strong>Instructions:</strong></p>
         <ol>
           <li *ngFor="let step of recipe?.instructions?.steps">
             {{ step.stepNumber }}. {{ step.description }}
           </li>
         </ol>
-        <p><strong>Meal Type:</strong> {{ recipe?.mealType }}</p>
-        <p><strong>Cuisine:</strong> {{ recipe?.cuisine }}</p>
-        <p><strong>Dietary Restrictions:</strong> {{ recipe?.dietaryRestrictions }}</p>
-        <p><strong>Cooking Method:</strong> {{ recipe?.cookingMethod }}</p>
-        <p><strong>Main Ingredient:</strong> {{ recipe?.mainIngredient }}</p>
-        <p><strong>Occasion:</strong> {{ recipe?.occasion }}</p>
-        <p><strong>Difficulty Level:</strong> {{ recipe?.difficultyLevel }}</p>
-        <p><strong>Other Categories:</strong> {{ recipe?.otherCategories }}</p>
       </mat-card-content>
     </div>
   </div>
-  
-  <!-- Comments section -->
+
+  <!-- Details Section -->
+  <div class="recipe-details">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <mat-card-content>
+          <p><strong>Ingredients:</strong></p>
+          <ul>
+            <li *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
+              {{ ingredient.name }} - {{ ingredient.quantity }}
+            </li>
+          </ul>
+          <p><strong>Meal Type:</strong> {{ recipe?.mealType }}</p>
+          <p><strong>Cuisine:</strong> {{ recipe?.cuisine }}</p>
+          <p><strong>Dietary Restrictions:</strong> {{ recipe?.dietaryRestrictions }}</p>
+        </mat-card-content>
+      </div>
+      <div class="col-md-6">
+        <mat-card-content>
+          <p><strong>Cooking Method:</strong> {{ recipe?.cookingMethod }}</p>
+          <p><strong>Main Ingredient:</strong> {{ recipe?.mainIngredient }}</p>
+          <p><strong>Occasion:</strong> {{ recipe?.occasion }}</p>
+          <p><strong>Difficulty Level:</strong> {{ recipe?.difficultyLevel }}</p>
+          <p><strong>Other Categories:</strong> {{ recipe?.otherCategories }}</p>
+        </mat-card-content>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comments Section -->
   <div class="comments mt-4">
     <mat-card-subtitle>Comments:</mat-card-subtitle>
     <div class="comments-list">
-      <div *ngFor="let comment of comments" class="card comment-card mb-3">
-        <div class="card-body">
-          <div class="d-flex align-items-center">
-            <img *ngIf="comment.user?.profilePictureUrl" [src]="comment.user!.profilePictureUrl" class="profile-picture mr-3" alt="{{ comment.user?.email }}">
-            <div>
-              <strong class="card-title mb-1">{{ comment.user?.firstName }} {{ comment.user?.lastName }}</strong>
-              <p class="card-text">{{ comment.content }}</p>
-              <div *ngIf="comment.rating">
-                <strong>Rating:</strong> {{ comment.rating }} / 5
-              </div>
-              <small class="text-muted">{{ comment.timestamp | date:'short' }}</small>
+      <div *ngFor="let comment of comments" class="comment-card mb-3">
+        <div class="d-flex align-items-center">
+          <img *ngIf="comment.user?.profilePictureUrl" [src]="comment.user!.profilePictureUrl" class="profile-picture mr-3" alt="{{ comment.user?.email }}">
+          <div>
+            <strong class="card-title mb-1">{{ comment.user?.firstName }} {{ comment.user?.lastName }}</strong>
+            <p class="card-text">{{ comment.content }}</p>
+            <div *ngIf="comment.rating">
+              <strong>Rating:</strong> {{ comment.rating }} / 5
             </div>
+            <small class="text-muted">{{ comment.timestamp | date:'short' }}</small>
           </div>
         </div>
       </div>
@@ -76,6 +101,7 @@
 <ng-template #loading>
   <mat-spinner></mat-spinner>
 </ng-template>
+
 
 <!--  <div class="example-input-wrapper">
   <label for="duration">Animation duration:</label>
