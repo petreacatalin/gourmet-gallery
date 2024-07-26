@@ -1,38 +1,39 @@
 <header class="p-3 text-bg-dark">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-        </a>
-  
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a routerLink="/mainpage" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a routerLink="/mainpage" class="nav-link px-2 text-white">Features</a></li>
-         
-          <li><a routerLink="/mainpage" class="nav-link px-2 text-white">About</a></li>
-        </ul>
-  
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" (submit)="onSearch(); $event.preventDefault()">
-          <div class="input-group">
-            <input type="search" class="form-control form-control-dark text-bg-dark" [(ngModel)]="searchText" placeholder="Search..." aria-label="Search" name="search">
-            <button type="submit" class="btn btn-outline-light">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </form>
-  
-        <div class="text-end" *ngIf="!authService.isLoggedIn(); else loggedIn">
-          <button type="button" class="btn btn-outline-light me-2" routerLink="/login">Login</button>
-          <button type="button" class="btn btn-warning" routerLink="/register">Sign-up</button>
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li>
+          <img src="assets/images/gourmet-logo.png" class="logo" alt="Gourmet Logo">
+        </li>
+        <li><a routerLink="/mainpage" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a routerLink="/mainpage" class="nav-link px-2 text-white">Features</a></li>
+        <li><a routerLink="/mainpage" class="nav-link px-2 text-white">About</a></li>
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" (submit)="onSearch(); $event.preventDefault()">
+        <div class="input-group">
+          <input type="search" class="form-control form-control-dark text-bg-dark" [(ngModel)]="searchText" placeholder="Search..." aria-label="Search" name="search">
+          <button type="submit" class="btn btn-outline-light">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
-  
-        <ng-template #loggedIn>
-          <div class="text-end text-white">
-            Welcome {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
-            <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
-          </div>
-        </ng-template>
+      </form>
+
+      <div class="text-end" *ngIf="!authService.isLoggedIn(); else loggedIn">
+        <button type="button" class="btn btn-outline-light me-2" routerLink="/login">Login</button>
+        <button type="button" class="btn btn-success" routerLink="/register">Sign-up</button>
       </div>
+
+      <ng-template #loggedIn>
+        <div class="text-end text-white">
+          Welcome {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
+          <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
+        </div>
+      </ng-template>
     </div>
-  </header>
-  
+  </div>
+</header>

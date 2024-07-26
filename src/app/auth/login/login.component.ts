@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
 
@@ -23,6 +23,10 @@ export class LoginComponent {
     });
   }
   
+  ngOnInit(): void {
+    // Initialize any settings if needed
+  }
+
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
@@ -38,7 +42,6 @@ export class LoginComponent {
         },
         error => {
           console.error('Login failed', error);
-          // Optionally handle login errors, e.g., display a message
         }
       );
     } else {

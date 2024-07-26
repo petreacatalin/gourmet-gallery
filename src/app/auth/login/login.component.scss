@@ -1,27 +1,59 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+/* Login Container */
 .login-container {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Minimum height to cover the viewport */
-  background: linear-gradient(135deg, #72edf2 10%, #5151e5 100%);
+  min-height: 100vh;
   overflow: hidden;
   width: 100%;
   height: 100%;
+  font-family: 'Open Sans', sans-serif;
 }
 
-
-@keyframes rise {
+/* Geometric Pieces Animation */
+@keyframes riseAndSpin {
   0% {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.6;
   }
   100% {
-    transform: translateY(-100vh);
+    transform: translateY(-100vh) rotate(360deg);
     opacity: 0;
   }
 }
 
+.geometric-piece {
+  position: absolute;
+  border: 2px solid rgba(128, 128, 128, 0.5); /* Semi-transparent grey border */
+  background: transparent; /* No interior color */
+  border-radius: 25%; /* Rounded corners */
+  animation: riseAndSpin linear infinite;
+  opacity: 0.7;
+  transition: transform 0.1s ease-out; /* Smooth transition for movement */
+}
+
+/* Specific Styles for Geometric Pieces */
+.piece1 { width: 60px; height: 60px; top: 100%; left: 5%; animation-duration: 6s; }
+.piece2 { width: 80px; height: 80px; top: 100%; left: 15%; animation-duration: 8s; }
+.piece3 { width: 100px; height: 100px; top: 100%; left: 25%; animation-duration: 10s; }
+.piece4 { width: 120px; height: 120px; top: 100%; left: 35%; animation-duration: 12s; }
+.piece5 { width: 140px; height: 140px; top: 100%; left: 45%; animation-duration: 14s; }
+.piece6 { width: 60px; height: 60px; top: 100%; left: 55%; animation-duration: 16s; }
+.piece7 { width: 80px; height: 80px; top: 100%; left: 65%; animation-duration: 18s; }
+.piece8 { width: 100px; height: 100px; top: 100%; left: 75%; animation-duration: 20s; }
+.piece9 { width: 120px; height: 120px; top: 100%; left: 85%; animation-duration: 22s; }
+.piece10 { width: 140px; height: 140px; top: 100%; left: 10%; animation-duration: 24s; }
+.piece11 { width: 60px; height: 60px; top: 100%; left: 20%; animation-duration: 26s; }
+.piece12 { width: 80px; height: 80px; top: 100%; left: 30%; animation-duration: 28s; }
+.piece13 { width: 100px; height: 100px; top: 100%; left: 40%; animation-duration: 30s; }
+.piece14 { width: 120px; height: 120px; top: 100%; left: 50%; animation-duration: 32s; }
+.piece15 { width: 140px; height: 140px; top: 100%; left: 60%; animation-duration: 34s; }
+
+/* Form Wrapper */
 .form-wrapper {
   position: relative;
   z-index: 1;
@@ -34,12 +66,24 @@
 
 .login-form {
   width: 100%;
-  max-width: 400px; /* Limit form width for readability */
+  max-width: 400px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff, #f1f1f1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #333;
 }
 
 .form-group {
@@ -47,9 +91,10 @@
 }
 
 label {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 18px;
-  color: #333333;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
 }
 
 input[type="text"],
@@ -57,40 +102,40 @@ input[type="password"] {
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ddd;
   border-radius: 6px;
-  transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+  font-family: 'Open Sans', sans-serif;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
   outline: none;
   border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
 
 .alert-validation {
-  color: #dc3545; /* Red color for validation messages */
+  color: #dc3545;
   font-size: 0.9rem;
   margin-top: 5px;
 }
 
 .btn {
-  background-color: #007bff;
+  background: linear-gradient(90deg, #1fcb41, #273b6f);
   color: white;
   border: none;
   padding: 12px 20px;
   cursor: pointer;
   border-radius: 6px;
   font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.btn-primary {
-  background-color: #007bff;
+  transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background: linear-gradient(90deg, #0fa32d, #5767b7);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button[type="submit"] {
@@ -101,21 +146,64 @@ button[type="submit"] {
 .register-link {
   font-size: 16px;
   margin-top: 15px;
-  text-align: center; /* Center align the text */
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .register-link a {
-  color: #007bff;
+  font-weight: 700;
+  color: #ff6347; /* Tomato color */
   text-decoration: none;
-  transition: color 0.3s ease-in-out;
+  transition: color 0.5s ease-in-out;
 }
 
 .register-link a:hover {
-  color: #0056b3;
+  color: #cc5136; /* Darker tomato color */
 }
 
 @media (max-width: 768px) {
   .login-form {
-    max-width: 90%; /* Adjust form width for smaller screens */
+    max-width: 90%;
   }
+}
+
+.logo {
+  width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+/* Floating Label */
+.floating-label {
+  position: relative;
+}
+
+.floating-label input {
+  width: 100%;
+  padding: 12px 12px 12px 9px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.floating-label label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #999;
+  transition: 0.3s ease all;
+  pointer-events: none;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: -12px;
+  left: 0;
+  font-size: 16px;
+  color: #273b6f;
 }

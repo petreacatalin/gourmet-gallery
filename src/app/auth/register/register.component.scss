@@ -1,28 +1,107 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+/* Register Container with Background Effect */
 .register-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f8f9fa; /* Light grey background */
-  padding: 20px; /* Padding for small screens */
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Open Sans', sans-serif;
 }
 
+/* Geometric Pieces Animation */
+@keyframes riseAndSpin {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.geometric-piece {
+  position: absolute;
+  border: 2px solid rgba(128, 128, 128, 0.5); /* Semi-transparent grey border */
+  background: transparent; /* No interior color */
+  border-radius: 25%; /* Rounded corners */
+  animation: riseAndSpin linear infinite;
+  opacity: 0.7;
+  transition: transform 0.1s ease-out; /* Smooth transition for movement */
+}
+
+/* Register Form Styling */
 .register-form {
   width: 100%;
-  max-width: 400px; /* Maximum width */
+  max-width: 400px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.register-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
 }
 
 .form-group {
   margin-bottom: 20px;
 }
 
+/* Floating Label */
+.floating-label {
+  position: relative;
+}
+
+.floating-label input {
+  width: 100%;
+  padding: 12px 12px 12px 9px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.floating-label label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #999;
+  transition: 0.3s ease all;
+  pointer-events: none;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: -12px;
+  left: 0;
+  font-size: 16px;
+  color: #273b6f;
+}
+
+/* Validation Alerts */
 .alert-validation {
-  color: #dc3545; /* Red color for validation messages */
+  color: #bc2b39;
   font-size: 0.9rem;
   margin-top: 5px;
 }
@@ -30,13 +109,74 @@
 .btn-primary {
   width: 100%;
   margin-top: 10px;
+  background: linear-gradient(90deg, #1fcb41, #273b6f);
+  border: none;
+  transition: background 0.3s;
+  color: white;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #0fa32d, #5767b7);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .login-link {
-  margin-top: 10px;
+  font-size: 16px;
+  margin-top: 15px;
   text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .login-link a {
-  color: #007bff; /* Blue color for the login link */
+  font-weight: 700;
+  color: #ff6347; /* Tomato color */
+  text-decoration: none;
+  transition: color 0.5s ease-in-out;
+}
+
+.login-link a:hover {
+  color: #cc5136; /* Darker tomato color */
+}
+
+.logo {
+  width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+/* Adding Geometric Pieces */
+.geometric-piece {
+  position: absolute;
+  border: 2px solid rgba(128, 128, 128, 0.5); /* Semi-transparent grey border */
+  background: transparent; /* No interior color */
+  border-radius: 25%; /* Rounded corners */
+  animation: riseAndSpin linear infinite;
+  opacity: 0.7;
+  transition: transform 0.1s ease-out; /* Smooth transition for movement */
+}
+
+/* Specific Styles for Geometric Pieces */
+.piece1 { width: 60px; height: 60px; top: 100%; left: 5%; animation-duration: 6s; }
+.piece2 { width: 80px; height: 80px; top: 100%; left: 15%; animation-duration: 8s; }
+.piece3 { width: 100px; height: 100px; top: 100%; left: 25%; animation-duration: 10s; }
+.piece4 { width: 120px; height: 120px; top: 100%; left: 35%; animation-duration: 12s; }
+.piece5 { width: 140px; height: 140px; top: 100%; left: 45%; animation-duration: 14s; }
+.piece6 { width: 60px; height: 60px; top: 100%; left: 55%; animation-duration: 16s; }
+.piece7 { width: 80px; height: 80px; top: 100%; left: 65%; animation-duration: 18s; }
+.piece8 { width: 100px; height: 100px; top: 100%; left: 75%; animation-duration: 20s; }
+.piece9 { width: 120px; height: 120px; top: 100%; left: 85%; animation-duration: 22s; }
+.piece10 { width: 140px; height: 140px; top: 100%; left: 10%; animation-duration: 24s; }
+.piece11 { width: 60px; height: 60px; top: 100%; left: 20%; animation-duration: 26s; }
+.piece12 { width: 80px; height: 80px; top: 100%; left: 30%; animation-duration: 28s; }
+.piece13 { width: 100px; height: 100px; top: 100%; left: 40%; animation-duration: 30s; }
+.piece14 { width: 120px; height: 120px; top: 100%; left: 50%; animation-duration: 32s; }
+.piece15 { width: 140px; height: 140px; top: 100%; left: 60%; animation-duration: 34s; }
+
+@media (max-width: 768px) {
+  .register-form {
+    max-width: 90%;
+  }
 }

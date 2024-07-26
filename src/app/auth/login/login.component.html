@@ -1,6 +1,25 @@
 <div *ngIf="!isLoggedIn" class="login-container">
+  <div class="geometric-pieces">
+    <div class="geometric-piece piece1"></div>
+    <div class="geometric-piece piece2"></div>
+    <div class="geometric-piece piece3"></div>
+    <div class="geometric-piece piece4"></div>
+    <div class="geometric-piece piece5"></div>
+    <div class="geometric-piece piece6"></div>
+    <div class="geometric-piece piece7"></div>
+    <div class="geometric-piece piece8"></div>
+    <div class="geometric-piece piece9"></div>
+    <div class="geometric-piece piece10"></div>
+    <div class="geometric-piece piece11"></div>
+    <div class="geometric-piece piece12"></div>
+    <div class="geometric-piece piece13"></div>
+    <div class="geometric-piece piece14"></div>
+    <div class="geometric-piece piece15"></div>
+</div>
+
   <div class="form-wrapper">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <img src="assets/images/logo.png" class="logo" alt="Gourmet Logo">
       <h2>Login</h2>
       <div class="form-group">
         <label for="userName">Email</label>
@@ -8,6 +27,9 @@
         <div class="alert-validation" *ngIf="loginForm.get('userName')?.invalid && (loginForm.get('userName')?.dirty || loginForm.get('userName')?.touched)">
           <div *ngIf="loginForm.get('userName')?.errors?.['required']">
             Email is required.
+          </div>
+          <div *ngIf="loginForm.get('userName')?.errors?.['email']">
+            Please enter a valid email address.
           </div>
         </div>
       </div>

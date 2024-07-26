@@ -22,12 +22,14 @@ export class RecipesListComponent implements OnInit {
   constructor(private recipeService: RecipeService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    debugger
     this.route.queryParams.subscribe(params => {
       if (params['search']) {
         this.filterText = params['search'];
       }
       this.recipeService.getRecipes().pipe(
         tap(recipes => {
+          console.log('Fetched recipes:', recipes); // Debugging log
           this.recipes = recipes;
           this.updateDisplayedRecipes();
         })

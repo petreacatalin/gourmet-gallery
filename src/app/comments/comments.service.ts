@@ -15,8 +15,8 @@ export class CommentService {
   // getCommentsForRecipe(recipeId: number): Observable<{ comments: { $values: Comments[] } }> {
   //   return this.http.get<{ comments: { $values: Comments[] } }>(`${this.baseUrl}/recipe/${recipeId}`);
   // }
-  getCommentsForRecipe(recipeId: number): Observable<{ $values: Comments[] }> {
-    return this.http.get<{ $values: Comments[] }>(`${this.baseUrl}/recipe/${recipeId}`);
+  getCommentsForRecipe(recipeId: number): Observable<Comments[]> {
+    return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`);
   }
 
   getCommentsById(recipeId: number): Observable<Comments[]> {

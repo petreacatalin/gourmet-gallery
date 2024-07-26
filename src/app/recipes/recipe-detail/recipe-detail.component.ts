@@ -55,13 +55,15 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   getRecipe(id: number): void {
     this.recipeSub = this.recipeService.getRecipeById(id).subscribe(recipe => {
+      debugger
       this.recipe = recipe as Recipe;
     });
   }
 
   loadComments(recipeId: number): void {
+    debugger
     this.commentSub = this.commentService.getCommentsForRecipe(recipeId).subscribe(response => {
-      this.comments = response.$values || [];
+      this.comments = response || [];
     });
   }
 

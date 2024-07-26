@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,42 +9,40 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-
   registerForm: FormGroup;
-  duplicateUser: boolean = false;
   errorMessages: { [key: string]: string } = {
-    PasswordRequiresNonAlphanumeric: 'Password must have at least one non-alphanumeric character.',
-    PasswordRequiresLower: 'Password must have at least one lowercase letter.',
-    PasswordRequiresUpper: 'Password must have at least one uppercase letter.'
+    'DuplicateUserName': 'This email is already registered.',
+    // Add more error messages as needed
   };
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
       firstName: ['', Validators.required],
-      lastName: ['', Validators.required]
+      lastName: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
     }, {
-      validators: this.passwordMatchValidator
+      validator: this.passwordMatchValidator
     });
+  }
+
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null : { passwordMismatch: true };
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      const userData: ApplicationUser = this.registerForm.value;
+      const userData = this.registerForm.value;
       this.authService.register(userData).subscribe(
         response => {
           console.log('Registration successful', response);
-          this.router.navigate(['/login']); // Navigate to login page upon successful registration
+          this.router.navigate(['/login']);
         },
         error => {
           console.error('Registration failed', error);
-          if (error.status === 400 && error.error) {
+          if (error.status === 400 || error.error) {
             const errorArray = error.error;
             if (Array.isArray(errorArray)) {
               errorArray.forEach(err => {
@@ -59,6 +56,7 @@ export class RegisterComponent {
                   }
                 }
               });
+              this.registerForm.updateValueAndValidity(); // Trigger validation checks
             }
           }
         }
@@ -71,13 +69,4 @@ export class RegisterComponent {
       });
     }
   }
-
-  // Custom validator to check if password and confirm password match
-  passwordMatchValidator(group: FormGroup): { [key: string]: any } | null {
-    const password = group.get('password');
-    const confirmPassword = group.get('confirmPassword');
-
-    return password && confirmPassword && password.value !== confirmPassword.value ? { passwordMismatch: true } : null;
-  }
-
 }

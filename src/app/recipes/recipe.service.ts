@@ -13,9 +13,8 @@ export class RecipeService {
   constructor(private http: HttpClient) { }
 
   getRecipes(): Observable<Recipe[]> {
-    return this.http.get<{ $values: Recipe[] }>(`${this.baseUrl}`).pipe(
-    map(response => response.$values) // Extract the recipes array from the $values property
-    )};
+    return this.http.get<Recipe[]>(`${this.baseUrl}`)
+  }
   
   getRecipeById(id: number): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.baseUrl}/${id}`);

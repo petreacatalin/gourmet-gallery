@@ -1,80 +1,91 @@
+
+<div  class="login-container">
+  <div class="geometric-pieces">
+    <div class="geometric-piece piece1"></div>
+    <div class="geometric-piece piece2"></div>
+    <div class="geometric-piece piece3"></div>
+    <div class="geometric-piece piece4"></div>
+    <div class="geometric-piece piece5"></div>
+    <div class="geometric-piece piece6"></div>
+    <div class="geometric-piece piece7"></div>
+    <div class="geometric-piece piece8"></div>
+    <div class="geometric-piece piece9"></div>
+    <div class="geometric-piece piece10"></div>
+    <div class="geometric-piece piece11"></div>
+    <div class="geometric-piece piece12"></div>
+    <div class="geometric-piece piece13"></div>
+    <div class="geometric-piece piece14"></div>
+    <div class="geometric-piece piece15"></div>
+</div>
+
 <div class="register-container">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+    <img src="assets/images/logo.png" class="logo" alt="Gourmet Logo">
     <h2>Register</h2>
+
     <!-- Email -->
     <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter your email">
+      <div class="floating-label">
+        <input id="email" formControlName="email" type="email" class="form-control" placeholder=" ">
+        <label for="email">Email</label>
+      </div>
       <div class="alert-validation" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
-        <div *ngIf="registerForm.get('email')?.errors?.['required']">
-          Email is required.
-        </div>
-        <div *ngIf="registerForm.get('email')?.errors?.['email']">
-          Please enter a valid email address.
-        </div>
-        <div *ngIf="registerForm.get('email')?.errors?.['duplicateUserName']">
-          This email is already registered. Please <a [routerLink]="['/login']">login</a> or choose another.
-        </div>
+        <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        <div *ngIf="registerForm.get('email')?.errors?.['duplicateUserName']">This email is already registered. Please <a [routerLink]="['/login']">login</a> or choose another.</div>
       </div>
     </div>
+
     <!-- FirstName -->
     <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input id="firstName" formControlName="firstName" class="form-control" placeholder="Enter your First Name">
+      <div class="floating-label">
+        <input id="firstName" formControlName="firstName" class="form-control" placeholder=" ">
+        <label for="firstName">First Name</label>
+      </div>
       <div class="alert-validation" *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
-        <div *ngIf="registerForm.get('firstName')?.errors?.['required']">
-          First Name is required.
-        </div>
-        <div *ngIf="registerForm.get('firstName')?.errors?.['firstName']">
-          Please enter your First Name.
-        </div>       
+        <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First Name is required.</div>
+        <div *ngIf="registerForm.get('firstName')?.errors?.['firstName']">Please enter your First Name.</div>
       </div>
     </div>
+
     <!-- LastName -->
     <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input id="lastName" formControlName="lastName" type="lastName" class="form-control" placeholder="Enter your Last Name">
+      <div class="floating-label">
+        <input id="lastName" formControlName="lastName" type="text" class="form-control" placeholder=" ">
+        <label for="lastName">Last Name</label>
+      </div>
       <div class="alert-validation" *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
-        <div *ngIf="registerForm.get('lastName')?.errors?.['required']">
-          Last Name is required.
-        </div>
-        <div *ngIf="registerForm.get('lastName')?.errors?.['lastName']">
-          Please enter your Last Name.
-        </div>
+        <div *ngIf="registerForm.get('lastName')?.errors?.['required']">Last Name is required.</div>
+        <div *ngIf="registerForm.get('lastName')?.errors?.['lastName']">Please enter your Last Name.</div>
       </div>
     </div>
+
     <!-- Password -->
     <div class="form-group">
-      <label for="password">Password</label>
-      <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter your password">
+      <div class="floating-label">
+        <input id="password" formControlName="password" type="password" class="form-control" placeholder=" ">
+        <label for="password">Password</label>
+      </div>
       <div class="alert-validation" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
-        <div *ngIf="registerForm.get('password')?.errors?.['required']">
-          Password is required.
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
-          Password must be at least 6 characters long.
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['backendError']">
-          {{ registerForm.get('password')?.errors?.['backendError'] }}
-        </div>
+        <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
+        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+        <div *ngIf="registerForm.get('password')?.errors?.['backendError']">{{ registerForm.get('password')?.errors?.['backendError'] }}</div>
       </div>
     </div>
+
     <!-- Confirm Password -->
     <div class="form-group">
-      <label for="confirmPassword">Confirm Password</label>
-      <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" placeholder="Confirm your password">
+      <div class="floating-label">
+        <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" placeholder=" ">
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
       <div class="alert-validation" *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
-        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
-          Confirm Password is required.
-        </div>
-        <div *ngIf="registerForm.hasError('passwordMismatch')">
-          Passwords do not match.
-        </div>
-        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['backendError']">
-          {{ registerForm.get('confirmPassword')?.errors?.['backendError'] }}
-        </div>
+        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</div>
+        <div *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</div>
+        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['backendError']">{{ registerForm.get('confirmPassword')?.errors?.['backendError'] }}</div>
       </div>
     </div>
+
     <button type="submit" class="btn btn-primary">Register</button>
     <div class="login-link">
       Already have an account? <a [routerLink]="['/login']">Login here!</a>
