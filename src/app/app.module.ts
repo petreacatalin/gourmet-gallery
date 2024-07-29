@@ -30,6 +30,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HeaderComponent } from './header/header/header.component';
+import {MatStepperModule} from '@angular/material/stepper';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -72,6 +73,7 @@ export function tokenGetter() {
     MatProgressSpinnerModule,
     MatDividerModule,
     CommonModule,    
+    MatStepperModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'

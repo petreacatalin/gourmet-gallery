@@ -1,8 +1,7 @@
-/* recipe-detail.component.scss */
 .recipe-card {
   margin: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
 
@@ -10,17 +9,17 @@
     background-color: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
     padding: 16px;
-    
   }
 
   .recipe-image {
-    display: block;  // Ensure it's treated as a block element
-    width: 60%;      // Set the width as needed
+    display: block;
+    width: 100%;
     height: auto;
-    border-radius: 10px;
-    margin: 0 auto;  // Center horizontally
-    margin-bottom: 20px;
-    margin-top: 29px;
+    border-radius: 12px;
+    margin: 20px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .mat-card-content {
@@ -41,7 +40,7 @@
 
   .mat-card-content ul li,
   .mat-card-content ol li {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
 
   .mat-card-subtitle {
@@ -53,43 +52,10 @@
     color: #495057;
   }
 
-  .comments-list {
-    .comment-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: #f8f9fa;
-      margin-bottom: 1rem;
-      padding: 10px;
-    }
-  }
-
-  .profile-picture {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 1rem;
-  }
-
-  .comment-form {
-    margin-top: 20px;
-  }
-
-  .comment-card {
-    border: none;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    background-color: #ffffff;
-  }
-
-  /* Highlighting Categories */
   .recipe-details {
     background-color: #f1f3f5;
-    border-radius: 8px;
-    padding: 15px;
+    border-radius: 12px;
+    padding: 20px;
     margin-top: 20px;
   }
 
@@ -97,4 +63,181 @@
     margin: 10px 0;
     font-weight: 500;
   }
+
+  .comments {
+    .comments-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .comments-list {
+      .comment-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        margin-bottom: 1rem;
+        padding: 15px;
+        transition: box-shadow 0.3s ease-in-out;
+
+        &:hover {
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-picture-wrapper {
+          .profile-picture {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: -16px
+          }
+        }
+
+        .rating {
+          display: flex;
+          align-items: center;
+
+          mat-icon {
+            font-size: 20px;
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    .load-more-container {
+      text-align: center;
+      margin-top: 20px;
+
+      button {
+        border-radius: 24px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+
+    .comment-form-card {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+    }
+
+    .comment-form-card .full-width {
+      width: 100%;
+    }
+
+    .comment-form {
+      margin-top: 20px;
+
+      .rating-form {
+        margin-top: 20px;
+
+        .stars {
+          display: flex;
+          cursor: pointer;
+
+          mat-icon {
+            font-size: 28px;
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+  }
+
+  .stars {
+    display: flex;
+    cursor: pointer;
+
+    mat-icon {
+      font-size: 24px;
+      margin-right: 4px;
+    }
+
+    .filled {
+      color: #ffc107;
+    }
+
+    .empty {
+      color: #e0e0e0;
+    }
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+
+    mat-icon {
+      font-size: 24px;
+      margin-right: 4px;
+    }
+  }
+}
+
+.custom-stepper-container {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+}
+
+.custom-stepper {
+  position: relative;
+  padding-left: 30px;
+}
+
+.custom-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.step-indicator {
+  width: 30px; /* Increased size for step number */
+  height: 30px; /* Increased size for step number */
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  margin-right: 20px;
+  z-index: 1;
+}
+
+.step-content {
+  flex: 1;
+  position: relative;
+}
+
+.step-line {
+  position: absolute;
+  left: 15px; /* Adjusted for alignment with step number */
+  top: 20px;
+  width: 2px;
+  height: calc(100% - 20px);
+  background-color: #ddd;
+  transition: background-color 0.3s ease;
+  z-index: 0;
+}
+
+.custom-step.active .step-indicator {
+  background-color: #007bff;
+}
+
+.custom-step.active .step-line {
+  background-color: #007bff;
 }
