@@ -9,6 +9,7 @@ import { Comments } from 'src/app/models/comments.interface';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MatStepper } from '@angular/material/stepper';
+import { Rating } from 'src/app/models/rating.interface';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,6 +24,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   visibleComments: any[] = [];
   stars: number[] = [1, 2, 3, 4, 5];
   commentsToShow = 7; 
+  rating!: Rating;
   hasMoreComments = true; // Flag to check if there are more comments to load
   @ViewChildren('stepContent') stepContents!: QueryList<ElementRef>;
   currentStep: number = 0;
@@ -40,7 +42,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {
     this.commentForm = this.fb.group({
       content: ['', Validators.required],
-      rating: [null, Validators.required]
+      rating: [null]
     });
   }
 
@@ -53,6 +55,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     });
     setTimeout(() => {
       this.checkCommentsLength();
+      this.loadMoreComments();
     }, 100);
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
@@ -60,7 +63,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     setTimeout(() => {
       this.stepContents.forEach(el => {
-        // Initialize or manipulate elements if needed
       });
     });
   }
@@ -82,6 +84,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   loadComments(recipeId: number): void {
     this.commentSub = this.commentService.getCommentsForRecipe(recipeId).subscribe(response => {
       this.comments = response || [];
+      this.checkCommentsLength()
+
     });  
   }
 
@@ -101,26 +105,44 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.hasMoreComments = this.comments.length > newCount;
   }
   getUserSub(): void {
-    console.log(this.currentUser)
-
     this.currentUser = this.authService.getUserDetail()!;
-    console.log(this.currentUser)
   }
 
   rate(star: number) {
     this.commentForm.patchValue({ rating: star });
   }
 
+  getStarClass(star: number, ratingValue?: number): string {
+    return star <= (ratingValue || 0) ? 'filled' : 'empty';
+  }
+
+  hasUserCommentedWithRating(): boolean {
+    return this.comments.some(comment => comment.user?.id === this.currentUser?.id && comment.rating);
+  }
+  
   onCommentSubmit(): void {
-    this.getUserSub();
+    //this.getUserSub();
     if (this.recipe && this.currentUser) {
+      const ratingValue = this.commentForm.get('rating')?.value;
+      if (ratingValue && this.hasUserCommentedWithRating()) {
+        alert('You can only leave one comment with a rating.')
+        this.commentForm.get('rating')?.setValue(null);
+        return;
+      }
+    if (this.recipe && this.currentUser) {
+      const rating: any = ratingValue ? {
+        ratingValue: ratingValue,
+        userId: this.currentUser.id,
+        recipeId: this.recipe.id,
+      } : null;
+
       const newComment: Comments = {
         content: this.commentForm.get('content')?.value,
         applicationUserId: this.currentUser.id,
         recipeId: this.recipe.id,
         user: this.currentUser,
         timestamp: new Date(),
-        rating: this.commentForm.get('rating')?.value
+        rating: rating
       };
 
       this.commentService.addComment(newComment).subscribe(comment => {
@@ -130,8 +152,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.checkCommentsLength();
         this.loadMoreComments();
-      }, 100);
-    }
+      }, 0);
+    }}
   }
 
   onScroll() {

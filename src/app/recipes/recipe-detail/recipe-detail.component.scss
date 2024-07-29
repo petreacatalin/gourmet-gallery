@@ -158,18 +158,18 @@
   .stars {
     display: flex;
     cursor: pointer;
-
+  
     mat-icon {
       font-size: 24px;
       margin-right: 4px;
     }
-
+  
     .filled {
-      color: #ffc107;
+      color: #ffc107; // Gold or any color you choose for filled stars
     }
-
+  
     .empty {
-      color: #e0e0e0;
+      color: #e0e0e0; // Gray or any color you choose for empty stars
     }
   }
 
@@ -240,4 +240,18 @@
 
 .custom-step.active .step-line {
   background-color: #007bff;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+
+.mat-icon.filled {
+  color: gold; // Or any color you want for filled stars
+}
+
+.mat-icon.empty {
+  color: lightgray; // Or any color you want for empty stars
 }
