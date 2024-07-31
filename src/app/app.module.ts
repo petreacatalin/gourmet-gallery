@@ -31,6 +31,10 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HeaderComponent } from './header/header/header.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ForgotPasswordComponent } from './auth/password/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/password/reset-password/reset-password.component';
+import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -50,6 +54,10 @@ export function tokenGetter() {
     RecipeAddEditComponent,
     CommentsComponent,
     HeaderComponent,
+    UserProfileComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ResetPasswordMessageComponent,
   ],
   imports: [
     BrowserModule,

@@ -255,3 +255,18 @@
 .mat-icon.empty {
   color: lightgray; // Or any color you want for empty stars
 }
+
+
+.reply-form-card {
+  margin-top: 1rem;
+}
+
+.nested-comments {
+  margin-left: 2rem; /* Adjust as needed */
+}
+
+.nested-comment {
+  border-left: 2px solid #e0e0e0; /* Optional: to visually separate replies */
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}

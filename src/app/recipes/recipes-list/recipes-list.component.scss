@@ -27,3 +27,10 @@
 .pagination .page-item.disabled .page-link {
   cursor: not-allowed;
 }
+
+.card-img-top {
+  width: 100%; /* Makes the image container take up the full width of the card */
+  height: 325px; /* Set a fixed height for all images */
+  object-fit: cover; /* Ensure the image covers the container without distortion */
+  display: block; /* Remove any extra spacing below the image */
+}

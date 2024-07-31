@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -10,7 +10,9 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  showForgotPasswordForm = false;
   submitted = false;
+  showInvalidLogin: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
       userName: ['', Validators.required],
       password: ['', Validators.required]
     });
+
   }
   
   ngOnInit(): void {
@@ -42,6 +45,8 @@ export class LoginComponent implements OnInit {
         },
         error => {
           console.error('Login failed', error);
+          if(!error.result)
+          this.showInvalidLogin = true;
         }
       );
     } else {

@@ -41,10 +41,16 @@
             Password is required.
           </div>
         </div>
+        <div class="alert-validation" *ngIf="showInvalidLogin">
+            Email or password is invalid!
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
       <div class="register-link">
         Don't have an account? <a [routerLink]="['/register']">Register here!</a>
+      </div>
+      <div class="register-link">
+        <a [routerLink]="['/forgot-password']">Forgot your password?</a>
       </div>
     </form>
   </div>

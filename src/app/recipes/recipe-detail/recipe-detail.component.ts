@@ -20,14 +20,17 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe?: Recipe;
   comments: Comments[] = [];
   commentForm: FormGroup;
+  editForm: FormGroup | null = null;
+  replyForm: FormGroup; 
   currentUser?: ApplicationUser; 
   visibleComments: any[] = [];
   stars: number[] = [1, 2, 3, 4, 5];
   commentsToShow = 7; 
   rating!: Rating;
   hasMoreComments = true; // Flag to check if there are more comments to load
-  @ViewChildren('stepContent') stepContents!: QueryList<ElementRef>;
   currentStep: number = 0;
+  replyingToComment: Comments | null = null;
+  @ViewChildren('stepContent') stepContents!: QueryList<ElementRef>;
   private routeSub: Subscription | undefined;
   private recipeSub: Subscription | undefined;
   private userSub: Subscription | undefined;
@@ -44,6 +47,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       content: ['', Validators.required],
       rating: [null]
     });
+    this.editForm = this.fb.group({
+      content: ['', Validators.required]
+    });
+    this.replyForm = this.fb.group({
+      content: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -58,13 +67,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       this.loadMoreComments();
     }, 100);
     window.addEventListener('scroll', this.onScroll.bind(this));
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.stepContents.forEach(el => {
-      });
-    });
   }
 
   ngOnDestroy(): void {
@@ -84,8 +86,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   loadComments(recipeId: number): void {
     this.commentSub = this.commentService.getCommentsForRecipe(recipeId).subscribe(response => {
       this.comments = response || [];
-      this.checkCommentsLength()
-
+      this.checkCommentsLength();
     });  
   }
 
@@ -100,10 +101,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   loadMoreComments() {
     const currentCount = this.visibleComments.length;
-    const newCount = currentCount + 7; // Load more comments in chunks of 7
+    const newCount = currentCount + 7; 
     this.visibleComments = this.comments.slice(0, newCount);
     this.hasMoreComments = this.comments.length > newCount;
   }
+
   getUserSub(): void {
     this.currentUser = this.authService.getUserDetail()!;
   }
@@ -119,9 +121,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   hasUserCommentedWithRating(): boolean {
     return this.comments.some(comment => comment.user?.id === this.currentUser?.id && comment.rating);
   }
-  
+
   onCommentSubmit(): void {
-    //this.getUserSub();
     if (this.recipe && this.currentUser) {
       const ratingValue = this.commentForm.get('rating')?.value;
       if (ratingValue && this.hasUserCommentedWithRating()) {
@@ -129,7 +130,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.commentForm.get('rating')?.setValue(null);
         return;
       }
-    if (this.recipe && this.currentUser) {
+
       const rating: any = ratingValue ? {
         ratingValue: ratingValue,
         userId: this.currentUser.id,
@@ -147,13 +148,82 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
       this.commentService.addComment(newComment).subscribe(comment => {
         this.comments.push(comment);
-        this.commentForm.reset();
-      });
-      setTimeout(() => {
         this.checkCommentsLength();
         this.loadMoreComments();
-      }, 0);
-    }}
+      });
+    }
+  }
+
+  onReplySubmit(comment: Comments): void {
+    if (this.replyingToComment && this.recipe && this.currentUser) {
+      const newReply: Comments = {
+        content: this.replyForm!.get('content')?.value,
+        applicationUserId: this.currentUser.id,
+        recipeId: this.recipe.id,
+        user: this.currentUser,
+        timestamp: new Date(),
+        parentCommentId: comment.id
+      };
+
+      this.commentService.addComment(newReply).subscribe(reply => {
+        const index = this.comments.findIndex(c => c.id === comment.id);
+        if (index > -1) {
+          if (!this.comments[index].replies) {
+            this.comments[index].replies = [];
+          }
+          this.comments[index].replies!.push(reply);
+        }
+        this.replyForm!.reset();
+        this.replyingToComment = null;
+      });
+    }
+  }
+
+  toggleReplyForm(comment: Comments): void {
+    this.replyingToComment = this.replyingToComment === comment ? null : comment;
+  }
+
+  onCommentEdit(comment: Comments): void {
+    alert()
+    this.editForm = this.fb.group({
+      content: [comment.content, Validators.required],
+      rating: [comment.rating ? comment.rating.ratingValue : null]
+    });
+
+    // Show edit form and add a method to save changes
+  }
+
+  onCommentDelete(commentId: number): void {
+    if (confirm('Are you sure you want to delete this comment?')) {
+      this.commentService.deleteComment(commentId).subscribe(() => {
+        this.comments = this.comments.filter(comment => comment.id !== commentId);
+        this.checkCommentsLength();
+      });
+    }
+  }
+
+  onEditSubmit(comment: Comments): void {
+    alert()
+    if (this.editForm && this.editForm.valid) {
+      const updatedComment: Comments = {
+        ...comment,
+        content: this.editForm.get('content')?.value,
+        rating : this.editForm.get('rating')?.value ? {
+          ratingValue: this.editForm.get('rating')?.value,
+          userId: comment.user?.id,
+          recipeId: this.recipe?.id
+        } : null
+      };
+
+      this.commentService.updateComment(updatedComment).subscribe(() => {
+        // Update local comment list
+        const index = this.comments.findIndex(c => c.id === comment.id);
+        if (index > -1) {
+          this.comments[index] = updatedComment;
+        }
+        this.editForm = null;
+      });
+    }
   }
 
   onScroll() {

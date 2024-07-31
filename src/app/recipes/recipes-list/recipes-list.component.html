@@ -29,8 +29,8 @@
       <div class="card h-100 shadow">
         <img [src]="recipe.imageUrl" class="card-img-top" alt="{{ recipe.title }}">
         <div class="card-body">
-          <h5 class="card-title">{{ recipe.title }}</h5>
-          <p class="card-text">{{ recipe.description }}</p>
+          <h2 class="card-title">{{ recipe.title }}</h2>
+          <p class="card-text">{{ recipe.description | slice:0:150 }}...</p><h4 *ngIf="recipe.description.length > 150">...</h4>
         </div>
         <div class="card-footer">
           <small class="text-muted">Meal type: {{ recipe.mealType }}</small>

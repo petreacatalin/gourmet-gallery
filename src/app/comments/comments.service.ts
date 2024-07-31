@@ -12,9 +12,6 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  // getCommentsForRecipe(recipeId: number): Observable<{ comments: { $values: Comments[] } }> {
-  //   return this.http.get<{ comments: { $values: Comments[] } }>(`${this.baseUrl}/recipe/${recipeId}`);
-  // }
   getCommentsForRecipe(recipeId: number): Observable<Comments[]> {
     return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`);
   }
@@ -23,15 +20,15 @@ export class CommentService {
     return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`)
     };
 
-  // addComment(comment: Comments): Observable<Comments> {
-  //   return this.http.post<Comments>(this.baseUrl, comment);
-  // }
-
-  // getCommentsForRecipe(recipeId: number): Observable<Comments[]> {
-  //   return this.http.get<Comments[]>(`${this.baseUrl}/recipe/${recipeId}`);
-  // }
-
   addComment(comment: Comments): Observable<Comments> {
     return this.http.post<Comments>(this.baseUrl, comment);
+  }
+
+  updateComment(comment: Comments): Observable<Comments> {
+    return this.http.put<Comments>(`${this.baseUrl}/${comment.id}`, comment);
+  }
+
+  deleteComment(commentId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${commentId}`);
   }
 }

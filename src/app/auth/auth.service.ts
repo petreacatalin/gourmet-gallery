@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AuthResponse } from '../models/authResponse.interface';
 import { Login } from '../models/login';
 import { jwtDecode } from 'jwt-decode';
+import { ResetPassword } from '../models/resetPassword.interface';
 
 
 @Injectable({
@@ -100,17 +101,14 @@ export class AuthService {
   }
  
 
-  // getUserDetail = () => {
-  //   const token = this.getToken();
-  //   if(!token) return true;
-  //   const decodedToken: any = jwtDecode(token);
-  //   const userDetail = {
-  //     id: decodedToken.nameid,
-  //     email: decodedToken.email,
+  forgotPassword(data: { email: string }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/Account/forgot-password`, data);
+  }
 
-  //   }
-  //   return userDetail;
-  // }
+  resetPassword(email: string, token: string, resetPassword: ResetPassword): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Account/reset-password`, resetPassword     
+    );
+  }
 
   updateProfile(profileData: Partial<ApplicationUser>): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/Account/profile`, profileData);

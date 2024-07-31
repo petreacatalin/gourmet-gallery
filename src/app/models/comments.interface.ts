@@ -9,5 +9,7 @@ export interface Comments {
   timestamp?: Date; // Optional timestamp
   applicationUserId?: string; // Assuming userId is of type string
   user?: ApplicationUser; // Optional user info, adjust type as per your actual implementation
-  rating?: Rating;
-  }
+  rating?: Rating | undefined | null;
+  parentCommentId?: number;
+  replies?: Comments[];  
+}

@@ -72,9 +72,9 @@
   </div>
 </div>
 
-  <!-- Comments Section -->
-  <div class="comments mt-4">
-    <mat-card-subtitle class="comments-title">Comments:</mat-card-subtitle>
+ <!-- Comments Section -->
+<div class="comments mt-4">
+  <mat-card-subtitle class="comments-title">Comments:</mat-card-subtitle>
 
   <!-- Comments List -->
   <div class="comments-list">
@@ -93,41 +93,85 @@
             <mat-icon [ngClass]="getStarClass(star, comment.rating.ratingValue)">star</mat-icon>
           </ng-container>
         </div>
+        <div *ngIf="currentUser?.id === comment.applicationUserId">
+          <button mat-button (click)="onCommentEdit(comment)">Edit</button>
+          <button mat-button (click)="onCommentDelete(comment.id!)">Delete</button>
+        </div>
+        <button mat-button (click)="toggleReplyForm(comment)">Reply</button>
+        
+        <!-- Reply Form -->
+        <mat-card *ngIf="replyingToComment === comment" class="reply-form-card mt-4">
+          <mat-card-header>
+            <mat-card-title>Reply to {{ comment.user?.firstName }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="replyForm!" (ngSubmit)="onReplySubmit(comment)">
+              <mat-form-field class="full-width">
+                <mat-label>Add a reply</mat-label>
+                <textarea matInput placeholder="Type your reply here" formControlName="content"></textarea>
+              </mat-form-field>
+              <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="replyForm.invalid">Submit Reply</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Nested comments (replies) -->
+        <div *ngIf="comment.replies?.length" class="nested-comments">
+      <div *ngFor="let reply of comment.replies" class="nested-comment mb-3">
+            <mat-card-header>
+              <div mat-card-avatar class="profile-picture-wrapper">
+                <img *ngIf="reply.user?.profilePictureUrl" [src]="reply.user!.profilePictureUrl" class="profile-picture" alt="{{ reply.user?.email }}">
+              </div>
+              <mat-card-title>{{ reply.user?.firstName }} {{ reply.user?.lastName }}</mat-card-title>
+              <mat-card-subtitle style="color: rgb(185, 185, 185);">{{ reply.timestamp | date:'short' }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ reply.content }}</p>
+              <div *ngIf="reply.rating" class="rating">
+                <ng-container *ngFor="let star of stars">
+                  <mat-icon [ngClass]="getStarClass(star, reply.rating.ratingValue)">star</mat-icon>
+                </ng-container>
+              </div>
+            </mat-card-content>
+          </div>
+        </div>
       </mat-card-content>
     </div>
   </div>
 
-    <!-- Load More Comments Button -->
-    <div class="load-more-container text-center mt-4">
-      <button mat-raised-button color="accent" (click)="loadMoreComments()">
-        Load More Comments
-      </button>
-    </div>
-  
-    <!-- Comment Form -->
-    <mat-card *ngIf="this.currentUser" class="comment-form-card mt-4">
-      <mat-card-header>
-        <mat-card-title>Leave a Comment</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
-          <mat-form-field class="full-width">
-            <mat-label>Add a comment</mat-label>
-            <textarea matInput placeholder="Type your comment here" formControlName="content"></textarea>
-          </mat-form-field>
-          <div class="rating-form">
-            <p><strong>Rating:</strong></p>
-            <div class="stars">
-              <mat-icon *ngFor="let star of stars" [ngClass]="getStarClass(star, commentForm.value.rating)" (click)="rate(star)">star</mat-icon>
-            </div>
-          </div>
-          <div class="form-actions">
-            <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid && this.currentUser != null">Submit</button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+  <!-- Load More Comments Button -->
+  <div class="load-more-container text-center mt-4">
+    <button mat-raised-button color="accent" (click)="loadMoreComments()">
+      Load More Comments
+    </button>
   </div>
+
+  <!-- Comment Form -->
+  <mat-card class="comment-form-card mt-4">
+    <mat-card-header>
+      <mat-card-title>Leave a Comment</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
+        <mat-form-field class="full-width">
+          <mat-label>Add a comment</mat-label>
+          <textarea matInput placeholder="Type your comment here" formControlName="content"></textarea>
+        </mat-form-field>
+        <div class="rating-form">
+          <p><strong>Rating:</strong></p>
+          <div class="stars">
+            <mat-icon *ngFor="let star of stars" [ngClass]="getStarClass(star, commentForm.value.rating)" (click)="rate(star)">star</mat-icon>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid && this.currentUser != null">Submit</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
 
   <ng-template #loading>
     <mat-spinner></mat-spinner>
