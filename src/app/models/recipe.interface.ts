@@ -6,6 +6,8 @@ import { Instructions } from "./instructions.interface";
 import { Rating } from "./rating.interface";
 import { Step } from "./step.interface";
 import { ApplicationUser } from "./applicationUser.interface";
+import { InformationTime } from "./informationTime.interface";
+import { NutritionFacts } from "./nutritionFacts.interface";
 
 export interface Recipe {
   id?: number;
@@ -27,5 +29,6 @@ export interface Recipe {
   applicationUser: ApplicationUser;
   comments?: Comments[];
   ratings: Rating[];
-  //reviews?: Review[];
+  informationTime?: InformationTime;
+  nutritionFacts?: NutritionFacts;
 }

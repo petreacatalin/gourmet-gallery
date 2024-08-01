@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CommentService } from 'src/app/comments/comments.service';
-import { RecipeService } from '../recipe.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Recipe } from 'src/app/models/recipe.interface';
-import { Comments } from 'src/app/models/comments.interface';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { AuthService } from 'src/app/auth/auth.service';
-import { MatStepper } from '@angular/material/stepper';
 import { Rating } from 'src/app/models/rating.interface';
+import { CommentService } from 'src/app/comments/comments.service';
+import { Comments } from 'src/app/models/comments.interface';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,10 +23,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   editForm: FormGroup | null = null;
   replyForm: FormGroup; 
   currentUser?: ApplicationUser; 
-  visibleComments: any[] = [];
+  visibleComments: Comments[] = [];
   stars: number[] = [1, 2, 3, 4, 5];
   commentsToShow = 7; 
-  rating!: Rating;
   hasMoreComments = true; // Flag to check if there are more comments to load
   currentStep: number = 0;
   replyingToComment: Comments | null = null;
@@ -48,7 +47,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       rating: [null]
     });
     this.editForm = this.fb.group({
-      content: ['', Validators.required]
+      content: ['', Validators.required],
+      rating: [null]
     });
     this.replyForm = this.fb.group({
       content: ['', Validators.required]
@@ -131,7 +131,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         return;
       }
 
-      const rating: any = ratingValue ? {
+      const rating: Rating | null = ratingValue ? {
         ratingValue: ratingValue,
         userId: this.currentUser.id,
         recipeId: this.recipe.id,
@@ -184,7 +184,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onCommentEdit(comment: Comments): void {
-    alert()
     this.editForm = this.fb.group({
       content: [comment.content, Validators.required],
       rating: [comment.rating ? comment.rating.ratingValue : null]
@@ -203,12 +202,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onEditSubmit(comment: Comments): void {
-    alert()
     if (this.editForm && this.editForm.valid) {
       const updatedComment: Comments = {
         ...comment,
         content: this.editForm.get('content')?.value,
-        rating : this.editForm.get('rating')?.value ? {
+        rating: this.editForm.get('rating')?.value ? {
           ratingValue: this.editForm.get('rating')?.value,
           userId: comment.user?.id,
           recipeId: this.recipe?.id

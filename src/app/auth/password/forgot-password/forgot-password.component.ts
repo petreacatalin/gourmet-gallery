@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,7 +17,8 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private spinnerService: SpinnerService
   ) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
@@ -28,14 +30,17 @@ export class ForgotPasswordComponent implements OnInit {
 
   onForgotPasswordSubmit(): void {
     this.submitted = true;
-
+    this.spinnerService.show();
     if (this.forgotPasswordForm.valid) {
       this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe(
         response => {
           //alert('Password reset link sent to your email.');
           this.router.navigate(['reset-password-message']); // Redirect back to login
+        
+          this.spinnerService.hide();
         },
         error => {
+          this.spinnerService.hide();
           console.error('Failed to send password reset link', error);
           this.showInvalidLogin = true;
         }
@@ -44,6 +49,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.markFormGroupTouched(this.forgotPasswordForm);
       this.showInvalidLogin = false;
     }
+    this.spinnerService.hide();
   }
 
   markFormGroupTouched(formGroup: FormGroup): void {

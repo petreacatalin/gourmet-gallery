@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { ResetPassword } from 'src/app/models/resetPassword.interface';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +19,8 @@ export class ResetPasswordComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,    
+    private spinnerService: SpinnerService
   ) {
     this.resetPasswordForm = this.fb.group({
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -38,6 +40,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.spinnerService.show();
     if (this.resetPasswordForm.valid && this.token && this.email) {
       const resetDto:ResetPassword = {
         email: this.email,
@@ -46,10 +49,12 @@ export class ResetPasswordComponent implements OnInit {
       }
       this.authService.resetPassword(this.email,this.token, resetDto ).subscribe(
         response => {
+          this.spinnerService.hide();
           console.log(response)
           this.router.navigate(['/reset-password-message']);
         },
         error => {
+          this.spinnerService.hide();
           if(error){
             this.showTokenExpired = true;
           }

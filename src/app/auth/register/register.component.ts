@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,13 @@ export class RegisterComponent {
     // Add more error messages as needed
   };
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+     private fb: FormBuilder,
+     private authService: AuthService,
+     private router: Router,
+     private spinnerService: SpinnerService,
+    
+    ) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', Validators.required],
@@ -33,12 +40,14 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
+    this.spinnerService.show();
     if (this.registerForm.valid) {
       const userData = this.registerForm.value;
       this.authService.register(userData).subscribe(
         response => {
           console.log('Registration successful', response);
           this.router.navigate(['/login']);
+          this.spinnerService.hide();
         },
         error => {
           console.error('Registration failed', error);
@@ -68,5 +77,6 @@ export class RegisterComponent {
         control.updateValueAndValidity();
       });
     }
+    this.spinnerService.hide();
   }
 }

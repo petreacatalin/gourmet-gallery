@@ -1,189 +1,194 @@
+/* General Recipe Card */
 .recipe-card {
-  margin: 20px;
+  margin: 30px; /* Space around the card */
   border-radius: 12px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2); /* Softer shadow for a refined look */
   background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
 
-  .mat-card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
-    padding: 16px;
-  }
+.recipe-card:hover {
+  box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25); /* Slightly more pronounced shadow on hover */
+  transform: translateY(-4px); /* Slight lift effect */
+}
 
-  .recipe-image {
-    display: block;
-    width: 100%;
-    height: auto;
+/* Card Header */
+.mat-card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 16px;
+  border-radius: 12px 12px 0 0; /* Rounded top corners */
+}
+
+.recipe-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 20px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Card Content */
+.mat-card-content {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.mat-card-content p {
+  margin: 10px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6; /* Improved readability */
+}
+
+.mat-card-content ul,
+.mat-card-content ol {
+  padding-left: 20px;
+}
+
+.mat-card-content ul li,
+.mat-card-content ol li {
+  margin-bottom: 8px;
+}
+
+/* Subtitle Styling */
+.mat-card-subtitle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #495057;
+}
+
+/* Recipe Details */
+.recipe-details {
+  background-color: #f1f3f5;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-details p {
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+/* Comments Section */
+.comments {
+  margin-top: 20px;
+}
+
+.comments-title {
+  font-size: 1.75rem; /* Slightly larger for emphasis */
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #007bff; /* Primary brand color */
+  border-bottom: 2px solid #007bff; /* Bottom border for emphasis */
+  padding-bottom: 10px; /* Space below the title */
+  font-family: 'Montserrat', sans-serif;
+}
+
+.comments-list {
+  .comment-card {
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
-    margin: 20px 0;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 15px;
+    transition: box-shadow 0.3s ease-in-out;
+    
+    &:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-picture-wrapper {
+      .profile-picture {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+
+      mat-icon {
+        font-size: 20px;
+        margin-right: 4px;
+      }
+    }
+
+    .mat-card-header {
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    .mat-card-content {
+      padding-top: 10px;
+    }
   }
 
-  .mat-card-content {
-    padding: 16px;
-    border-bottom: 1px solid #e9ecef;
-  }
-
-  .mat-card-content p {
-    margin: 10px 0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-  }
-
-  .mat-card-content ul,
-  .mat-card-content ol {
-    padding-left: 20px;
-  }
-
-  .mat-card-content ul li,
-  .mat-card-content ol li {
-    margin-bottom: 8px;
-  }
-
-  .mat-card-subtitle {
+  .load-more-container {
+    text-align: center;
     margin-top: 20px;
-    margin-bottom: 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: #495057;
+
+    button {
+      border-radius: 24px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      background-color: #007bff; /* Primary color for consistency */
+      color: #ffffff;
+      border: none;
+
+      &:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+      }
+    }
   }
 
-  .recipe-details {
-    background-color: #f1f3f5;
+  .comment-form-card {
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
     padding: 20px;
     margin-top: 20px;
   }
 
-  .recipe-details p {
-    margin: 10px 0;
-    font-weight: 500;
+  .comment-form-card .full-width {
+    width: 100%;
   }
 
-  .comments {
-    .comments-title {
-      font-size: 1.5rem;
-      font-weight: 600;
+  .comment-form {
+    margin-top: 20px;
+
+    .rating-form {
       margin-top: 20px;
-    }
 
-    .comments-list {
-      .comment-card {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        background-color: #ffffff;
-        margin-bottom: 1rem;
-        padding: 15px;
-        transition: box-shadow 0.3s ease-in-out;
+      .stars {
+        display: flex;
+        cursor: pointer;
 
-        &:hover {
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-picture-wrapper {
-          .profile-picture {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-left: -16px
-          }
-        }
-
-        .rating {
-          display: flex;
-          align-items: center;
-
-          mat-icon {
-            font-size: 20px;
-            margin-right: 4px;
-          }
+        mat-icon {
+          font-size: 28px;
+          margin-right: 6px;
         }
       }
-    }
-
-    .load-more-container {
-      text-align: center;
-      margin-top: 20px;
-
-      button {
-        border-radius: 24px;
-        padding: 10px 20px;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-          background-color: #0056b3;
-        }
-      }
-    }
-
-    .comment-form-card {
-      margin-top: 20px;
-      padding: 20px;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-      background-color: #ffffff;
-    }
-
-    .comment-form-card .full-width {
-      width: 100%;
-    }
-
-    .comment-form {
-      margin-top: 20px;
-
-      .rating-form {
-        margin-top: 20px;
-
-        .stars {
-          display: flex;
-          cursor: pointer;
-
-          mat-icon {
-            font-size: 28px;
-            margin-right: 6px;
-          }
-        }
-      }
-    }
-  }
-
-  .stars {
-    display: flex;
-    cursor: pointer;
-  
-    mat-icon {
-      font-size: 24px;
-      margin-right: 4px;
-    }
-  
-    .filled {
-      color: #ffc107; // Gold or any color you choose for filled stars
-    }
-  
-    .empty {
-      color: #e0e0e0; // Gray or any color you choose for empty stars
-    }
-  }
-
-  .rating {
-    display: flex;
-    align-items: center;
-
-    mat-icon {
-      font-size: 24px;
-      margin-right: 4px;
     }
   }
 }
 
+/* Custom Stepper */
 .custom-stepper-container {
   position: relative;
   width: 100%;
@@ -203,8 +208,8 @@
 }
 
 .step-indicator {
-  width: 30px; /* Increased size for step number */
-  height: 30px; /* Increased size for step number */
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: #ddd;
   display: flex;
@@ -225,7 +230,7 @@
 
 .step-line {
   position: absolute;
-  left: 15px; /* Adjusted for alignment with step number */
+  left: 15px;
   top: 20px;
   width: 2px;
   height: calc(100% - 20px);
@@ -242,31 +247,153 @@
   background-color: #007bff;
 }
 
+/* Rating Stars */
 .rating {
   display: flex;
   align-items: center;
 }
 
-
 .mat-icon.filled {
-  color: gold; // Or any color you want for filled stars
+  color: gold;
 }
 
 .mat-icon.empty {
-  color: lightgray; // Or any color you want for empty stars
+  color: lightgray;
 }
 
-
+/* Reply and Nested Comments */
 .reply-form-card {
   margin-top: 1rem;
 }
 
 .nested-comments {
-  margin-left: 2rem; /* Adjust as needed */
+  margin-left: 2rem;
 }
 
 .nested-comment {
-  border-left: 2px solid #e0e0e0; /* Optional: to visually separate replies */
+  border-left: 2px solid #e0e0e0;
   padding-left: 1rem;
   margin-bottom: 1rem;
+}
+
+/* Nutrition Facts */
+.nutrition-facts {
+  .mat-card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 16px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns for the first row */
+    gap: 16px; /* Space between items */
+    margin-top: 20px;
+  }
+
+  .nutrition-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .nutrition-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+  }
+
+  /* Adjusting for second row items */
+  .nutrition-item:nth-child(4) {
+    grid-column: 1 / span 1;
+    grid-row: 2;
+  }
+
+  .nutrition-item:nth-child(5) {
+    grid-column: 2 / span 1;
+    grid-row: 2;
+  }
+
+  @media (max-width: 1024px) {
+    .nutrition-grid {
+      grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
+    }
+
+    .nutrition-item:nth-child(4),
+    .nutrition-item:nth-child(5) {
+      grid-column: 1 / span 2; /* Center on the first row */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nutrition-grid {
+      grid-template-columns: 1fr; /* Single column for small screens */
+    }
+
+    .nutrition-item {
+      grid-column: span 1; /* Each item takes the full width */
+    }
+  }
+}
+
+/* Information Time */
+.information-time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns for the first row */
+  gap: 16px; /* Space between items */
+  margin-top: 20px;
+}
+
+.information-time-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+.information-time-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Adjusting for second row items */
+.information-time-item:nth-child(4) {
+  grid-column: 1 / span 1;
+  grid-row: 2;
+}
+
+.information-time-item:nth-child(5) {
+  grid-column: 2 / span 1;
+  grid-row: 2;
+}
+
+@media (max-width: 1024px) {
+  .information-time-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
+  }
+
+  .information-time-item:nth-child(4) {
+    grid-column: 1 / span 2; /* Center on the first row */
+  }
+
+  .information-time-item:nth-child(5) {
+    grid-column: 1 / span 2; /* Center on the first row */
+  }
+}
+
+@media (max-width: 768px) {
+  .information-time-grid {
+    grid-template-columns: 1fr; /* Single column for small screens */
+  }
+
+  .information-time-item {
+    grid-column: span 1; /* Each item takes the full width */
+  }
 }

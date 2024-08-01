@@ -5,7 +5,7 @@
   align-items: center;
   height: 100vh; /* Full height */
   padding: 20px; /* Padding around modal */
-  align-self: center;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
 
 .modal-dialog {
@@ -15,6 +15,7 @@
 
 .modal-content {
   border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Deeper shadow for contrast */
 }
 
 /* CSS for form container */
@@ -23,17 +24,24 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Full viewport height */
-  background-color: #f5f5f5; /* Light gray background */
+  background-color: #f0f2f5; /* Light gray background for better contrast */
   padding: 20px; /* Padding */
 }
 
 .custom-card {
   width: 100%; /* Full width */
-  max-width: 600px; /* Maximum width */
-  background-color: #fff; /* White background */
+  max-width: 800px; /* Maximum width */
+  background-color: #ffffff; /* White background for the card */
   border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
   padding: 24px; /* Padding inside the card */
+  margin: 10px; /* Margin around the card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.custom-card:hover {
+  transform: translateY(-5px); /* Lift card on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
 }
 
 .custom-card-content {
@@ -54,7 +62,7 @@ mat-card-title {
   font-size: 24px; /* Title font size */
   font-weight: bold; /* Bold title */
   text-align: center; /* Centered title */
-  margin-bottom: 10px; /* Margin below title */
+  margin-bottom: 15px; /* Margin below title */
 }
 
 mat-card-actions {
@@ -67,12 +75,203 @@ button[type="submit"] {
   min-width: 120px; /* Minimum width for submit button */
 }
 
+.section-card {
+  margin-bottom: 20px; /* Space between cards */
+  padding: 16px; /* Padding inside the card */
+  background-color: #f9f9f9; /* Slightly off-white background */
+  border-radius: 8px; /* Slightly rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+  transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+}
+
+.section-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.compact-form-field {
+  max-width: 300px; /* Smaller field width */
+}
+
 @media (max-width: 768px) {
   .custom-card {
-    max-width: 90%; /* Adjust for smaller screens */
+    max-width: 100%; /* Full width for card on small screens */
+    margin: 5px; /* Smaller margin */
   }
 
   .modal-dialog {
     max-width: 100%; /* Full width for modal on small screens */
+  }
+
+  .section-card {
+    margin-bottom: 10px; /* Adjust spacing for smaller screens */
+  }
+}
+
+/* Style for Publish Recipe button */
+.btn-publish-recipe {
+  min-width: 160px; /* Minimum width */
+  padding: 12px 28px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  color: #ffffff; /* Text color */
+  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
+  border: none; /* Remove default border */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition */
+  position: relative; /* For pseudo-element positioning */
+  overflow: hidden; /* Ensure shadows and effects stay within bounds */
+}
+
+/* Button hover effect */
+.btn-publish-recipe:hover {
+  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
+  transform: translateY(-3px); /* Lift effect on hover */
+}
+
+/* Button focus effect */
+.btn-publish-recipe:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.7), 0 4px 8px rgba(0, 0, 0, 0.3); /* Custom focus outline with inner shadow */
+}
+
+/* Button disabled state */
+.btn-publish-recipe:disabled {
+  background: #d3d3d3; /* Disabled background color */
+  color: #9e9e9e; /* Disabled text color */
+  cursor: not-allowed; /* Not allowed cursor */
+  box-shadow: none; /* Remove shadow */
+  transition: none; /* Remove transition */
+}
+
+/* Container for form fields and remove button */
+.ingredient-row, .step-row {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  gap: 10px; /* Space between the fields and the button */
+  margin-bottom: 10px; /* Space below each row */
+}
+
+/* Style for the remove button (X icon) */
+.btn-remove {
+  background-color: transparent; /* Remove background color */
+  border: none; /* Remove border */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  border-radius: 50%; /* Circular button */
+  width: 40px; /* Size of the button */
+  height: 40px; /* Size of the button */
+  display: flex; /* Center the icon */
+  align-items: center; /* Center the icon vertically */
+  justify-content: center; /* Center the icon horizontally */
+  padding: 0; /* Remove padding */
+}
+
+/* Style for the X icon */
+.btn-remove mat-icon {
+  color: #333; /* Darker color for better visibility */
+  font-size: 24px; /* Larger size of the "X" icon */
+  transition: color 0.3s, transform 0.3s; /* Smooth transitions */
+  margin: 0; /* Remove default margin */
+}
+
+/* Hover effect for the X icon */
+.btn-remove:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Light background on hover */
+  transform: scale(1.1); /* Slightly scale up the button on hover */
+}
+
+/* Hover effect for the X icon */
+.btn-remove:hover mat-icon {
+  color: #e74c3c; /* Change to a red color on hover */
+  transform: scale(1.2); /* Slightly scale up the icon on hover */
+}
+
+/* Focus effect for the X icon */
+.btn-remove:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Custom focus outline */
+}
+
+/* Style for Add Ingredient Button */
+.btn-futuristic-add {
+  min-width: 160px; /* Minimum width */
+  padding: 12px 28px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  color: #ffffff; /* Text color */
+  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
+  border: none; /* Remove default border */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition */
+  position: relative; /* For pseudo-element positioning */
+  overflow: hidden; /* Ensure shadows and effects stay within bounds */
+}
+
+/* Button hover effect for Add Ingredient Button */
+.btn-futuristic-add:hover {
+  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
+  transform: translateY(-3px); /* Lift effect on hover */
+}
+
+/* Style for Add Step Button */
+.btn-futuristic-add-step {
+  min-width: 160px; /* Minimum width */
+  padding: 12px 28px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  color: #ffffff; /* Text color */
+  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
+  border: none; /* Remove default border */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition */
+  position: relative; /* For pseudo-element positioning */
+  overflow: hidden; /* Ensure shadows and effects stay within bounds */
+}
+
+/* Button hover effect for Add Step Button */
+.btn-futuristic-add-step:hover {
+  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
+  transform: translateY(-3px); /* Lift effect on hover */
+}
+
+
+/* Fade-in effect */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade-out effect */
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 }

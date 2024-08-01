@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private spinnerService: SpinnerService
   ) {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
@@ -35,18 +37,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.spinnerService.show();
     this.submitted = true;
 
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         response => {
           console.log('Login successful', response);
+          this.spinnerService.hide();
           this.router.navigate(['/mainpage']);
         },
         error => {
           console.error('Login failed', error);
           if(!error.result)
-          this.showInvalidLogin = true;
+            this.showInvalidLogin = true;
+          this.spinnerService.hide();
         }
       );
     } else {

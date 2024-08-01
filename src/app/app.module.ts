@@ -35,6 +35,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ForgotPasswordComponent } from './auth/password/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/password/reset-password/reset-password.component';
 import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
+import { SpinnerComponent } from './utils/spinner/spinner.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -58,6 +59,7 @@ export function tokenGetter() {
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ResetPasswordMessageComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
