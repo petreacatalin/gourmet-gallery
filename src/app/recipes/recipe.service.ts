@@ -21,6 +21,7 @@ export class RecipeService {
   }
 
   createRecipe(recipe: Recipe): Observable<Recipe> {
+    console.log(recipe)
     return this.http.post<Recipe>(this.baseUrl, recipe);
   }
 
@@ -31,5 +32,11 @@ export class RecipeService {
 
   deleteRecipe(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  uploadImage(file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post<string>(`${environment.baseUrl}/upload/upload`, formData); // Adjust URL as needed
   }
 }

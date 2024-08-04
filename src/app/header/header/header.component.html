@@ -30,7 +30,7 @@
 
       <ng-template #loggedIn>
         <div class="text-end text-white">
-          Welcome {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
+          Hello, <u> <a routerLink="/user-profile" class="text-white">{{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}</a> </u>
           <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
         </div>
       </ng-template>

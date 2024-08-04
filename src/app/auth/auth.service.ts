@@ -13,7 +13,7 @@ import { ResetPassword } from '../models/resetPassword.interface';
   providedIn: 'root'
 })
 export class AuthService {
-   private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
+  private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
   public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   private baseUrl = environment.baseUrl;
   private tokenKey = 'token';
@@ -55,24 +55,9 @@ export class AuthService {
       };
       this.userCurrently = userDetail;
     } else {
-     // this.userSubject.next(null);
+      //this.userSubject.next(null);
+      this.isloggedIn.next(false);
     }
-  }
-
-  getUserDetail(){
-    // return this.user$;
-    const token = this.getToken();
-    if (token) {
-      const decodedToken: any = jwtDecode(token);
-      const userDetail: ApplicationUser = {
-        id: decodedToken.nameid,
-        email: decodedToken.email,
-        lastName: decodedToken.given_name,
-        firstName: decodedToken.family_name,
-      };
-      return userDetail;
-    }
-    return null;
   }
 
   getToken = (): string | null => localStorage.getItem(this.tokenKey) || '';
@@ -108,6 +93,10 @@ export class AuthService {
   resetPassword(email: string, token: string, resetPassword: ResetPassword): Observable<any> {
     return this.http.post(`${this.baseUrl}/Account/reset-password`, resetPassword     
     );
+  }
+
+  getProfile(): Observable<ApplicationUser> {
+    return this.http.get<ApplicationUser>(`${this.baseUrl}/Account/profile`);
   }
 
   updateProfile(profileData: Partial<ApplicationUser>): Observable<any> {

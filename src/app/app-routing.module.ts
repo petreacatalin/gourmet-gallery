@@ -8,7 +8,7 @@ import { RecipeAddEditComponent } from './recipes/recipe-add-edit/recipe-add-edi
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from './auth/user-profile/user-profile.component';
 import { ForgotPasswordComponent } from './auth/password/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/password/reset-password/reset-password.component';
 import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'recipes/create', component: RecipeAddEditComponent, data: { animation: 'recipes/create' } },
   { path: 'recipes/edit/:id', component: RecipeAddEditComponent , data: { animation: 'recipes/edit/:id' }},
   { path: 'recipes/:id', component: RecipeDetailComponent, data: { animation: 'recipes/:id' } },
-  { path: 'user-profile', component: UserProfileComponent, data: { animation: 'user-profile' } },
+  { path: 'user-profile', component: UserProfileComponent, data: { animation: 'user-profile' },  canActivate: [AuthGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent, data: { animation: 'forgot-password' } },
   { path: 'reset-password', component: ResetPasswordComponent, data: { animation: 'reset-password' } },
   { path: 'reset-password-message', component: ResetPasswordMessageComponent, data: { animation: 'reset-password-message' } },

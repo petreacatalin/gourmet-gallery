@@ -107,7 +107,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   getUserSub(): void {
-    this.currentUser = this.authService.getUserDetail()!;
+    this.currentUser = this.authService.loadUserDetails()!;
   }
 
   rate(star: number) {

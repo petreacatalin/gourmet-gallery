@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { tap } from 'rxjs/operators';
+import { UserProfileService } from 'src/app/auth/user-profile/user-profile.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { ApplicationUser } from 'src/app/models/applicationUser.interface';
+import { ToastService } from 'src/app/utils/toast/toast.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -18,10 +22,24 @@ export class RecipesListComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
   pages: number[] = [];
+  favoriteRecipeIds: Set<number> = new Set<number>(); // Track favorite recipe IDs
+  currentUser: any;
+  constructor(
+    private recipeService: RecipeService,
+     private route: ActivatedRoute,
+     private userProfileService: UserProfileService,
+     private authService: AuthService,
+     private toastService: ToastService
+    
+    ){
+     }
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.authService.getProfile().subscribe(user => {
+      this.currentUser = user;
+    });
+
     this.route.queryParams.subscribe(params => {
       if (params['search']) {
         this.filterText = params['search'];
@@ -30,11 +48,30 @@ export class RecipesListComponent implements OnInit {
         tap(recipes => {
           console.log('Fetched recipes:', recipes);
           this.recipes = recipes;
+          console.log(recipes)
           this.updateDisplayedRecipes();
         })
       ).subscribe();
     });
+   // Load favorite recipes for the current user
+   this.authService.getProfile().subscribe(user => {
+    if (user) {
+      this.userProfileService.getFavorites(user.id).subscribe(favorites => {
+        this.favoriteRecipeIds = new Set(favorites.map(recipe => recipe.id!));
+        this.updateDisplayedRecipes();
+      });
+    }
+  });
   }
+
+  triggerSuccess(recipeName?: string): void {
+    this.toastService.showToast(`Successfully added ‘${recipeName}’ to your saved recipes!`, 'success');
+  }
+  
+  triggerError(recipeName?: string): void {
+    this.toastService.showToast(`‘${recipeName}’ has been removed from your saved recipes.`, 'error');
+  }
+  
 
   updateDisplayedRecipes(): void {
     if (!Array.isArray(this.recipes)) {
@@ -79,4 +116,27 @@ export class RecipesListComponent implements OnInit {
       this.updateDisplayedRecipes();
     }
   }
+
+  toggleFavorite(recipe: Recipe): void {
+    const isFavorite = this.favoriteRecipeIds.has(recipe.id!);
+    if (isFavorite) {
+      debugger
+      this.triggerError(recipe.title);
+      this.userProfileService.removeFromFavorites(this.currentUser.id, recipe.id!).subscribe(() => {
+        this.favoriteRecipeIds.delete(recipe.id!);
+        this.updateDisplayedRecipes();
+      });
+    } else {
+      this.triggerSuccess(recipe.title);
+      this.userProfileService.addToFavorites(this.currentUser.id, recipe.id!).subscribe(() => {
+        this.favoriteRecipeIds.add(recipe.id!);
+        this.updateDisplayedRecipes();
+      });
+    }
+  }
+
+  isFavorite(recipeId: number): boolean {
+    return this.favoriteRecipeIds.has(recipeId);
+  }
+
 }

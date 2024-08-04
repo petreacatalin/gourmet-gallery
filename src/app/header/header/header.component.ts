@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   searchText: string = '';
-
+  currentUser: ApplicationUser | undefined;
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -20,9 +21,14 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/recipes/list'], { queryParams: { search: this.searchText } })
     }};
     
-
+  loadProfileData(): void {
+    this.authService.getProfile().subscribe(user => {
+      this.currentUser = user;
+    });
+  }
   onLogout() {
     this.authService.logout();
+    this.loadProfileData();
     this.router.navigate(['/mainpage']);
   }
 }

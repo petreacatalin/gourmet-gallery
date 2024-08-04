@@ -1,5 +1,6 @@
 .recipes-container {
   padding: 20px;
+  background-color: #f5f5f5; /* Background color to ensure contrast */
 }
 
 .card {
@@ -33,4 +34,46 @@
   height: 325px; /* Set a fixed height for all images */
   object-fit: cover; /* Ensure the image covers the container without distortion */
   display: block; /* Remove any extra spacing below the image */
+}
+
+/* Heart Icon Container */
+.favorite-icon {
+  background-color: #ffffff; /* White background color */
+  border-radius: 50%; /* Make it a circle */
+  padding: 10px; /* Padding around the icon */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  display: flex; /* Flexbox for centering */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  width: 40px; /* Fixed width for circle */
+  height: 40px; /* Fixed height for circle */
+}
+
+/* Heart Icon Styling */
+.favorite-icon .bi-heart,
+.favorite-icon .bi-heart-fill {
+  font-size: 20px; /* Adjust size of heart icon */
+  color: #6c757d; /* Default grey color for non-favorited icon */
+  transition: color 0.3s; /* Smooth color transition */
+}
+
+/* Filled Heart Icon */
+.favorite-icon .bi-heart-fill {
+  color: #ff5722; /* Orange-red color for favorited icon */
+}
+
+/* Hover Effect for Heart Icon */
+.favorite-icon:hover {
+  background-color: #ffffff; /* Keep background white on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.favorite-icon:hover .bi-heart {
+  color: #ff5722; /* Orange-red color for non-favorited icon on hover */
+}
+
+.favorite-icon:hover .bi-heart-fill {
+  color: #ff5722; /* Orange-red color for favorited icon on hover */
 }

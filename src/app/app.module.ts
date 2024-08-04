@@ -31,11 +31,13 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HeaderComponent } from './header/header/header.component';
 import {MatStepperModule} from '@angular/material/stepper';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from './auth/user-profile/user-profile.component';
 import { ForgotPasswordComponent } from './auth/password/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/password/reset-password/reset-password.component';
 import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
 import { SpinnerComponent } from './utils/spinner/spinner.component';
+import {  MatTabsModule} from '@angular/material/tabs';
+import { ToastComponent } from './utils/toast/toast.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -60,6 +62,7 @@ export function tokenGetter() {
     ResetPasswordComponent,
     ResetPasswordMessageComponent,
     SpinnerComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +87,7 @@ export function tokenGetter() {
     MatDividerModule,
     CommonModule,    
     MatStepperModule,
+    MatTabsModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'

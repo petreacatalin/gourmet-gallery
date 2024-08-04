@@ -1,0 +1,63 @@
+<!-- User Profile Page -->
+<div class="user-profile-container">
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <mat-card class="content-card">
+      <mat-tab-group>
+        <mat-tab label="Personal Info">
+          <div class="profile-info">
+            <h2>Personal Info</h2>
+            <div class="profile-picture-container">
+              <img [src]="currentUser?.profilePictureUrl" alt="Profile Picture" class="profile-picture">
+              <button (click)="resetProfilePicture()"  class="btn-reset-picture">
+                <i class="bi bi-x"></i>
+              </button>
+              <input type="file" id="fileInput" (change)="onFileChange($event)" class="file-input">
+              <div class="button-container">
+                <button (click)="triggerFileInput()" class="btn-select-picture">Select Picture</button>
+                <button (click)="uploadProfilePicture()" class="btn-save-changes" [disabled]="!selectedFile">Save changes</button>
+              </div>
+            </div>
+            <p><strong>Name:</strong> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
+            <p><strong>Email:</strong> {{ currentUser?.email }}</p>
+          </div>
+        </mat-tab>
+        <mat-tab label="Change Password">
+          <div class="change-password">
+            <h2>Change Password</h2>
+            <form (ngSubmit)="changePassword()">
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" class="form-control" [(ngModel)]="currentPassword" name="currentPassword" required>
+              </div>
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" class="form-control" [(ngModel)]="newPassword" name="newPassword" required>
+              </div>
+              <button type="submit" class="btn-save-changes">Change Password</button>
+            </form>
+          </div>
+        </mat-tab>
+        <mat-tab label="Saved Recipes">
+          <div class="saved-recipes-container">
+            <h2>Saved Recipes</h2>
+            <div class="recipe-grid">
+              <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
+                <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image">
+                <div class="recipe-title">
+                  <h5>{{ recipe.title }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="My Reviews">
+          <div class="my-reviews">
+            <h2>My Reviews</h2>
+            <!-- Reviews content will be added here -->
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+</div>

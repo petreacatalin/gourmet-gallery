@@ -23,10 +23,9 @@
     </div>
   </div>
 
-  <!-- Recipe Cards -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let recipe of displayedRecipes">
-      <div class="card h-100 shadow">
+      <div class="card h-100 shadow position-relative">
         <img [src]="recipe.imageUrl" class="card-img-top" alt="{{ recipe.title }}">
         <div class="card-body">
           <h2 class="card-title">{{ recipe.title }}</h2>
@@ -35,6 +34,17 @@
         <div class="card-footer">
           <small class="text-muted">Meal type: {{ recipe.mealType }}</small>
           <a [routerLink]="['/recipes', recipe.id]" class="btn btn-primary float-end">View Recipe</a>
+        </div>
+        <div *ngIf="this.currentUser" class="favorite-icon position-absolute top-0 end-0 m-2">
+          <i
+            class="bi"
+            [ngClass]="{
+              'bi-heart-fill': isFavorite(recipe.id!),
+              'bi-heart': !isFavorite(recipe.id!)
+            }"
+            (click)="toggleFavorite(recipe)"
+            role="button"
+          ></i>
         </div>
       </div>
     </div>
