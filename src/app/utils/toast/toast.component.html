@@ -1,10 +1,19 @@
-<!-- toast.component.html -->
 <div class="toast-container">
-    <div *ngFor="let toast of toasts" class="toast show pulse mb-2" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-body">
-       <strong> {{ toast.message }}</strong>
-        <button type="button" class="btn-close" (click)="toasts.shift()" aria-label="Close">&#10005;</button>
-      </div>
+  <div *ngFor="let toast of toasts" 
+       class="toast show pulse mb-2" 
+       [ngClass]="{'toast-success': toast.type === 'success', 'toast-error': toast.type === 'error'}" 
+       role="alert" 
+       aria-live="assertive" 
+       aria-atomic="true">
+    <div class="toast-body">
+      <ng-container *ngIf="toast.type === 'success'">
+        <span class="toast-icon success">&#10004;</span>
+      </ng-container>
+      <ng-container *ngIf="toast.type === 'error'">
+        <span class="toast-icon error">&#10005;</span>
+      </ng-container>
+      <strong> {{ toast.message }}</strong>
+      <button type="button" class="btn-close" (click)="toasts.shift()" aria-label="Close">&#10005;</button>
     </div>
   </div>
-  
+</div>

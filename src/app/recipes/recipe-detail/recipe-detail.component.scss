@@ -1,6 +1,8 @@
 /* General Recipe Card */
 .recipe-card {
-  margin: 30px; /* Space around the card */
+  margin: 20px auto; /* Center card with margin on top and bottom */
+  width: 90%; /* Reduce card width */
+  max-width: 800px; /* Set a max-width to prevent it from getting too wide */
   border-radius: 12px;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2); /* Softer shadow for a refined look */
   background-color: #ffffff;
@@ -21,15 +23,14 @@
   border-radius: 12px 12px 0 0; /* Rounded top corners */
 }
 
+/* Image Styling */
 .recipe-image {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 12px;
   margin: 20px 0;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
 }
 
 /* Card Content */
@@ -110,8 +111,8 @@
 
     .profile-picture-wrapper {
       .profile-picture {
-        width: 60px;
-        height: 60px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         object-fit: cover;
       }
@@ -323,77 +324,45 @@
     .nutrition-grid {
       grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
     }
-
-    .nutrition-item:nth-child(4),
-    .nutrition-item:nth-child(5) {
-      grid-column: 1 / span 2; /* Center on the first row */
-    }
   }
 
   @media (max-width: 768px) {
     .nutrition-grid {
       grid-template-columns: 1fr; /* Single column for small screens */
     }
-
-    .nutrition-item {
-      grid-column: span 1; /* Each item takes the full width */
-    }
   }
 }
 
-/* Information Time */
-.information-time-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns for the first row */
-  gap: 16px; /* Space between items */
-  margin-top: 20px;
+/* Additional Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f1f3f5;
 }
 
-.information-time-item {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  text-align: center;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
 }
 
-.information-time-item:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-4px);
+button {
+  border: none;
+  cursor: pointer;
 }
 
-/* Adjusting for second row items */
-.information-time-item:nth-child(4) {
-  grid-column: 1 / span 1;
-  grid-row: 2;
+.playfair-font {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
 }
 
-.information-time-item:nth-child(5) {
-  grid-column: 2 / span 1;
-  grid-row: 2;
+.josefin-slab-font {
+  font-family: "Josefin Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 568;
 }
 
-@media (max-width: 1024px) {
-  .information-time-grid {
-    grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
-  }
-
-  .information-time-item:nth-child(4) {
-    grid-column: 1 / span 2; /* Center on the first row */
-  }
-
-  .information-time-item:nth-child(5) {
-    grid-column: 1 / span 2; /* Center on the first row */
-  }
-}
-
-@media (max-width: 768px) {
-  .information-time-grid {
-    grid-template-columns: 1fr; /* Single column for small screens */
-  }
-
-  .information-time-item {
-    grid-column: span 1; /* Each item takes the full width */
-  }
+.gupter-regular {
+  font-family: "Gupter", serif;
+  font-size: medium;
+  font-weight: 200;
+  font-style: normal;
 }

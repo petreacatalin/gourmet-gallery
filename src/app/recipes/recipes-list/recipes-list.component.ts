@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { tap } from 'rxjs/operators';
@@ -18,18 +18,20 @@ export class RecipesListComponent implements OnInit {
   displayedRecipes: Recipe[] = [];
   sortBy: string = 'title';
   filterText: string = '';
-  itemsPerPage: number = 6;
+  itemsPerPage: number = 8;
   currentPage: number = 1;
   totalPages: number = 1;
   pages: number[] = [];
   favoriteRecipeIds: Set<number> = new Set<number>(); // Track favorite recipe IDs
   currentUser: any;
+  isPulsing = false; // State for pulsating effect
   constructor(
     private recipeService: RecipeService,
      private route: ActivatedRoute,
      private userProfileService: UserProfileService,
      private authService: AuthService,
-     private toastService: ToastService
+     private toastService: ToastService,
+     private router: Router
     
     ){
      }
@@ -72,6 +74,9 @@ export class RecipesListComponent implements OnInit {
     this.toastService.showToast(`‘${recipeName}’ has been removed from your saved recipes.`, 'error');
   }
   
+  navigateToRecipe(recipeId: number) {
+    this.router.navigate(['/recipes', recipeId]);
+  }
 
   updateDisplayedRecipes(): void {
     if (!Array.isArray(this.recipes)) {
@@ -120,7 +125,6 @@ export class RecipesListComponent implements OnInit {
   toggleFavorite(recipe: Recipe): void {
     const isFavorite = this.favoriteRecipeIds.has(recipe.id!);
     if (isFavorite) {
-      debugger
       this.triggerError(recipe.title);
       this.userProfileService.removeFromFavorites(this.currentUser.id, recipe.id!).subscribe(() => {
         this.favoriteRecipeIds.delete(recipe.id!);
@@ -133,6 +137,9 @@ export class RecipesListComponent implements OnInit {
         this.updateDisplayedRecipes();
       });
     }
+    setTimeout(() => {
+      this.isPulsing = false; // Reset pulsing state after animation
+    }, 500); // Duration of the pulse animation
   }
 
   isFavorite(recipeId: number): boolean {

@@ -38,6 +38,7 @@ import { ResetPasswordMessageComponent } from './auth/password/reset-password-me
 import { SpinnerComponent } from './utils/spinner/spinner.component';
 import {  MatTabsModule} from '@angular/material/tabs';
 import { ToastComponent } from './utils/toast/toast.component';
+import { ConfirmDialogComponent } from './recipes/confirm-dialog/confirm-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -63,6 +64,7 @@ export function tokenGetter() {
     ResetPasswordMessageComponent,
     SpinnerComponent,
     ToastComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

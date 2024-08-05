@@ -1,0 +1,17 @@
+<div class="modal fade" #confirmDialog tabindex="-1" role="dialog" aria-labelledby="confirmDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDialogLabel">Confirm Action</h5>
+          <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ message }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="onConfirm()">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -43,7 +43,7 @@ export class AuthService {
     return this.isloggedIn.asObservable();
   }
 
-  loadUserDetails(): void {
+  loadUserDetails(): Observable<ApplicationUser> {
     const token = this.getToken();
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -54,9 +54,13 @@ export class AuthService {
         firstName: decodedToken.family_name,
       };
       this.userCurrently = userDetail;
+      this.userSubject.next(userDetail);
+      return this.user$.pipe(map(user => user || userDetail)); // Return the user details
     } else {
-      //this.userSubject.next(null);
-      this.isloggedIn.next(false);
+      return this.user$.pipe(map(user => {
+        // Handle case where token is not present
+        throw new Error('User not authenticated');
+      }));
     }
   }
 

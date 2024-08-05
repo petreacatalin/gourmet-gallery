@@ -5,10 +5,25 @@
 
 .card {
   transition: transform 0.2s ease-in-out;
+  border-radius: 8px; /* Rounded corners for a modern look */
+}
+
+.card-title{
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: medium;
+  font-style: italic;
+}
+
+.card-link {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color from parent */
 }
 
 .card:hover {
-  transform: translateY(-5px); /* Example: Add a slight lift effect on hover */
+  transform: translateY(-9px); /* Example: Add a slight lift effect on hover */
+  cursor: pointer;
 }
 
 /* Optional: Custom styles for the sort, filter, and pagination controls */
@@ -31,30 +46,37 @@
 
 .card-img-top {
   width: 100%; /* Makes the image container take up the full width of the card */
-  height: 325px; /* Set a fixed height for all images */
+  height: 200px; /* Reduced height for a smaller card */
   object-fit: cover; /* Ensure the image covers the container without distortion */
   display: block; /* Remove any extra spacing below the image */
+}
+.playfair-font {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: italic;
 }
 
 /* Heart Icon Container */
 .favorite-icon {
   background-color: #ffffff; /* White background color */
   border-radius: 50%; /* Make it a circle */
-  padding: 10px; /* Padding around the icon */
+  padding: 8px; /* Padding around the icon */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
   display: flex; /* Flexbox for centering */
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
-  width: 40px; /* Fixed width for circle */
-  height: 40px; /* Fixed height for circle */
+  width: 32px; /* Fixed width for circle */
+  height: 32px; /* Fixed height for circle */
+  z-index: 10; /* Ensure it's above the card */
 }
 
 /* Heart Icon Styling */
 .favorite-icon .bi-heart,
 .favorite-icon .bi-heart-fill {
-  font-size: 20px; /* Adjust size of heart icon */
+  font-size: 18px; /* Adjust size of heart icon */
   color: #6c757d; /* Default grey color for non-favorited icon */
   transition: color 0.3s; /* Smooth color transition */
 }
@@ -77,3 +99,4 @@
 .favorite-icon:hover .bi-heart-fill {
   color: #ff5722; /* Orange-red color for favorited icon on hover */
 }
+

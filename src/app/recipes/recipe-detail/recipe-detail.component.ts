@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,6 +10,9 @@ import { Rating } from 'src/app/models/rating.interface';
 import { CommentService } from 'src/app/comments/comments.service';
 import { Comments } from 'src/app/models/comments.interface';
 import { RecipeService } from '../recipe.service';
+import { ToastService } from 'src/app/utils/toast/toast.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,13 +26,16 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   editForm: FormGroup | null = null;
   replyForm: FormGroup; 
   currentUser?: ApplicationUser; 
-  visibleComments: Comments[] = [];
+  visibleComments: Comments[] = [];  
+  private confirmSubscription: Subscription | null = null;
   stars: number[] = [1, 2, 3, 4, 5];
   commentsToShow = 7; 
   hasMoreComments = true; // Flag to check if there are more comments to load
   currentStep: number = 0;
   replyingToComment: Comments | null = null;
+  commentToDeleteId?: number;
   @ViewChildren('stepContent') stepContents!: QueryList<ElementRef>;
+  @ViewChild(ConfirmDialogComponent) confirmDialog!: ConfirmDialogComponent;
   private routeSub: Subscription | undefined;
   private recipeSub: Subscription | undefined;
   private userSub: Subscription | undefined;
@@ -40,7 +46,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private recipeService: RecipeService,
     private commentService: CommentService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef
   ) {
     this.commentForm = this.fb.group({
       content: ['', Validators.required],
@@ -62,10 +70,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       this.getRecipe(id);
       this.loadComments(id);
     });
-    setTimeout(() => {
-      this.checkCommentsLength();
-      this.loadMoreComments();
-    }, 100);
+   
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
@@ -82,6 +87,14 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       this.recipe = recipe as Recipe;
     });
   }
+  
+  triggerSuccess(text?: string): void {
+    this.toastService.showToast(text!, 'success');
+  }
+  
+  triggerError(text?: string): void {
+    this.toastService.showToast(text!, 'error');
+  }
 
   loadComments(recipeId: number): void {
     this.commentSub = this.commentService.getCommentsForRecipe(recipeId).subscribe(response => {
@@ -90,24 +103,32 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     });  
   }
 
-  checkCommentsLength(){
-    if (this.comments.length > 0) {
-      this.visibleComments = this.comments.slice(0, this.commentsToShow);
-      this.hasMoreComments = this.comments.length > this.commentsToShow;
+  checkCommentsLength() {
+  if (this.comments.length > 0) {
+    this.visibleComments = this.comments.slice(0, this.commentsToShow);
+    this.hasMoreComments = this.comments.length > this.commentsToShow;
+  } else {
+    this.visibleComments = []; // Ensure visibleComments is cleared if no comments
+    this.hasMoreComments = false;
+  }
+}
+  loadMoreComments(): void {
+    const currentCount = this.visibleComments.length;
+    const newCount = currentCount + 7; 
+    
+    this.checkCommentsLength();
+    if (newCount >= this.comments.length) {
+      this.visibleComments = this.comments.slice(0, this.comments.length);
+      this.hasMoreComments = false; 
+      this.triggerError("No more comments to load")
     } else {
-      this.hasMoreComments = false;
+      this.visibleComments = this.comments.slice(0, newCount);
+      this.hasMoreComments = true; 
     }
   }
 
-  loadMoreComments() {
-    const currentCount = this.visibleComments.length;
-    const newCount = currentCount + 7; 
-    this.visibleComments = this.comments.slice(0, newCount);
-    this.hasMoreComments = this.comments.length > newCount;
-  }
-
   getUserSub(): void {
-    this.currentUser = this.authService.loadUserDetails()!;
+   this.authService.loadUserDetails().subscribe((data: ApplicationUser) => {this.currentUser = data})!;
   }
 
   rate(star: number) {
@@ -126,7 +147,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     if (this.recipe && this.currentUser) {
       const ratingValue = this.commentForm.get('rating')?.value;
       if (ratingValue && this.hasUserCommentedWithRating()) {
-        alert('You can only leave one comment with a rating.')
+        this.triggerError("Only one rating per user is allowed.")
         this.commentForm.get('rating')?.setValue(null);
         return;
       }
@@ -148,9 +169,17 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
       this.commentService.addComment(newComment).subscribe(comment => {
         this.comments.push(comment);
+        this.triggerSuccess("Success! Your comment has been posted !")
+        this.commentForm.get('content')?.setValue(null);
         this.checkCommentsLength();
         this.loadMoreComments();
-      });
+      }
+      ,(error) => {
+        console.log(error)
+        this.triggerError("Error submitting the comment.")
+
+    })
+      
     }
   }
 
@@ -189,14 +218,44 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       rating: [comment.rating ? comment.rating.ratingValue : null]
     });
 
-    // Show edit form and add a method to save changes
+    console.log(this.editForm)
   }
 
-  onCommentDelete(commentId: number): void {
-    if (confirm('Are you sure you want to delete this comment?')) {
+  // onCommentDelete(commentId: number): void {
+  //   if (confirm('Are you sure you want to delete this comment?')) {
+  //     this.commentService.deleteComment(commentId).subscribe(() => {
+  //       this.comments = this.comments.filter(comment => comment.id !== commentId);
+  //       this.checkCommentsLength();
+  //     });
+  //   }
+  // }
+
+  openDeleteDialog(commentId: number): void {
+    this.commentToDeleteId = commentId;
+  
+    // Clean up any existing subscription
+    if (this.confirmSubscription) {
+      this.confirmSubscription.unsubscribe();
+    }
+  
+    this.confirmSubscription = this.confirmDialog.confirmed.subscribe(() => {
+      this.onConfirmDelete(commentId);
+    });
+  
+    this.confirmDialog.canceled.subscribe(() => console.log('Delete canceled'));
+    this.confirmDialog.open('Are you sure you want to delete this comment?');
+  }
+
+  onConfirmDelete(commentId: number): void {
+    if (commentId) {
       this.commentService.deleteComment(commentId).subscribe(() => {
         this.comments = this.comments.filter(comment => comment.id !== commentId);
         this.checkCommentsLength();
+        this.triggerSuccess("Your comment has been removed!");
+        this.cdr.detectChanges(); // Trigger change detection manually
+      }, (error) => {
+        console.log(error);
+        this.triggerError("Error deleting the comment.");
       });
     }
   }
