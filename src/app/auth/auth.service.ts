@@ -17,10 +17,28 @@ export class AuthService {
   public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
   private baseUrl = environment.baseUrl;
   private tokenKey = 'token';
-  public userCurrently?: ApplicationUser | undefined;
+  public userCurrently?: ApplicationUser | undefined | null;
   private isloggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.initializeUserState();
+  }
+
+  private initializeUserState(): void {
+    const token = this.getToken();
+    if (token && !this.isTokenExpired()) {
+      this.isloggedIn.next(true);
+      this.loadUserDetails();
+      setTimeout(() => {
+        this.loadProfileData();
+        
+      }, 110);
+
+    } else {
+      this.logout();
+      this.isloggedIn.next(false);
+    }
+  }
 
   register(user:ApplicationUser): Observable<any> {
     return this.http.post(`${this.baseUrl}/Account/register`, user);
@@ -34,6 +52,8 @@ export class AuthService {
         
           this.isloggedIn.next(true);
           this.loadUserDetails();
+          this.loadProfileData();
+          this.userSubject.next(this.userCurrently!)
         return response;
       })
     );
@@ -41,6 +61,13 @@ export class AuthService {
 
   loggedIn(): Observable<boolean> {
     return this.isloggedIn.asObservable();
+  }
+
+  loadProfileData(): void {
+    this.getProfile().subscribe(user => {
+      this.userCurrently = user;
+      console.log(user)
+    });
   }
 
   loadUserDetails(): Observable<ApplicationUser> {
@@ -52,8 +79,9 @@ export class AuthService {
         email: decodedToken.email,
         lastName: decodedToken.given_name,
         firstName: decodedToken.family_name,
+        //profilePictureUrl: decodedToken.unique_name
       };
-      this.userCurrently = userDetail;
+      //this.userCurrently = userDetail;
       this.userSubject.next(userDetail);
       return this.user$.pipe(map(user => user || userDetail)); // Return the user details
     } else {
@@ -86,7 +114,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.isloggedIn.next(false);
-    //this.userSubject.next(null);
+    this.userCurrently = null;
+    this.userSubject.next(null);
   }
  
 

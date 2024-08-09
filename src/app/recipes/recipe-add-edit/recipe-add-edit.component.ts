@@ -217,7 +217,6 @@ addIngredient() {
   createRecipe(recipe: Recipe): void {
     this.recipeService.createRecipe(recipe).subscribe(
       (createdRecipe) => {
-        console.log('Recipe created successfully:', createdRecipe);
         this.router.navigate(['/recipes/list']);
       },
       (error) => {
@@ -230,7 +229,6 @@ addIngredient() {
   updateRecipe(recipe: Recipe): void {
     this.recipeService.updateRecipe(recipe).subscribe(
       (updatedRecipe) => {
-        console.log('Recipe updated successfully:', updatedRecipe);
         this.router.navigate(['/recipes/list']);
       },
       (error) => {

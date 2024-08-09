@@ -12,11 +12,6 @@ export class MainPageComponent implements OnInit {
   constructor(public authService: AuthService,) { }
 
   ngOnInit(): void {
-    this.loadProfileData();
   }
-  loadProfileData(): void {
-    this.authService.getProfile().subscribe(user => {
-      this.currentUser = user;
-    });
-  }
+
 }

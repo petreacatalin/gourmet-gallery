@@ -31,4 +31,6 @@ export interface Recipe {
   ratings: Rating[];
   informationTime?: InformationTime;
   nutritionFacts?: NutritionFacts;
+  averageRating: number;
+  ratingsNumber: number;
 }

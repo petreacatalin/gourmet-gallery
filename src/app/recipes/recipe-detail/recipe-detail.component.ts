@@ -175,12 +175,15 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.loadMoreComments();
       }
       ,(error) => {
-        console.log(error)
         this.triggerError("Error submitting the comment.")
 
     })
-      
-    }
+    
+  }
+  else{
+    this.triggerError("You need to be logged in to submit comments.")
+
+  }
   }
 
   onReplySubmit(comment: Comments): void {
@@ -218,7 +221,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       rating: [comment.rating ? comment.rating.ratingValue : null]
     });
 
-    console.log(this.editForm)
   }
 
   // onCommentDelete(commentId: number): void {

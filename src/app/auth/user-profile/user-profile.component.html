@@ -8,11 +8,11 @@
           <div class="profile-info">
             <h2>Personal Info</h2>
             <div class="profile-picture-container">
+              <input type="file" id="fileInput" (change)="onFileChange($event)" class="file-input">
               <img [src]="currentUser?.profilePictureUrl" alt="Profile Picture" class="profile-picture">
               <button (click)="resetProfilePicture()"  class="btn-reset-picture">
                 <i class="bi bi-x"></i>
               </button>
-              <input type="file" id="fileInput" (change)="onFileChange($event)" class="file-input">
               <div class="button-container">
                 <button (click)="triggerFileInput()" class="btn-select-picture">Select Picture</button>
                 <button (click)="uploadProfilePicture()" class="btn-save-changes" [disabled]="!selectedFile">Save changes</button>
@@ -43,10 +43,12 @@
             <h2>Saved Recipes</h2>
             <div class="recipe-grid">
               <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
+                <div class="card h-100 shadow position-relative" (click)="navigateToRecipe(recipe.id!)">
                 <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image">
                 <div class="recipe-title">
                   <h5>{{ recipe.title }}</h5>
                 </div>
+              </div>
               </div>
             </div>
           </div>

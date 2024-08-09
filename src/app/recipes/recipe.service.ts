@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { Recipe } from '../models/recipe.interface';
 import { environment } from 'src/environments/environment';
+import { Rating } from '../models/rating.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,16 @@ export class RecipeService {
   }
 
   createRecipe(recipe: Recipe): Observable<Recipe> {
-    console.log(recipe)
     return this.http.post<Recipe>(this.baseUrl, recipe);
   }
 
   updateRecipe(recipe: Recipe): Observable<Recipe> {
     const url = `${this.baseUrl}/${recipe.id}`; // Assuming id is present in Recipe interface
     return this.http.put<Recipe>(url, recipe);
+  }
+
+  getRatingsByRecipeId(id: number): Observable<Rating[]>{
+    return this.http.get<Rating[]>(`${this.baseUrl}/ratings/${id}`);
   }
 
   deleteRecipe(id: number): Observable<void> {

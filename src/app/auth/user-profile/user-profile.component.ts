@@ -3,6 +3,7 @@ import { UserProfileService } from './user-profile.service';
 import { AuthService } from '../auth.service';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { Recipe } from 'src/app/models/recipe.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +20,13 @@ export class UserProfileComponent implements OnInit {
   currentPassword: string = '';
   newPassword: string = '';
 
-  constructor(private userProfileService: UserProfileService, private authService: AuthService) { }
+  constructor(
+    private userProfileService: UserProfileService, 
+    private authService: AuthService,
+    private router:Router,
+  ) {
+    
+   }
 
   ngOnInit(): void {
     this.loadProfileData();
@@ -91,5 +98,7 @@ export class UserProfileComponent implements OnInit {
       this.loadProfileData(); // Reload profile to get default picture URL
     });
   }
-
+  navigateToRecipe(recipeId: number) {
+    this.router.navigate(['/recipes', recipeId]);
+  }
 }

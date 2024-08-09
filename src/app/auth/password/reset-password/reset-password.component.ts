@@ -50,7 +50,6 @@ export class ResetPasswordComponent implements OnInit {
       this.authService.resetPassword(this.email,this.token, resetDto ).subscribe(
         response => {
           this.spinnerService.hide();
-          console.log(response)
           this.router.navigate(['/reset-password-message']);
         },
         error => {
@@ -58,7 +57,6 @@ export class ResetPasswordComponent implements OnInit {
           if(error){
             this.showTokenExpired = true;
           }
-          console.log(error)
         }
       );
     }

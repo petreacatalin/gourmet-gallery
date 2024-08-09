@@ -76,9 +76,9 @@
 
 /* Select Picture Button hover effect */
 .btn-select-picture:hover {
-  background-color: #5c6166; /* Blue background on hover */
-  color: #ffffff; /* White text on hover */
-  border-color: #2d3135; /* Darker blue border on hover */
+  background-color: #d7dfe7; /* Blue background on hover */
+  color: #afaeae; /* White text on hover */
+  border-color: #a1b0bf; /* Darker blue border on hover */
   transform: translateY(-3px); /* Lift effect on hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
 }
@@ -191,4 +191,26 @@
 .btn-reset-picture i {
   font-size: 16px;
   color: #dc3545; /* Red color for the X icon */
+}
+.card {
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px; /* Rounded corners for a modern look */
+}
+
+.card-title{
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: medium;
+  font-style: italic;
+}
+
+.card-link {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color from parent */
+}
+
+.card:hover {
+  transform: translateY(-9px); /* Example: Add a slight lift effect on hover */
+  cursor: pointer;
 }

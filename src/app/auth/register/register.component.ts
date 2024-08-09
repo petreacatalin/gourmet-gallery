@@ -45,7 +45,6 @@ export class RegisterComponent {
       const userData = this.registerForm.value;
       this.authService.register(userData).subscribe(
         response => {
-          console.log('Registration successful', response);
           this.router.navigate(['/login']);
           this.spinnerService.hide();
         },

@@ -7,6 +7,8 @@ import { UserProfileService } from 'src/app/auth/user-profile/user-profile.servi
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { ToastService } from 'src/app/utils/toast/toast.service';
+import { Rating } from 'src/app/models/rating.interface';
+import { Comments } from 'src/app/models/comments.interface';
 
 @Component({
   selector: 'app-recipes-list',
@@ -24,6 +26,7 @@ export class RecipesListComponent implements OnInit {
   pages: number[] = [];
   favoriteRecipeIds: Set<number> = new Set<number>(); // Track favorite recipe IDs
   currentUser: any;
+  ratings?: Rating[];
   isPulsing = false; // State for pulsating effect
   constructor(
     private recipeService: RecipeService,
@@ -48,9 +51,8 @@ export class RecipesListComponent implements OnInit {
       }
       this.recipeService.getRecipes().pipe(
         tap(recipes => {
-          console.log('Fetched recipes:', recipes);
-          this.recipes = recipes;
           console.log(recipes)
+          this.recipes = recipes;
           this.updateDisplayedRecipes();
         })
       ).subscribe();
@@ -64,8 +66,21 @@ export class RecipesListComponent implements OnInit {
       });
     }
   });
+
+  this.recipeService.getRatingsByRecipeId(10).subscribe(data => {
+    this.ratings = data;
+  })
   }
 
+
+  getStars(averageRating: number): number[] {
+    const fullStars = Math.floor(averageRating);
+    const halfStar = averageRating % 1 > 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+    
+    return [...Array(fullStars).fill(1), ...Array(halfStar).fill(0.5), ...Array(emptyStars).fill(0)];
+  }
+  
   triggerSuccess(recipeName?: string): void {
     this.toastService.showToast(`Successfully added ‘${recipeName}’ to your saved recipes!`, 'success');
   }
