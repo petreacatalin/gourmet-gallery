@@ -8,14 +8,22 @@
           <div class="profile-info">
             <h2>Personal Info</h2>
             <div class="profile-picture-container">
-              <input type="file" id="fileInput" (change)="onFileChange($event)" class="file-input">
-              <img [src]="currentUser?.profilePictureUrl" alt="Profile Picture" class="profile-picture">
-              <button (click)="resetProfilePicture()"  class="btn-reset-picture">
+              <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-input">
+              <!-- <input type="file" (change)="onFileSelected($event)"> -->
+              <img *ngIf="this.newImageUrl" [src]="this.newImageUrl" alt="Profile Picture" class="profile-picture">
+              <button (click)="resetProfilePicture()" class="btn-reset-picture">
                 <i class="bi bi-x"></i>
               </button>
+              <img *ngIf="!this.newImageUrl" [src]="currentUser?.profilePictureUrl" alt="Profile Picture" class="profile-picture">
+              <button *ngIf="this.newImageUrl" (click)="removeSelectedfile()" class="btn btn-outline-danger">
+                <i class="bi bi-trash-fill"></i>
+              </button>
               <div class="button-container">
-                <button (click)="triggerFileInput()" class="btn-select-picture">Select Picture</button>
-                <button (click)="uploadProfilePicture()" class="btn-save-changes" [disabled]="!selectedFile">Save changes</button>
+                <button type="file" id="fileInput" (click)="triggerFileInput()" class="btn-select-picture">Select
+                  Picture
+                </button>
+                <button (click)="uploadProfilePicture()" class="btn-save-changes" [disabled]="this.selectedFile === null">Save changes
+                </button>
               </div>
             </div>
             <p><strong>Name:</strong> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
@@ -28,11 +36,13 @@
             <form (ngSubmit)="changePassword()">
               <div class="form-group">
                 <label for="currentPassword">Current Password</label>
-                <input type="password" id="currentPassword" class="form-control" [(ngModel)]="currentPassword" name="currentPassword" required>
+                <input type="password" id="currentPassword" class="form-control" [(ngModel)]="currentPassword"
+                  name="currentPassword" required>
               </div>
               <div class="form-group">
                 <label for="newPassword">New Password</label>
-                <input type="password" id="newPassword" class="form-control" [(ngModel)]="newPassword" name="newPassword" required>
+                <input type="password" id="newPassword" class="form-control" [(ngModel)]="newPassword"
+                  name="newPassword" required>
               </div>
               <button type="submit" class="btn-save-changes">Change Password</button>
             </form>
@@ -44,11 +54,11 @@
             <div class="recipe-grid">
               <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
                 <div class="card h-100 shadow position-relative" (click)="navigateToRecipe(recipe.id!)">
-                <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image">
-                <div class="recipe-title">
-                  <h5>{{ recipe.title }}</h5>
+                  <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image">
+                  <div class="recipe-title">
+                    <h5>{{ recipe.title }}</h5>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>

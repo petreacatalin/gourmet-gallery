@@ -44,7 +44,6 @@
           <p><strong>Main Ingredient:</strong> {{ recipe?.mainIngredient }}</p>
           <p><strong>Occasion:</strong> {{ recipe?.occasion }}</p>
           <p><strong>Difficulty Level:</strong> {{ recipe?.difficultyLevel }}</p>
-          <p><strong>Other Categories:</strong> {{ recipe?.otherCategories }}</p>
         </mat-card-content>
       </div>
     </div>
@@ -184,7 +183,9 @@
           </div>
           <div *ngIf="currentUser?.id === comment.applicationUserId">
             <button mat-button (click)="onCommentEdit(comment)">Edit</button>
-            <button *ngIf="currentUser?.id === comment.user?.id" class="btn btn-danger btn-sm float-end" (click)="openDeleteDialog(comment.id!)">Delete</button>
+            <button *ngIf="currentUser?.id === comment.user?.id" class="btn btn-outline-danger" (click)="openDeleteDialog(comment.id!)">
+              <i class="bi bi-trash"></i>
+            </button>
           </div>
           <button mat-button (click)="toggleReplyForm(comment)">Reply</button>
           

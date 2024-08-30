@@ -1,4 +1,4 @@
-import { MealType, Cuisine, DietaryRestrictions, CookingMethod, MainIngredient, Occasion, DifficultyLevel, OtherCategories } from "../utils/enums";
+import { MealType, Cuisine, DietaryRestrictions, CookingMethod, MainIngredient, Occasion, DifficultyLevel } from "../utils/enums";
 import { Comments } from "./comments.interface";
 import { Ingredient } from "./ingredient.interface";
 import { IngredientsTotal } from "./ingredientsTotal.interface";
@@ -24,7 +24,6 @@ export interface Recipe {
   mainIngredient?: MainIngredient;
   occasion?: Occasion;
   difficultyLevel?: DifficultyLevel;
-  otherCategories?: OtherCategories;
   applicationUserId?: string;
   applicationUser: ApplicationUser;
   comments?: Comments[];
@@ -33,4 +32,5 @@ export interface Recipe {
   nutritionFacts?: NutritionFacts;
   averageRating: number;
   ratingsNumber: number;
+  file?: any;
 }

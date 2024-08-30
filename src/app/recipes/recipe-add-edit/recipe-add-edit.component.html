@@ -44,6 +44,19 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-card class="section-card">
+            <mat-card-title>Recipe Image</mat-card-title>
+            <div class="step-row">
+              <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-input">
+              <img *ngIf="this.newImageUrl" [src]="this.newImageUrl" alt="Recipe Picture" class="recipe-picture">
+              <button mat-icon-button *ngIf="this.newImageUrl" (click)="removeSelectedfile()" class="btn-remove">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+            <div class="button-container">
+              <button type="file" id="fileInput" (click)="triggerFileInput()" class="btn-select-picture">Select Picture</button>
+            </div>
+          </mat-card>
                   <!-- Ingredients Card -->
           <mat-card class="section-card">
             <mat-card-title>Ingredients</mat-card-title>
@@ -156,13 +169,13 @@
             </mat-select>
           </mat-form-field>
 
-          <!-- Other Categories -->
+          <!-- Other Categories
           <mat-form-field appearance="outline">
             <mat-label>Other Categories</mat-label>
             <mat-select formControlName="otherCategories" multiple>
               <mat-option *ngFor="let type of otherCategories" [value]="type">{{ type }}</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <!-- Information Time Card -->
           <mat-card class="section-card">

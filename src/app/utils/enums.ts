@@ -81,17 +81,3 @@ export enum MealType {
     Beginner = 'Beginner',
     Advanced = 'Advanced'
   }
-  
-  export enum OtherCategories {
-    Healthy = 'Healthy',
-    ComfortFood = 'Comfort Food',
-    KidsFriendly = 'Kids-Friendly',
-    BudgetFriendly = 'Budget-Friendly',
-    QuickEasy = 'Quick & Easy',
-    OnePotMeals = 'One-Pot Meals',
-    MakeAhead = 'Make-Ahead',
-    NoCook = 'No-Cook',
-    LowCalorie = 'Low-Calorie',
-    HighProtein = 'High-Protein'
-  }
-  

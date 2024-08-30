@@ -5,10 +5,11 @@ import { RecipeService } from '../recipe.service';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { Ingredient } from 'src/app/models/ingredient.interface';
 import { Step } from 'src/app/models/step.interface';
-import { MealType, Cuisine, DietaryRestrictions, CookingMethod, MainIngredient, Occasion, DifficultyLevel, OtherCategories } from 'src/app/utils/enums';
+import { MealType, Cuisine, DietaryRestrictions, CookingMethod, MainIngredient, Occasion, DifficultyLevel  } from 'src/app/utils/enums';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
+import { Observable, map, catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -24,7 +25,10 @@ export class RecipeAddEditComponent implements OnInit {
   mainIngredients = Object.keys(MainIngredient).filter(key => isNaN(Number(key)));
   occasions = Object.keys(Occasion).filter(key => isNaN(Number(key)));
   difficultyLevels = Object.keys(DifficultyLevel).filter(key => isNaN(Number(key)));
-  otherCategories = Object.keys(OtherCategories).filter(key => isNaN(Number(key)));
+  //otherCategories = Object.keys(OtherCategories).filter(key => isNaN(Number(key)));
+  selectedFile: File | null = null;
+  newImageUrl: string | ArrayBuffer | null = null;
+  urlPhoto: string | null = null;
 
   isEditMode = false;
   recipeId: number | null = null;
@@ -70,7 +74,7 @@ export class RecipeAddEditComponent implements OnInit {
         mainIngredient: [null],
         occasion: [null],
         difficultyLevel: [null],
-        otherCategories: [null],
+        //otherCategories: [null],
         informationTime: this.formBuilder.group({
             prepTime: [null],
             cookTime: [null],
@@ -174,7 +178,7 @@ addIngredient() {
               mainIngredient: recipe.mainIngredient,
               occasion: recipe.occasion,
               difficultyLevel: recipe.difficultyLevel,
-              otherCategories: recipe.otherCategories
+              //otherCategories: recipe.otherCategories
             });
 
             const ingredientsArray = this.ingredients;
@@ -198,33 +202,62 @@ addIngredient() {
 
   onSubmit(): void {
     this.spinnerService.show();
+
     if (this.recipeForm.invalid) {
-      this.spinnerService.hide();
-      return;
+        this.spinnerService.hide();
+        return;
     }
 
     const recipe: Recipe = this.recipeForm.value;
     if (this.isEditMode && this.recipeId) {
-      recipe.id = this.recipeId;
-      this.updateRecipe(recipe);
-      this.spinnerService.hide();
+        recipe.id = this.recipeId;
+        this.updateRecipe(recipe);
+        this.spinnerService.hide();
     } else {
-      this.createRecipe(recipe);
-      this.spinnerService.hide();
-    }
-  }
+        if (this.recipeForm.valid && this.selectedFile) {
+            this.uploadImage(this.selectedFile!).subscribe(
+                (urlRecipePhoto) => {
+                    this.urlPhoto = urlRecipePhoto;
 
-  createRecipe(recipe: Recipe): void {
-    this.recipeService.createRecipe(recipe).subscribe(
-      (createdRecipe) => {
-        this.router.navigate(['/recipes/list']);
-      },
-      (error) => {
-        console.error('Error creating recipe:', error);
-        // Optionally show user feedback here
-      }
+                    // Once the image upload is successful, set the imageUrl and create the recipe
+                    recipe.imageUrl = this.urlPhoto;
+                    this.createRecipe(recipe);
+                    this.spinnerService.hide();
+
+                },
+                (error) => {
+                    console.error('Error uploading image:', error);
+                    this.spinnerService.hide();
+                }
+            );
+        } else {
+            this.createRecipe(recipe);
+            this.spinnerService.hide();
+        }
+    }
+}
+
+uploadImage(file: File): Observable<string> {
+  
+    return this.recipeService.uploadImage(file).pipe(
+        map((response: any) => response), // Ensure the response is treated as text
+        catchError((error: any) => {
+            console.error('Error uploading image:', error);
+            return throwError(error);
+        })
     );
-  }
+}
+
+createRecipe(recipe: Recipe): void {
+    this.recipeService.createRecipe(recipe).subscribe(
+        (createdRecipe) => {
+            this.router.navigate(['/recipes/list']);
+        },
+        (error) => {
+            console.error('Error creating recipe:', error);
+        }
+    );
+}
 
   updateRecipe(recipe: Recipe): void {
     this.recipeService.updateRecipe(recipe).subscribe(
@@ -237,4 +270,38 @@ addIngredient() {
       }
     );
   }
+
+  triggerFileInput(): void {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput?.click();
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.newImageUrl = reader.result; // Show a preview of the image
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  uploadProfilePicture(): void {
+    this.spinnerService.show();  
+    if (this.selectedFile) {      
+      this.selectedFile = null;
+      this.newImageUrl = null;
+    }
+  }
+
+  removeSelectedfile(): void{
+    this.selectedFile = null;
+    this.newImageUrl = null;
+  }
+   
+
 }

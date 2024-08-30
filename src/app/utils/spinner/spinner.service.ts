@@ -14,14 +14,12 @@ export class SpinnerService {
   }
 
   hide() {
-    // Clear any existing timer
     if (this.hideSpinnerTimer) {
       clearTimeout(this.hideSpinnerTimer);
     }
 
-    // Set a minimum display time (e.g., 500 ms)
     this.hideSpinnerTimer = setTimeout(() => {
       this.spinnerSubject.next(false);
-    }, 500); // Adjust the delay as needed
+    }, 500); 
   }
 }

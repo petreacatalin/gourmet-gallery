@@ -276,4 +276,56 @@ button[type="submit"] {
   }
 }
 
+/* File Input */
+.file-input {
+  display: none;
+}
 
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px;
+}
+
+/* Select Picture Button */
+.btn-select-picture {
+  min-width: 160px; /* Minimum width */
+  padding: 9px 20px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  color: #99a6b4; /* Text color */
+  background-color: #ffffff; /* White background */
+  border: 2px solid #a4aeb9; /* Blue border */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Select Picture Button hover effect */
+.btn-select-picture:hover {
+  background-color: #d7dfe7; /* Blue background on hover */
+  color: #afaeae; /* White text on hover */
+  border-color: #a1b0bf; /* Darker blue border on hover */
+  transform: translateY(-3px); /* Lift effect on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+}
+
+/* Profile Picture Container */
+.profile-picture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Profile Picture */
+.recipe-picture {
+  width: 505px;
+  height: 305px;
+  border-radius: 7%;
+  object-fit: cover;
+  border: 3px solid #ddd;
+  margin-bottom: 10px;
+}

@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { Router } from '@angular/router';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,11 +20,13 @@ export class UserProfileComponent implements OnInit {
   favoriteRecipes: Recipe[] = [];
   currentPassword: string = '';
   newPassword: string = '';
+  newImageUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private userProfileService: UserProfileService, 
     private authService: AuthService,
     private router:Router,
+    private spinnerService: SpinnerService,
   ) {
     
    }
@@ -45,18 +48,35 @@ export class UserProfileComponent implements OnInit {
     this.authService.getProfile().subscribe(user => {
       this.currentUser = user;
       this.loadSavedRecipes();
-    });
+    });   
+    this.spinnerService.hide();
+    this.selectedFile = null;
+    this.newImageUrl = null;
   }
 
-  onFileChange(event: any): void {
+
+  onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.newImageUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   uploadProfilePicture(): void {
+    this.spinnerService.show();
     if (this.selectedFile) {
       this.userProfileService.uploadProfilePicture(this.selectedFile).subscribe(() => {
         this.loadProfileData(); // Reload profile to get new picture URL
       });
+      this.selectedFile = null;
+      this.newImageUrl = null;
     }
   }
 
@@ -94,10 +114,18 @@ export class UserProfileComponent implements OnInit {
   }
 
   resetProfilePicture(): void {
+    this.spinnerService.show();
     this.userProfileService.resetProfilePicture().subscribe(() => {
       this.loadProfileData(); // Reload profile to get default picture URL
     });
+    this.spinnerService.hide();
   }
+
+  removeSelectedfile(): void{
+    this.selectedFile = null;
+    this.newImageUrl = null;
+  }
+   
   navigateToRecipe(recipeId: number) {
     this.router.navigate(['/recipes', recipeId]);
   }
