@@ -21,10 +21,20 @@
 </div>
 
 <div class="container fade-in" *ngIf="isLoggedIn">
+  <div class="intro-section">
+    <h2>Share Your Favorite Recipe with the World!</h2>
+    <p>
+      Welcome to our community of food lovers! Whether you're a seasoned chef or a home cook, 
+      we can't wait to see what you create. Use the form below to publish your recipe. 
+      Fill out the details, upload an appetizing photo, and let others enjoy your culinary masterpiece!
+    </p>
+  </div>
+
+<div class="container fade-in" *ngIf="isLoggedIn">
   <div class="form-container">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <mat-card class="custom-card">
-        <mat-card-title>Add/Edit Recipe</mat-card-title>
+        <mat-card-title>Publish your Recipe </mat-card-title>
         <mat-card-content class="custom-card-content">
           <!-- Title -->
           <mat-form-field appearance="outline" class="full-width">

@@ -2,12 +2,13 @@
 .recipe-card {
   margin: 20px auto; /* Center card with margin on top and bottom */
   width: 90%; /* Reduce card width */
-  max-width: 800px; /* Set a max-width to prevent it from getting too wide */
+  max-width: 1200px; /* Set a max-width to prevent it from getting too wide */
   border-radius: 12px;
   box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2); /* Softer shadow for a refined look */
   background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
+
 }
 
 .recipe-card:hover {
@@ -23,14 +24,13 @@
   border-radius: 12px 12px 0 0; /* Rounded top corners */
 }
 
-/* Image Styling */
 .recipe-image {
-  display: block;
-  width: 100%;
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  max-width: 55%;
   height: auto;
   border-radius: 12px;
-  margin: 20px 0;
-  max-width: 100%;
+  margin: 20px auto; /* Center image with automatic left and right margins */
 }
 
 /* Card Content */

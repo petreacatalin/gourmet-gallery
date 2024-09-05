@@ -11,7 +11,7 @@ import { ApplicationUser } from '../models/applicationUser.interface';
 })
 export class SidebarComponent implements OnInit {
   isLoggedIn?: boolean;
-  isCollapsed: boolean = false;
+  isCollapsed: boolean = true;
   currentUser?:ApplicationUser | undefined | null;
 
   constructor(
@@ -48,5 +48,9 @@ export class SidebarComponent implements OnInit {
     this.authService.logout();
     this.currentUser = undefined;
     this.router.navigate(['/mainpage']);
+    if(this.sidebarService.isCollapsedSubject.value === false)
+      {
+        this.sidebarService.toggleSidebar();
+      }
   }
 }

@@ -9,6 +9,7 @@ import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { ToastService } from 'src/app/utils/toast/toast.service';
 import { Rating } from 'src/app/models/rating.interface';
 import { Comments } from 'src/app/models/comments.interface';
+import { SidebarService } from 'src/app/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -34,7 +35,8 @@ export class RecipesListComponent implements OnInit {
      private userProfileService: UserProfileService,
      private authService: AuthService,
      private toastService: ToastService,
-     private router: Router
+     private router: Router,
+     private sidebarService: SidebarService
     
     ){
      }
@@ -51,7 +53,6 @@ export class RecipesListComponent implements OnInit {
       }
       this.recipeService.getRecipes().pipe(
         tap(recipes => {
-          console.log(recipes)
           this.recipes = recipes;
           this.updateDisplayedRecipes();
         })
@@ -91,6 +92,10 @@ export class RecipesListComponent implements OnInit {
   
   navigateToRecipe(recipeId: number) {
     this.router.navigate(['/recipes', recipeId]);
+    if(this.sidebarService.isCollapsedSubject.value === false)
+      {
+        this.sidebarService.toggleSidebar();
+      }
   }
 
   updateDisplayedRecipes(): void {

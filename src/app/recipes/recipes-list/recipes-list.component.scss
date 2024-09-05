@@ -127,3 +127,105 @@
     font-size: 1.5rem;
   }
 }
+
+.food-photo {
+  width: 100%;
+  max-height: 150px; /* Optional: Limit the height for larger screens */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  object-fit: cover;
+}
+
+.recipe-heading {
+  text-align: center; /* Center the text */
+  font-family: "Playfair Display", serif; /* Use a beautiful serif font */
+  font-weight: bold; /* Make the text bold */
+  font-size: 2rem; /* Increase the size of the text */
+  color: #333; /* Set a dark gray color for the text */
+  margin-bottom: 20px; /* Add space below the heading */
+  letter-spacing: 2px; /* Add some spacing between the letters */
+}
+
+@media (max-width: 576px) {
+  .recipe-heading {
+    font-size: 1.5rem; /* Slightly reduce the size on smaller screens */
+  }
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: #0ea041;
+  border-radius: 50%;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0ea041;
+  color: white;
+}
+
+.pagination .page-link:hover {
+  background-color: #d3f1e6;
+}
+
+/* Container for search and sort controls */
+.search-sort-container {
+  margin-bottom: 20px; /* Ensure there's space below the controls */
+}
+
+.search-sort-container .form-label {
+  margin-bottom: 0.5rem; /* Space between label and input */
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #333; /* Ensure good contrast for readability */
+}
+
+.search-sort-container .form-select, 
+.search-sort-container .form-control {
+  border-radius: 4px;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-sort-container .form-select:focus,
+.search-sort-container .form-control:focus {
+  border-color: #0ea041;
+  box-shadow: 0 0 0 0.2rem rgba(14, 160, 65, 0.25);
+}
+
+.search-sort-container .form-select {
+  max-width: 100%; /* Ensure the select box takes full width on small screens */
+}
+
+.search-sort-container .form-control {
+  max-width: 100%; /* Ensure the input box takes full width on small screens */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  .search-sort-container .form-label {
+    font-size: 0.75rem; /* Smaller font size on very small screens */
+  }
+
+  .search-sort-container .form-select,
+  .search-sort-container .form-control {
+    font-size: 0.75rem; /* Ensure inputs and selects are not too large */
+    padding: 0.5rem 0.75rem; /* Reduce padding for small screens */
+  }
+}
+
+@media (min-width: 768px) {
+  .search-sort-container .form-select,
+  .search-sort-container .form-control {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .search-sort-container .form-select,
+  .search-sort-container .form-control {
+    font-size: 1rem;
+  }
+}

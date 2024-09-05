@@ -11,12 +11,48 @@
 .modal-dialog {
   max-width: 90%; /* Max width for the modal */
   margin: 0 auto; /* Center horizontally */
+  width: 100%; /* Full width to ensure responsiveness */
 }
 
 .modal-content {
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Deeper shadow for contrast */
+  padding: 20px; /* Padding inside the modal content */
 }
+
+/* Introductory Section Styling */
+.intro-section {
+  text-align: center;
+  margin-bottom: 30px;
+  background-color: #fdfdfd;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.intro-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.intro-section p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+  .intro-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .intro-section p {
+    font-size: 1rem;
+  }
+}
+
 
 /* CSS for form container */
 .form-container {
@@ -59,7 +95,7 @@ mat-form-field {
 }
 
 mat-card-title {
-  font-size: 24px; /* Title font size */
+  font-size: 1.5rem; /* Responsive font size */
   font-weight: bold; /* Bold title */
   text-align: center; /* Centered title */
   margin-bottom: 15px; /* Margin below title */
@@ -89,7 +125,8 @@ button[type="submit"] {
 }
 
 .compact-form-field {
-  max-width: 300px; /* Smaller field width */
+  max-width: 100%; /* Full width on small screens */
+  box-sizing: border-box; /* Ensure padding/margins are included in width */
 }
 
 @media (max-width: 768px) {
@@ -197,52 +234,51 @@ button[type="submit"] {
 
 /* Style for Add Ingredient Button */
 .btn-futuristic-add {
-  min-width: 160px; /* Minimum width */
-  padding: 12px 28px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  color: #ffffff; /* Text color */
-  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
-  border: none; /* Remove default border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition */
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Ensure shadows and effects stay within bounds */
+  min-width: 114px;
+  padding: 0px 0px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(45deg, #ababab, #07d8db);
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Button hover effect for Add Ingredient Button */
 .btn-futuristic-add:hover {
-  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
+  background: linear-gradient(45deg, #968695, #7b7b7c); /* Reverse gradient on hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
   transform: translateY(-3px); /* Lift effect on hover */
 }
 
 /* Style for Add Step Button */
 .btn-futuristic-add-step {
-  min-width: 160px; /* Minimum width */
-  padding: 12px 28px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  color: #ffffff; /* Text color */
-  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
-  border: none; /* Remove default border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition */
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Ensure shadows and effects stay within bounds */
+  min-width: 114px;
+  padding: 0px 0px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(45deg, #ababab, #07d8db);
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Button hover effect for Add Step Button */
 .btn-futuristic-add-step:hover {
-  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
+  background: linear-gradient(45deg, #5c5c5c, #d1d1d1); /* Reverse gradient on hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
   transform: translateY(-3px); /* Lift effect on hover */
 }
-
 
 /* Fade-in effect */
 .fade-in {
@@ -322,8 +358,8 @@ button[type="submit"] {
 
 /* Profile Picture */
 .recipe-picture {
-  width: 505px;
-  height: 305px;
+  max-width: 100%; /* Responsive width */
+  height: auto; /* Auto height to maintain aspect ratio */
   border-radius: 7%;
   object-fit: cover;
   border: 3px solid #ddd;

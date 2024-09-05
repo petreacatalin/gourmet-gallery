@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
+import { SidebarService } from 'src/app/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,10 @@ import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 export class HeaderComponent implements OnInit {
   searchText: string = '';
   currentUser: ApplicationUser | undefined;
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService,
+     private router: Router,
+     private sidebarService:SidebarService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -30,6 +35,10 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.loadProfileData();
     this.router.navigate(['/mainpage']);
+    if(this.sidebarService.isCollapsedSubject.value === false)
+    {
+      this.sidebarService.toggleSidebar();
+    }
   }
 }
 

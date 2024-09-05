@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SidebarService {
-  private isCollapsedSubject = new BehaviorSubject<boolean>(false);
+  public isCollapsedSubject = new BehaviorSubject<boolean>(true);
   isCollapsed$ = this.isCollapsedSubject.asObservable();
 
   toggleSidebar(): void {

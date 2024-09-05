@@ -2,9 +2,9 @@
   <div class="sidebar">
     <app-sidebar></app-sidebar>
   </div>
-  <div class="content-container">
+  <div class="main-content">
     <app-header></app-header>
-    <div class="" [@routeAnimations]="prepareRoute(outlet)">
+    <div class="content" [@routeAnimations]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </div>

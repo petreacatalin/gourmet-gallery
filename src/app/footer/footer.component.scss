@@ -1,27 +1,47 @@
-.footer .d-flex {
-  flex-wrap: wrap; /* Allow content to wrap */
-  justify-content: space-between; /* Distribute space between items */
-  align-items: center; /* Align items vertically centered */
-}
-
-.footer .nav {
-  display: flex;
-  flex-wrap: wrap; /* Allow nav items to wrap */
-  justify-content: center; /* Center align nav items */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-}
-
-.footer .nav-item {
-  margin: 0 5px; /* Space between nav items */
-}
-@media (max-width: 768px) {
-  .footer {
-    padding: 10px; /* Adjust padding for smaller screens */
+footer {
+    background-color: #343a40; /* Dark background for the footer */
+    color: #ffffff; /* Light text color */
+    padding: 20px 0; /* Top and bottom padding */
+    text-align: center; /* Center text horizontally */
+    width: 100%; /* Full width */
+    position: relative; /* Allow footer to be placed correctly */
+    
   }
-
-  .footer .nav {
-    flex-direction: column; /* Stack nav items vertically on small screens */
-    align-items: center; /* Center align items */
+  
+  footer .container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 100%; /* Full height of the footer */
+    
   }
-}
+  
+  footer .d-flex {
+    width: 100%; /* Ensure d-flex container is full width */
+    justify-content: center; /* Center items horizontally */
+    
+  }
+  
+  footer .nav {
+    list-style: none; /* Remove list styling */
+    padding-left: 0; /* Remove default padding */
+    margin-bottom: 0; /* Remove bottom margin */
+    display: flex; /* Use flexbox for nav items */
+    gap: 15px; /* Space between nav items */
+  }
+  
+  footer .nav-link {
+    color: #ffffff; /* Text color for links */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s; /* Smooth color transition */
+  }
+  
+  footer .nav-link:hover {
+    color: #adb5bd; /* Hover color */
+  }
+  
+  footer svg {
+    fill: #ffffff; /* Icon color */
+  }
+  

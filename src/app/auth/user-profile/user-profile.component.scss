@@ -1,32 +1,32 @@
 /* User Profile Container */
 .user-profile-container {
   display: flex;
-  height: 100vh;
   width: 100%;
-  overflow: hidden;
-  background-color: #f5f5f5; /* Background color to ensure contrast */
-  z-index: 10; /* Ensure it is above the content but below the navbar */
+  background-color: #f5f5f5; /* Background color for contrast */
+  justify-content: center; /* Center content horizontally */
+  align-items: flex-start; /* Align items to the top */
+  padding: 20px; /* Add padding around the container */
+  margin-left: -140px;
 }
 
 /* Main Content Area */
 .main-content {
-  flex: 1;
-  padding: 20px;
+  width: 100%;
+  max-width: 75%; /* Limit the width to 75% of the container */
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow: auto;
-  background-color: #f5f5f5; /* Background color for contrast */
+  overflow: visible; /* Allow content to expand as needed */
 }
 
 /* Content Card */
 .content-card {
   width: 100%;
-  max-width: 900px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  box-sizing: border-box; /* Ensure padding and border are included in width */
 }
 
 /* Profile Picture Container */
@@ -41,6 +41,7 @@
 .profile-picture {
   width: 150px;
   height: 150px;
+  max-width: 100%; /* Ensure the image doesn't exceed its container */
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #ddd;
@@ -55,61 +56,61 @@
 /* Button Container */
 .button-container {
   display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
   gap: 10px; /* Space between buttons */
   margin-top: 10px;
+  justify-content: center; /* Center buttons horizontally */
 }
 
 /* Select Picture Button */
 .btn-select-picture {
-  min-width: 160px; /* Minimum width */
-  padding: 12px 28px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  color: #99a6b4; /* Text color */
-  background-color: #ffffff; /* White background */
-  border: 2px solid #a4aeb9; /* Blue border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition */
+  min-width: 140px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #99a6b4;
+  background-color: #ffffff;
+  border: 2px solid #a4aeb9;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 /* Select Picture Button hover effect */
 .btn-select-picture:hover {
-  background-color: #d7dfe7; /* Blue background on hover */
-  color: #afaeae; /* White text on hover */
-  border-color: #a1b0bf; /* Darker blue border on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+  background-color: #d7dfe7;
+  color: #afaeae;
+  border-color: #a1b0bf;
+  transform: translateY(-3px);
 }
 
-/* Futuristic Save Changes Button */
+/* Save Changes Button */
 .btn-save-changes {
-  min-width: 160px; /* Minimum width */
-  padding: 12px 28px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  color: #ffffff; /* Text color */
-  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
-  border: none; /* Remove default border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition */
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Ensure shadows and effects stay within bounds */
-  
+  min-width: 140px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(45deg, #6b00b6, #a3009b);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Save Changes Button hover effect */
 .btn-save-changes:hover {
-  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
+  background: linear-gradient(45deg, #a3009b, #6b00b6);
+  transform: translateY(-3px);
 }
 
 /* Tab Content */
-.profile-info, .change-password, .saved-recipes-container, .my-reviews {
+.profile-info,
+.change-password,
+.saved-recipes-container,
+.my-reviews {
   padding: 20px;
 }
 
@@ -127,6 +128,7 @@
   border-radius: 5px;
   padding: 10px;
   width: 100%;
+  box-sizing: border-box; /* Include padding in width */
 }
 
 /* Recipe Grid */
@@ -134,24 +136,23 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center; /* Center the grid items */
+  justify-content: center;
 }
 
 /* Recipe Card */
 .recipe-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: calc(33.333% - 20px); /* Three items per row with gap consideration */
+  flex: 1 1 calc(33.333% - 40px); /* Adjust width and allow flexibility */
+  max-width: 300px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .recipe-image {
   width: 100%;
-  height: 150px;
+  height: auto; /* Allow image to scale */
   object-fit: cover;
 }
 
@@ -162,9 +163,10 @@
 
 .recipe-title h5 {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
   color: #333;
 }
+
 /* Reset Profile Picture Button */
 .btn-reset-picture {
   position: absolute;
@@ -183,34 +185,55 @@
 }
 
 .btn-reset-picture:hover {
-  background-color: #f8d7da; /* Light red background */
-  border-color: #f5c6cb; /* Red border */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-reset-picture i {
   font-size: 16px;
-  color: #dc3545; /* Red color for the X icon */
+  color: #dc3545;
 }
+
+/* Card Hover Effect */
 .card {
   transition: transform 0.2s ease-in-out;
-  border-radius: 8px; /* Rounded corners for a modern look */
-}
-
-.card-title{
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-size: medium;
-  font-style: italic;
-}
-
-.card-link {
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit text color from parent */
+  border-radius: 8px;
 }
 
 .card:hover {
-  transform: translateY(-9px); /* Example: Add a slight lift effect on hover */
+  transform: translateY(-5px);
   cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .main-content {
+    max-width: 90%; /* Increase max-width on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .recipe-card {
+    flex: 1 1 calc(50% - 40px); /* Two items per row */
+  }
+
+  .btn-select-picture,
+  .btn-save-changes {
+    min-width: 120px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .recipe-card {
+    flex: 1 1 calc(100% - 40px); /* One item per row */
+  }
+
+  .btn-select-picture,
+  .btn-save-changes {
+    min-width: 100px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
 }
