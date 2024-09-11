@@ -5,7 +5,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:7201/api', // https
+  //baseUrl: 'https://gourmet-gallery-be.azurewebsites.net/api', // https
+  baseUrl: 'https://localhost:7201/api',
  // baseUrl: 'https://localhost:32773/api' // Docker
 };
 /*
