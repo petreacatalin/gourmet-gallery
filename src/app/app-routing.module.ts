@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent , data: { animation: 'login' }},
   { path: 'register', component: RegisterComponent , data: { animation: 'register' }},
   { path: 'mainpage', component: MainPageComponent , data: { animation: 'mainpage' }},
-  { path: '', component: SidebarComponent },
+  { path: '', redirectTo: 'mainpage', pathMatch: 'full', data: { animation: 'mainpage' } }, // Redirect default to mainpage
   { path: 'recipes/list', component: RecipesListComponent , data: { animation: 'recipes/list' }},
   { path: 'recipes/create', component: RecipeAddEditComponent, data: { animation: 'recipes/create' } },
   { path: 'recipes/edit/:id', component: RecipeAddEditComponent , data: { animation: 'recipes/edit/:id' }},
@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent, data: { animation: 'reset-password' } },
   { path: 'reset-password-message', component: ResetPasswordMessageComponent, data: { animation: 'reset-password-message' } },
   { path: '', redirectTo: 'login', pathMatch: 'full', data: { animation: 'login' } },
-  { path: '**', redirectTo: 'login', data: { animation: 'login' } }
+  { path: '**', redirectTo: 'mainpage', data: { animation: 'mainpage' } } // Wildcard route to mainpage
 ];
 
 

@@ -1,39 +1,92 @@
-<header class="p-3 text-bg-dark">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-      </a>
+<header class="p-3 text-bg-dark sticky-header">
+  <!-- Hamburger Toggler (Visible on all devices) -->
+  <!-- Hamburger Toggler -->
+  <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-label="Toggle menu">
+    <i class="fas" [ngClass]="{'fa-times': menuOpen, 'fa-bars': !menuOpen}"></i>
+  </button>
 
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li>
-          <img src="assets/images/gourmet-logo.png" class="logo" alt="Gourmet Logo">
-        </li>
-        <li><a routerLink="/mainpage" class="nav-link px-2 text-secondary">Home</a></li>
-        <li><a routerLink="/mainpage" class="nav-link px-2 text-white">Features</a></li>
-        <li><a routerLink="/mainpage" class="nav-link px-2 text-white">About</a></li>
-      </ul>
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo in the center -->
+    <a href="/" class="logo-container text-white text-decoration-none mx-auto">
+      <img src="assets/images/gourmet-logo.png" class="logo" alt="Gourmet Logo">
+    </a>
 
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" (submit)="onSearch(); $event.preventDefault()">
-        <div class="input-group">
-          <input type="search" class="form-control form-control-dark text-bg-dark" [(ngModel)]="searchText" placeholder="Search..." aria-label="Search" name="search">
-          <button type="submit" class="btn btn-outline-light">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </form>
-
-      <div class="text-end" *ngIf="!authService.isLoggedIn(); else loggedIn">
-        <button type="button" class="btn btn-outline-light me-2" routerLink="/login">Login</button>
-        <button type="button" class="btn btn-success" routerLink="/register">Sign-up</button>
+    <!-- Search Bar -->
+    <form class="search-form" role="search" (submit)="onSearch(); $event.preventDefault()">
+      <div class="input-group">
+        <input type="search" class="form-control form-control-dark text-bg-dark" [(ngModel)]="searchText"
+          placeholder="Search..." aria-label="Search" name="search">
+        <button type="submit" class="btn btn-outline-light">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
+    </form>
 
-      <ng-template #loggedIn>
-        <div class="text-end text-white">
-          Hello, <u> <a routerLink="/user-profile" class="text-white">{{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}</a> </u>
-          <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
-        </div>
-      </ng-template>
+    <!-- User Authentication Buttons (Right) -->
+    <div class="auth-buttons" *ngIf="!authService.isLoggedIn(); else loggedIn">
+      <button type="button" class="btn btn-outline-light me-2" routerLink="/login">Login</button>
+      <button type="button" class="btn btn-success" routerLink="/register">Sign-up</button>
     </div>
+
+    <ng-template #loggedIn>
+      <div class="logged-in text-end text-white">
+        Hello, <u><a routerLink="/user-profile" class="text-white">{{ authService.userCurrently?.firstName }} {{
+            authService.userCurrently?.lastName }}</a></u>
+        <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
+      </div>
+    </ng-template>
   </div>
+
+  <!-- Side Menu (Hidden by Default) -->
+  <nav class="side-menu" [ngClass]="{'open': menuOpen}" (click)="onMenuClick($event)">
+    <div class="menu-header">
+      <button class="btn btn-close" (click)="closeMenu()">
+        <i class="fas fa-times"></i> <!-- Close icon for the side menu -->
+      </button>
+    </div>
+    <!-- Menu content -->
+    <div *ngIf="menuOpen" class="menu-content">
+      <ul class="nav flex-column mb-auto">
+        <li class="nav-item">
+          <a routerLink="/mainpage" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
+            <i class="bi bi-house me-2"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/recipes/list" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
+            <i class="bi bi-table me-2"></i> Recipes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/recipes/create" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
+            <i class="bi bi-file-earmark-plus me-2"></i> Publish Your Recipe
+          </a>
+        </li>
+        <hr class="text-white">
+        
+        <!-- User Dropdown -->
+        <div class="nav-item dropdown" *ngIf="!authService.isLoggedIn()">
+          <li><a class="dropdown-item" routerLink="/login">Log In</a></li>
+        </div>
+        <div class="nav-item dropdown" *ngIf="authService.isLoggedIn()">
+          <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img [src]="authService.userCurrently?.profilePictureUrl" alt="" width="40" height="40"
+              class="rounded-circle me-4">
+            <strong>My Account</strong>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <li><a class="dropdown-item" routerLink="/recipes/create" (click)="closeMenu()">My Recipes</a></li>
+            <li><a class="dropdown-item" routerLink="/user-profile" (click)="closeMenu()">Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" (click)="onLogout()">Sign out</a></li>
+          </ul>
+        </div>
+
+      </ul>
+    </div>
+  </nav>
+
 </header>

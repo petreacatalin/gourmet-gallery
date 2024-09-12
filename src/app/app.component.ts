@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './auth/auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -32,9 +32,11 @@ import { filter } from 'rxjs/operators';
   ]
 })
 export class AppComponent implements OnInit {
-  isSidebarCollapsed = false; 
   private userSubject: BehaviorSubject<ApplicationUser | null> = new BehaviorSubject<ApplicationUser | null>(null);
   public user$: Observable<ApplicationUser | null> = this.userSubject.asObservable();
+  isSidebarVisible: boolean = false; // Controls if sidebar is visible (for mobile)
+  isSidebarCollapsed: boolean = false; // Controls sidebar collapse/expand on all devices
+  isMobile: boolean = window.innerWidth < 768; // To check if the screen is mobile-sized
 
   constructor(private authService: AuthService, private sidebarService: SidebarService, private router: Router) {}
 
@@ -58,12 +60,21 @@ export class AppComponent implements OnInit {
     return true; 
   }
 
-  prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  // Detect screen resize to update the mobile flag
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.isMobile = event.target.innerWidth < 768;
+  }
+  
+  // toggleSidebar() {
+    //   this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    // }
+  toggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed; // Toggle collapsed state on all devices
   }
 
-  toggleSidebar() {
-    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 
   logout() {

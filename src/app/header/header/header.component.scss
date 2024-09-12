@@ -1,4 +1,222 @@
+/* Sticky Header Styling */
+.sticky-header {
+  position: fixed; /* Fix the header to the top of the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #343a40; /* Dark background for the header */
+  z-index: 1000;
+  border-bottom: 1px solid #495057;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px; /* Adjust padding as needed */
+  transition: height 0.3s ease; /* Smooth transition for height changes */
+  overflow: hidden; /* Prevent overflow issues */
+}
+
+/* Adjusting header size on scroll */
+.sticky-header.shrink {
+  height: 50px; /* Reduced height */
+  padding: 0 10px; /* Reduced padding */
+}
+
+/* Hamburger Toggler Styling */
+.navbar-toggler {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2.5rem; /* Larger size for better visibility */
+  z-index: 1050;
+  position: absolute;
+  left: 20px; /* Fixed position from the left */
+  top: 50%; /* Centered vertically */
+  transform: translateY(-50%); /* Adjust to center */
+}
+
+/* Hide the .fa-bars icon when the menu is open */
+.navbar-toggler .fa-bars {
+  display: none;
+}
+
+/* Show the .fa-bars icon only when the menu is closed */
+.navbar-toggler .fa-bars:not(.fa-times) {
+  display: inline-block;
+}
+
+/* Hide the .fa-times icon when the menu is closed */
+.navbar-toggler .fa-times {
+  display: none;
+}
+
+/* Show the .fa-times icon only when the menu is open */
+.navbar-toggler .fa-times.fa-bars {
+  display: inline-block;
+}
+
+/* Logo Container */
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0; /* Adjust as needed */
+}
+
+/* Logo Styling */
 .logo {
-  width: 100px;  /* Adjust the width as needed */
-  height: auto;
+  max-height: 40px; /* Adjust logo size */
+}
+
+/* Search Bar Styling */
+.search-form {
+  flex-grow: 1; /* Make the search bar wider */
+  margin-left: 20px; /* Space between the logo and search bar */
+  display: flex;
+  justify-content: center;
+}
+
+.search-form .input-group {
+  width: 100%; /* Ensure the input group takes available space */
+  max-width: 600px; /* Maximum width for search bar */
+}
+
+/* User Authentication Buttons */
+.auth-buttons,
+.logged-in {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Align to the right */
+}
+
+/* Side Menu Styling */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Hidden off-screen */
+  width: 300px;
+  height: 100vh;
+  background-color: #343a40;
+  color: white;
+  transition: left 0.3s ease;
+  z-index: 1040;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* When the Menu is Open */
+.side-menu.open {
+  left: 0; /* Slide the menu into view */
+}
+
+/* Menu Header */
+.menu-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background: #343a40;
+}
+
+/* Close Button */
+.btn-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem; /* Larger size for better visibility */
+}
+
+/* Menu Items */
+.nav-link {
+  padding: 20px 30px; /* Increase padding for better touch targets */
+  color: white;
+  font-size: 1.5rem; /* Increase font size */
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: #495057; /* Hover effect */
+}
+
+/* User Dropdown */
+.nav-item.dropdown {
+  position: relative; /* Position dropdown relative to this container */
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  padding: 20px 30px; /* Adjust padding as needed */
+  color: white;
+  font-size: 1.5rem; /* Adjust font size as needed */
+  text-decoration: none;
+  border: none; /* Remove default border */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.dropdown-toggle:hover {
+  background-color: #495057; /* Hover effect */
+}
+
+.dropdown-menu {
+  background-color: #343a40; /* Match the background of the side menu */
+  border: none; /* Remove default border */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Slight shadow for dropdown */
+  position: absolute; /* Position dropdown relative to the parent container */
+  top: 100%; /* Position the dropdown directly below the toggle */
+  left: 0;
+  width: 100%; /* Full width to align with the toggle */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+ // z-index: 1050; /* Ensure dropdown is on top of other elements */
+}
+
+.dropdown-item {
+  color: white; /* Text color */
+  padding: 20px 30px; /* Padding to match the menu items */
+  font-size: 1.5rem; /* Font size */
+  text-decoration: none; /* Remove underline */
+}
+
+.dropdown-item:hover {
+  background-color: #495057; /* Hover effect */
+}
+
+/* Divider */
+.dropdown-divider {
+  background-color: #495057; /* Match divider color */
+  height: 1px; /* Standard divider height */
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+  .side-menu {
+    width: 100%; /* Full width for small screens */
+    left: -100%; /* Initially hidden off-screen */
+    transition: left 0.3s ease;
+  }
+
+  .side-menu.open {
+    left: 0; /* Slide the menu into view */
+  }
+
+  .nav-link, .dropdown-toggle, .dropdown-item {
+    font-size: 1.5rem; /* Larger font size on mobile */
+    padding: 20px 30px; /* Increase padding for touch targets */
+  }
+
+  .btn-close {
+    font-size: 2.5rem; /* Larger close button on mobile */
+  }
+}
+
+
+/* Hamburger Toggler Styling */
+.navbar-toggler {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2.5rem; /* Larger size for better visibility */
+  z-index: 1050;
+  position: absolute;
+  left: 20px; /* Fixed position from the left */
+  top: 50%; /* Centered vertically */
+  transform: translateY(-50%); /* Adjust to center */
 }

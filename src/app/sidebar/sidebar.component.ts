@@ -12,45 +12,41 @@ import { ApplicationUser } from '../models/applicationUser.interface';
 export class SidebarComponent implements OnInit {
   isLoggedIn?: boolean;
   isCollapsed: boolean = true;
-  currentUser?:ApplicationUser | undefined | null;
+  currentUser?: ApplicationUser | undefined | null;
 
   constructor(
-     public authService: AuthService,
-     private router: Router, 
-     private sidebarService: SidebarService) {
-     }
+    public authService: AuthService,
+    private router: Router, 
+    private sidebarService: SidebarService
+  ) {}
 
   ngOnInit(): void {
     this.sidebarService.isCollapsed$.subscribe((isCollapsed: boolean) => {
       this.isCollapsed = isCollapsed;
     });
-   
     this.loggedIn();
   }
 
-  
-  
   loggedIn() {
     this.authService.user$.subscribe(user => {
       this.currentUser = user;
     });
-  
+
     this.authService.loggedIn().subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
   }
 
-  toggleSidebar(): void {
-    this.sidebarService.toggleSidebar();
-  }
+  // toggleSidebar(): void {
+  //   this.sidebarService.toggleSidebar();
+  // }
 
   logout(): void {  
     this.authService.logout();
     this.currentUser = undefined;
     this.router.navigate(['/mainpage']);
-    if(this.sidebarService.isCollapsedSubject.value === false)
-      {
-        this.sidebarService.toggleSidebar();
-      }
+    if (this.sidebarService.isCollapsedSubject.value === false) {
+      this.sidebarService.toggleSidebar();
+    }
   }
 }

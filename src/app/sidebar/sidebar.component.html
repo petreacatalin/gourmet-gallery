@@ -1,5 +1,5 @@
-<div class="sidebar text-bg-dark" [ngClass]="{'collapsed': isCollapsed}">
-  <button class="btn btn-primary btn-toggle" (click)="toggleSidebar()">
+<!-- <div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
+  <button class="btn btn-primary btn-toggle" >
     <i class="bi" [ngClass]="{'bi-chevron-left': !isCollapsed, 'bi-chevron-right': isCollapsed}"></i>
   </button>
 
@@ -19,7 +19,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a routerLink="/recipes/list" routerLinkActive="active" class="nav-link text-white" [routerLinkActiveOptions]="{ exact: true }">
+        <a routerLink="/recipes/list" routerLinkActive="active" class="nav-link text-white">
           <i class="bi bi-table pe-none me-2"></i>
           <span *ngIf="!isCollapsed">Recipes</span>
         </a>
@@ -32,9 +32,10 @@
       </li>
     </ul>
 
-    <hr>
+    <hr> -->
 
-    <div class="dropdown" *ngIf="this.isLoggedIn">
+    <!-- User Account Dropdown -->
+    <!-- <div class="dropdown" *ngIf="this.isLoggedIn">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img [src]="authService.userCurrently?.profilePictureUrl" alt="" width="32" height="32" class="rounded-circle me-2">
         <strong *ngIf="!isCollapsed">My Account</strong>
@@ -48,4 +49,4 @@
       </ul>
     </div>
   </div>
-</div>
+</div> -->

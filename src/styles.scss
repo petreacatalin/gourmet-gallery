@@ -13,6 +13,7 @@ html, body {
   box-sizing: border-box;
 }
 
+/* Main container */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -21,53 +22,40 @@ html, body {
   overflow: hidden;
 }
 
-.sidebar {
-  width: 280px;
-  background-color: #343a40;
-  color: white;
-  transition: width 0.3s ease-in-out;
-  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);
-  position: fixed;
+/* Sticky Header Styling */
+.header {
+  position: sticky;
   top: 0;
-  left: 0;
-  height: 100vh;
+  background-color: #343a40; /* Dark background for the header */
   z-index: 1000;
+  border-bottom: 1px solid #495057;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Adjust padding as needed */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+  transition: background-color 0.3s ease; /* Smooth background transition */
 }
 
-.app-container.collapsed .sidebar {
-  width: 80px;
-}
-
+/* Adjusting main content margin */
 .main-content {
   display: flex;
   flex-direction: column;
   flex: 1; /* Takes up remaining space above the footer */
-  margin-left: 280px;
   transition: margin-left 0.3s ease-in-out;
+  margin-top: 70px; /* Adjust this value to match the height of your header */
 }
 
-.app-container.collapsed .main-content {
-  margin-left: 80px;
-}
-
+/* Main content area styling */
 .content {
-  flex: 1; /* Takes up remaining space in main-content */
+  flex: 1;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* Allows scrolling if content is taller than viewport */
+  overflow-y: auto;
 }
-
-app-header {
-  position: sticky; /* Stick the header to the top */
-  top: 0; /* Align it to the top of the viewport */
-  background-color: #ffffff; /* Ensure it stands out */
-  z-index: 1000; /* Ensure it sits above other elements */
-  border-bottom: 1px solid #ddd; /* Optional: add a border to separate from content */
-  width: 100%; /* Ensure it spans the full width */
-}
-
 
 footer {
   background-color: #343a40;
@@ -76,36 +64,22 @@ footer {
   padding: 20px 0;
   text-align: center;
   width: 100%;
-  display: flex; /* Use Flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  position: fixed; /* Position footer fixed to the bottom of the page */
-  bottom: 0; /* Ensure it's at the bottom */
-  z-index: 999; /* Ensure it sits above other elements if needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
 }
 
+/* Media queries for responsive behavior */
 @media (max-width: 768px) {
-  .app-container.collapsed .main-content {
-    margin-left: 80px;
-    padding-top: 60px; /* Adjust if needed */
-  }
-
-  .app-container .sidebar {
-    width: 80px;
+  .app-container .main-content {
+    margin-left: 0;
   }
 }
 
 @media (max-width: 576px) {
-  .app-container {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-
   .main-content {
     margin-left: 0;
     padding-top: 60px; /* Adjust if needed */
