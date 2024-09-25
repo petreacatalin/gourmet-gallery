@@ -30,8 +30,10 @@
 
     <ng-template #loggedIn>
       <div class="logged-in text-end text-white">
-        Hello, <u><a routerLink="/user-profile" class="text-white">{{ authService.userCurrently?.firstName }} {{
-            authService.userCurrently?.lastName }}</a></u>
+        Hello, 
+        <u><a routerLink="/user-profile" class="text-white">
+          {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
+        </a></u>
         <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
       </div>
     </ng-template>
@@ -66,7 +68,7 @@
         
         <!-- User Dropdown -->
         <div class="nav-item dropdown" *ngIf="!authService.isLoggedIn()">
-          <li><a class="dropdown-item" routerLink="/login">Log In</a></li>
+          <li><a class="dropdown-item" routerLink="/login" (click)="closeMenu()">Log In</a></li>
         </div>
         <div class="nav-item dropdown" *ngIf="authService.isLoggedIn()">
           <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
@@ -76,7 +78,7 @@
             <strong>My Account</strong>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><a class="dropdown-item" routerLink="/recipes/create" (click)="closeMenu()">My Recipes</a></li>
+            <li><a class="dropdown-item" routerLink="/user-profile" (click)="closeMenu()">My Recipes</a></li>
             <li><a class="dropdown-item" routerLink="/user-profile" (click)="closeMenu()">Profile</a></li>
             <li>
               <hr class="dropdown-divider">
@@ -84,9 +86,7 @@
             <li><a class="dropdown-item" (click)="onLogout()">Sign out</a></li>
           </ul>
         </div>
-
       </ul>
     </div>
   </nav>
-
 </header>

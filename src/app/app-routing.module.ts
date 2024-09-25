@@ -14,22 +14,23 @@ import { ResetPasswordComponent } from './auth/password/reset-password/reset-pas
 import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent , data: { animation: 'login' }},
-  { path: 'register', component: RegisterComponent , data: { animation: 'register' }},
-  { path: 'mainpage', component: MainPageComponent , data: { animation: 'mainpage' }},
-  { path: '', redirectTo: 'mainpage', pathMatch: 'full', data: { animation: 'mainpage' } }, // Redirect default to mainpage
-  { path: 'recipes/list', component: RecipesListComponent , data: { animation: 'recipes/list' }},
-  { path: 'recipes/create', component: RecipeAddEditComponent, data: { animation: 'recipes/create' } },
-  { path: 'recipes/edit/:id', component: RecipeAddEditComponent , data: { animation: 'recipes/edit/:id' }},
-  { path: 'recipes/:id', component: RecipeDetailComponent, data: { animation: 'recipes/:id' } },
-  { path: 'user-profile', component: UserProfileComponent, data: { animation: 'user-profile' },  canActivate: [AuthGuard] },
-  { path: 'forgot-password', component: ForgotPasswordComponent, data: { animation: 'forgot-password' } },
-  { path: 'reset-password', component: ResetPasswordComponent, data: { animation: 'reset-password' } },
-  { path: 'reset-password-message', component: ResetPasswordMessageComponent, data: { animation: 'reset-password-message' } },
-  { path: '', redirectTo: 'login', pathMatch: 'full', data: { animation: 'login' } },
-  { path: '**', redirectTo: 'mainpage', data: { animation: 'mainpage' } } // Wildcard route to mainpage
+  { path: 'login', component: LoginComponent, data: { breadcrumb: 'Login', animation: 'login' }},
+  { path: 'register', component: RegisterComponent, data: { breadcrumb: 'Register', animation: 'register' }},
+  { path: 'mainpage', component: MainPageComponent, data: { breadcrumb: 'Main Page', animation: 'mainpage' }},
+  { path: 'recipes', children: [
+      { path: 'list', component: RecipesListComponent, data: { breadcrumb: 'Recipes List', animation: 'list' }},
+      { path: 'create', component: RecipeAddEditComponent, data: { breadcrumb: 'Create Recipe', animation: 'create' }},
+      { path: 'edit/:id', component: RecipeAddEditComponent, data: { breadcrumb: 'Edit Recipe', animation: 'edit/:id' }},
+      { path: ':id', component: RecipeDetailComponent, data: { breadcrumb: 'Recipe Details', animation: ':id' }},
+    ],  
+  },
+  { path: 'user-profile', component: UserProfileComponent, data: { breadcrumb: 'User Profile', animation: 'user-profile' }, canActivate: [AuthGuard] },
+  { path: 'forgot-password', component: ForgotPasswordComponent, data: { breadcrumb: 'Forgot Password', animation: 'forgot-password' }},
+  { path: 'reset-password', component: ResetPasswordComponent, data: { breadcrumb: 'Reset Password', animation: 'reset-password' }},
+  { path: 'reset-password-message', component: ResetPasswordMessageComponent, data: { breadcrumb: 'Reset Password Message', animation: 'reset-password-message' }},
+  { path: '', redirectTo: 'mainpage', pathMatch: 'full', data: { breadcrumb:'mainpage', animation: 'mainpage' }},
+  { path: '**', redirectTo: 'mainpage', data: { breadcrumb: 'mainpage', animation: 'mainpage' }}
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

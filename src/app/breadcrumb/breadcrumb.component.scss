@@ -1,0 +1,44 @@
+:host {
+    display: block;
+    padding: 1rem; /* Add padding for spacing */
+    background-color: #f8f9fa; /* Light background color */
+    border-bottom: 1px solid #e9ecef; /* Border to separate from content */
+    border-radius: 0.5rem; /* Rounded corners */
+}
+
+.breadcrumb {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
+    list-style: none; /* Remove default list style */
+    font-family: 'Arial', sans-serif; /* Font family */
+}
+
+.breadcrumb-item {
+    margin-right: 1rem; /* Space between items */
+    padding-left: 10px; /* Move content to the right */
+}
+
+.breadcrumb-item + .breadcrumb-item:before {
+    content: '>'; /* Custom separator */
+    margin-right: 1rem; /* Space before the separator */
+    color: #6c757d; /* Color for the separator */
+}
+
+.breadcrumb-item a {
+    text-decoration: none; /* Remove underline from links */
+    color: #007bff; /* Primary link color */
+    transition: color 0.3s; /* Smooth color transition */
+    font-weight: 500; /* Adjust font weight */
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline; /* Underline on hover */
+    color: #0056b3; /* Darker color on hover */
+}
+
+.breadcrumb-item .active {
+    color: #6c757d; /* Color for the active breadcrumb */
+    font-weight: 700; /* Bold for active item */
+}

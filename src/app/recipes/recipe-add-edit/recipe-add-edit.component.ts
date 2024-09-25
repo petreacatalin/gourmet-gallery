@@ -54,7 +54,7 @@ export class RecipeAddEditComponent implements OnInit {
 
   initializeForm(): void {
     this.recipeForm = this.formBuilder.group({
-        title: ['', Validators.required],
+        title: ['', [Validators.required, Validators.maxLength(70)]],
         description: ['', Validators.required],
         ingredientsTotal: this.formBuilder.group({
             id: [0],
@@ -90,8 +90,8 @@ export class RecipeAddEditComponent implements OnInit {
         })
     });
 
-    this.addIngredient(); // Add an initial ingredient
-    this.addStep(); // Add an initial step
+    this.addIngredient(); 
+    this.addStep(); 
 }
 
   createIngredient(): FormGroup {
@@ -205,6 +205,7 @@ addIngredient() {
 
     if (this.recipeForm.invalid) {
         this.spinnerService.hide();
+        console.log(this.recipeForm)
         return;
     }
 

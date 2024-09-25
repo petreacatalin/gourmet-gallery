@@ -37,4 +37,8 @@ export class UserProfileService {
   resetProfilePicture(): Observable<void> {
     return this.http.put<void>(`${environment.baseUrl}/Account/remove-profile-picture`, {});
   }
+
+  getRecipesByLoggedUser(): Observable<Recipe[]>{
+    return this.http.get<Recipe[]>(`${environment.baseUrl}/Account/user-recipes`)
+  }
 }

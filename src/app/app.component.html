@@ -1,6 +1,7 @@
 <div class="app-container">
   <app-header></app-header>
   <div class="main-content">
+    <app-breadcrumb></app-breadcrumb>
     <div class="content" [@routeAnimations]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>

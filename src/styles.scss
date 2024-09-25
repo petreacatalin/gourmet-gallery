@@ -22,21 +22,21 @@ html, body {
   overflow: hidden;
 }
 
-/* Sticky Header Styling */
-.header {
-  position: sticky;
-  top: 0;
-  background-color: #343a40; /* Dark background for the header */
-  z-index: 1000;
-  border-bottom: 1px solid #495057;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px; /* Adjust padding as needed */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
-  transition: background-color 0.3s ease; /* Smooth background transition */
-}
+// /* Sticky Header Styling */
+// .header {
+//   position: sticky;
+//   top: 0;
+//   background-color: #343a40; /* Dark background for the header */
+//   z-index: 1000;
+//   border-bottom: 1px solid #495057;
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 10px 20px; /* Adjust padding as needed */
+//   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+//   transition: background-color 0.3s ease; /* Smooth background transition */
+// }
 
 /* Adjusting main content margin */
 .main-content {
@@ -71,11 +71,26 @@ footer {
   bottom: 0;
   z-index: 999;
 }
+/* styles.css */
+.no-breadcrumb .content {
+  background: transparent; /* Make background transparent when no breadcrumb */
+}
 
+.has-breadcrumb .content {
+  background: #f8f9fa; /* Light background when breadcrumb exists */
+}
 /* Media queries for responsive behavior */
 @media (max-width: 768px) {
   .app-container .main-content {
     margin-left: 0;
+  }
+  .breadcrumb {
+    flex-direction: column; /* Stack items on smaller screens */
+  }
+
+  .breadcrumb-item {
+    margin-right: 0; /* Remove right margin */
+    margin-bottom: 0.5rem; /* Add bottom margin */
   }
 }
 

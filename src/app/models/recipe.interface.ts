@@ -33,4 +33,6 @@ export interface Recipe {
   averageRating: number;
   ratingsNumber: number;
   file?: any;
+  createdAt: Date;       
+  updatedAt?: Date;
 }

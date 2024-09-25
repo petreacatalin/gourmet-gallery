@@ -1,0 +1,14 @@
+<nav aria-label="breadcrumb" *ngIf="breadcrumbs.length > 0">
+    <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+        <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let i = index">
+            <a *ngIf="i < breadcrumbs.length - 1; else lastCrumb"
+               class="link-body-emphasis fw-semibold text-decoration-none"
+               [routerLink]="breadcrumb.url">
+                {{ breadcrumb.label }} <!-- Use title instead of ID -->
+            </a>
+            <ng-template #lastCrumb>
+                <span class="active">{{ breadcrumb.label }}</span>
+            </ng-template>
+        </li>
+    </ol>
+</nav>

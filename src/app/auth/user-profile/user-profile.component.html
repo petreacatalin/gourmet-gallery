@@ -6,6 +6,7 @@
       <mat-tab-group>
         <mat-tab label="Personal Info">
           <div class="profile-info">
+            <br>
             <h2>Personal Info</h2>
             <div class="profile-picture-container">
               <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-input">
@@ -32,6 +33,7 @@
         </mat-tab>
         <mat-tab label="Change Password">
           <div class="change-password">
+            <br>
             <h2>Change Password</h2>
             <form (ngSubmit)="changePassword()">
               <div class="form-group">
@@ -44,12 +46,13 @@
                 <input type="password" id="newPassword" class="form-control" [(ngModel)]="newPassword"
                   name="newPassword" required>
               </div>
-              <button type="submit" class="btn-save-changes">Change Password</button>
+              <button type="submit" class="btn-save-changes">Change password</button>
             </form>
           </div>
         </mat-tab>
-        <mat-tab label="Saved Recipes">
+        <mat-tab label="Favorite Recipes">
           <div class="saved-recipes-container">
+            <br>
             <h2>Saved Recipes</h2>
             <div class="recipe-grid">
               <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
@@ -65,7 +68,29 @@
         </mat-tab>
         <mat-tab label="My Reviews">
           <div class="my-reviews">
+            <br>
             <h2>My Reviews</h2>
+            <!-- Reviews content will be added here -->
+          </div>
+        </mat-tab>
+
+        <mat-tab label="My Recipes">
+          <div class="my-reviews">
+            <br>
+            <div class="saved-recipes-container">
+              <br>
+              <h2>Saved Recipes</h2>
+              <div class="recipe-grid">
+                <div class="recipe-card" *ngFor="let recipe of userRecipes">
+                  <div class="card h-100 shadow position-relative" (click)="navigateToRecipe(recipe.id!)">
+                    <img [src]="recipe.imageUrl" alt="{{ recipe.title }}" class="recipe-image">
+                    <div class="recipe-title">
+                      <h5><b>{{ recipe.title }}</b></h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- Reviews content will be added here -->
           </div>
         </mat-tab>

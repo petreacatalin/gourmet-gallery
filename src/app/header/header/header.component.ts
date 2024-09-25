@@ -41,9 +41,9 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.loadProfileData();
     this.router.navigate(['/mainpage']);
-    if (this.sidebarService.isCollapsedSubject.value === false) {
-      this.sidebarService.toggleSidebar();
-    }
+    // if (this.sidebarService.isCollapsedSubject.value === false) {
+    //   this.sidebarService.toggleSidebar();
+    // }
   }
 
   toggleMenu() {

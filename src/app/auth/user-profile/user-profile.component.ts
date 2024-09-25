@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
   currentPassword: string = '';
   newPassword: string = '';
   newImageUrl: string | ArrayBuffer | null = null;
+  userRecipes: any[] = [];
 
   constructor(
     private userProfileService: UserProfileService, 
@@ -34,6 +35,9 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loadProfileData();
     this.loadSavedRecipes();
+    setTimeout(() => {
+      this.loadUserPublishedRecipes();
+    }, 100);
   }
 
   openModal() {
@@ -77,6 +81,7 @@ export class UserProfileComponent implements OnInit {
       });
       this.selectedFile = null;
       this.newImageUrl = null;
+      this.authService.loadProfileData();
     }
   }
 
@@ -84,6 +89,14 @@ export class UserProfileComponent implements OnInit {
     if (this.currentUser) {
       this.userProfileService.getFavorites(this.currentUser.id).subscribe(favorites => {
         this.favoriteRecipes = favorites;
+      });
+    }
+  }
+
+  loadUserPublishedRecipes(): void {
+    if (this.currentUser) {
+      this.userProfileService.getRecipesByLoggedUser().subscribe(userRecipes => {
+        this.userRecipes = userRecipes
       });
     }
   }

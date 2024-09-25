@@ -43,6 +43,9 @@
             <mat-error *ngIf="recipeForm.get('title')?.hasError('required')">
               Title is <strong>required</strong>
             </mat-error>
+            <mat-error *ngIf="recipeForm.get('title')?.hasError('maxlength')">
+              Title must contain a maximum of <strong>70 characters</strong>.
+            </mat-error>
           </mat-form-field>
 
           <!-- Description -->

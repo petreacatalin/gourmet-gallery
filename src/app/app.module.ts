@@ -39,6 +39,7 @@ import { SpinnerComponent } from './utils/spinner/spinner.component';
 import {  MatTabsModule} from '@angular/material/tabs';
 import { ToastComponent } from './utils/toast/toast.component';
 import { ConfirmDialogComponent } from './recipes/confirm-dialog/confirm-dialog.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -65,6 +66,7 @@ export function tokenGetter() {
     SpinnerComponent,
     ToastComponent,
     ConfirmDialogComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     BrowserModule,

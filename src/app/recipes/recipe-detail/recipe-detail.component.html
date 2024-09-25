@@ -1,10 +1,27 @@
 <mat-card class="recipe-card">
   <!-- Card Header -->
-  <mat-card-header >   
-    <h1 class="playfair-font"> {{ recipe?.title }}</h1>
+  <mat-card-header style="justify-content: center;">   
+    <p style="font-size: 48px; " class="playfair-font"> {{ recipe?.title }}</p>
   </mat-card-header>
   <mat-divider></mat-divider>
 
+  <!-- Description Section -->
+  <div class="row mt-4">
+    <div class="col-12">
+        <mat-card-header>
+          <mat-card-title>Description</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ recipe?.description }}</p>
+          <div class="submitted">
+            <p style="display: inline; font-style: italic;">Submitted by  </p>
+            <p style="display: inline;"><b>{{recipe?.applicationUser?.firstName}} {{recipe?.applicationUser?.lastName}}</b></p>
+            <p style="display: inline; font-style: italic;">on {{recipe?.createdAt | date:'short'}}. </p>
+          </div>
+          </mat-card-content>
+      </div>
+    </div>
+  
   <!-- Photo Section -->
   <div class="row">
     <div class="col-12">
@@ -12,27 +29,12 @@
     </div>
   </div>
 
-  <!-- Description Section -->
-  <div class="row mt-4">
-    <div class="col-12">
-      <mat-card-content>
-        <p><strong>Description:</strong></p>
-        <p>{{ recipe?.description }}</p>
-      </mat-card-content>
-    </div>
-  </div>
 
   <!-- Details Section -->
   <div class="recipe-details">
     <div class="row mt-4">
       <div class="col-md-6">
         <mat-card-content>
-          <p><strong>Ingredients:</strong></p>
-          <ul>
-            <li *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
-              {{ ingredient.name }} - {{ ingredient.quantity }}
-            </li>
-          </ul>
           <p><strong>Meal Type:</strong> {{ recipe?.mealType }}</p>
           <p><strong>Cuisine:</strong> {{ recipe?.cuisine }}</p>
           <p><strong>Dietary Restrictions:</strong> {{ recipe?.dietaryRestrictions }}</p>
@@ -48,6 +50,25 @@
       </div>
     </div>
   </div>
+
+<!-- Ingredients Section -->
+<mat-card class="nutrition-facts mt-4">
+  <mat-card-header>
+    <mat-card-title>Ingredients</mat-card-title>
+  </mat-card-header>
+    <div class="row mt-4">
+        <mat-card-content class="col-md-6">
+          <div class="nutrition-grid">
+            <div  *ngIf="recipe?.ingredientsTotal?.ingredients">
+              <li class="nutrition-item" *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
+                {{ ingredient.name }} - {{ ingredient.quantity }}
+              </li>
+            </div>
+          </div>
+        </mat-card-content>
+    </div>
+</mat-card>
+
 
 <!-- Nutrition Facts Card -->
 <mat-card class="nutrition-facts mt-4">
@@ -72,48 +93,44 @@
   </mat-card-content>
 </mat-card>
 
-
 <!-- Information Time Card -->
-<mat-card class="information-time mt-4">
+<mat-card class="nutrition-facts mt-4">
   <mat-card-header>
     <mat-card-title>Information Time</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="information-time-grid">
-      <!-- First Row with 3 Inputs -->
-      <div class="information-time-item" *ngIf="recipe?.informationTime?.prepTime">
-        <p><strong>Preparation Time:</strong></p>
-        {{ recipe?.informationTime?.prepTime }} minutes
+    <div class="nutrition-grid">
+      <!-- Preparation Time -->
+      <div class="nutrition-item" *ngIf="recipe?.informationTime?.prepTime">
+        <strong>Preparation Time:</strong> {{ recipe?.informationTime?.prepTime }} minutes
       </div>
-      <div class="information-time-item" *ngIf="recipe?.informationTime?.cookTime">
-        <p><strong>Cooking Time:</strong></p>
-        {{ recipe?.informationTime?.cookTime }} minutes
+      <!-- Cooking Time -->
+      <div class="nutrition-item" *ngIf="recipe?.informationTime?.cookTime">
+        <strong>Cooking Time:</strong> {{ recipe?.informationTime?.cookTime }} minutes
       </div>
-      <div class="information-time-item" *ngIf="recipe?.informationTime?.standTime">
-        <p><strong>Stand Time:</strong></p>
-        {{ recipe?.informationTime?.standTime }} minutes
+      <!-- Stand Time -->
+      <div class="nutrition-item" *ngIf="recipe?.informationTime?.standTime">
+        <strong>Stand Time:</strong> {{ recipe?.informationTime?.standTime }} minutes
       </div>
-      <!-- Second Row with 2 Inputs -->
-      <div class="information-time-item" *ngIf="recipe?.informationTime?.totalTime">
-        <p><strong>Total Time:</strong></p>
-        {{ recipe?.informationTime?.totalTime }} minutes
+      <!-- Total Time -->
+      <div class="nutrition-item" *ngIf="recipe?.informationTime?.totalTime">
+        <strong>Total Time:</strong> {{ recipe?.informationTime?.totalTime }} minutes
       </div>
-      <div class="information-time-item" *ngIf="recipe?.informationTime?.servings">
-        <p><strong>Servings:</strong></p>
-        {{ recipe?.informationTime?.servings }}
+      <!-- Servings -->
+      <div class="nutrition-item" *ngIf="recipe?.informationTime?.servings">
+        <strong>Servings:</strong> {{ recipe?.informationTime?.servings }}
       </div>
     </div>
   </mat-card-content>
 </mat-card>
 
-
-
-
   <!-- Instructions Section -->
   <div class="row mt-4">
     <div class="col-12">
       <mat-card-content>
-        <p><strong>Instructions:</strong></p>
+        <mat-card-header>
+          <mat-card-title>Instructions</mat-card-title>
+        </mat-card-header>
         <div class="custom-stepper-container">
           <div class="custom-stepper">
             <div *ngFor="let step of recipe?.instructions?.steps; let i = index" 

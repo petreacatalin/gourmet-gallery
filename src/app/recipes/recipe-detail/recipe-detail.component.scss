@@ -20,7 +20,7 @@
 .mat-card-header {
   background-color: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
-  padding: 16px;
+  padding: 30px;
   border-radius: 12px 12px 0 0; /* Rounded top corners */
 }
 
@@ -89,8 +89,8 @@
   font-size: 1.75rem; /* Slightly larger for emphasis */
   font-weight: 600;
   margin-bottom: 20px;
-  color: #007bff; /* Primary brand color */
-  border-bottom: 2px solid #007bff; /* Bottom border for emphasis */
+  color: #0ea041; /* Primary brand color */
+  border-bottom: 2px solid  #0ea041;; /* Bottom border for emphasis */
   padding-bottom: 10px; /* Space below the title */
   font-family: 'Montserrat', sans-serif;
 }
@@ -241,11 +241,11 @@
 }
 
 .custom-step.active .step-indicator {
-  background-color: #007bff;
+  background-color:  #0ea041;;
 }
 
 .custom-step.active .step-line {
-  background-color: #007bff;
+  background-color:  #0ea041;;
 }
 
 /* Rating Stars */
@@ -365,4 +365,9 @@ button {
   font-size: medium;
   font-weight: 200;
   font-style: normal;
+}
+
+.submitted{
+  font-size: 5px;
+  display: inline;
 }

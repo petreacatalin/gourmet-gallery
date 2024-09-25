@@ -68,9 +68,9 @@ export class RecipesListComponent implements OnInit {
     }
   });
 
-  this.recipeService.getRatingsByRecipeId(10).subscribe(data => {
-    this.ratings = data;
-  })
+  // this.recipeService.getRatingsByRecipeId(10).subscribe(data => {
+  //   this.ratings = data;
+  // })
   }
 
 

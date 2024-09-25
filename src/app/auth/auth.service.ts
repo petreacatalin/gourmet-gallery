@@ -66,7 +66,6 @@ export class AuthService {
   loadProfileData(): void {
     this.getProfile().subscribe(user => {
       this.userCurrently = user;
-      console.log(user)
     });
   }
 

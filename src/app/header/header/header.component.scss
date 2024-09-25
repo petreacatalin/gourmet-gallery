@@ -75,16 +75,40 @@
 
 .search-form .input-group {
   width: 100%; /* Ensure the input group takes available space */
-  max-width: 600px; /* Maximum width for search bar */
+  max-width: 500px; /* Maximum width for search bar */
 }
 
-/* User Authentication Buttons */
+/* Container for Auth Buttons or User Info */
 .auth-buttons,
 .logged-in {
   display: flex;
   align-items: center;
-  margin-left: auto; /* Align to the right */
+  margin-left: auto; /* Automatically pushes the auth buttons to the right */
 }
+
+/* Adjust the space between individual buttons */
+.auth-buttons button, 
+.logged-in button {
+  margin-left: 15px; /* Control spacing between buttons */
+}
+
+/* Right-align text for logged-in state */
+.logged-in {
+  text-align: right;
+}
+
+/* Reduce padding around the logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin: 0; /* Remove extra margin around the logo */
+  padding: 0;
+}
+/* Adjust container padding to bring buttons closer to the edge */
+.container {
+  padding-right: 15px; /* Ensure the container doesn’t have too much padding on the right */
+}
+
 
 /* Side Menu Styling */
 .side-menu {
@@ -205,6 +229,7 @@
   .btn-close {
     font-size: 2.5rem; /* Larger close button on mobile */
   }
+
 }
 
 

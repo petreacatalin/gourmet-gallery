@@ -1,32 +1,38 @@
 /* User Profile Container */
 .user-profile-container {
   display: flex;
-  width: 100%;
-  background-color: #f5f5f5; /* Background color for contrast */
-  justify-content: center; /* Center content horizontally */
-  align-items: flex-start; /* Align items to the top */
-  padding: 20px; /* Add padding around the container */
-  margin-left: -140px;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top of the container */
+  min-height: 100vh; /* Ensure full viewport height */
+  background-color: #f7f9fc; /* Background color similar to forgot-password */
+  padding: 20px;
 }
 
 /* Main Content Area */
 .main-content {
   width: 100%;
-  max-width: 75%; /* Limit the width to 75% of the container */
+  max-width: 950px; /* Increased max width for larger card */
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: visible; /* Allow content to expand as needed */
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  margin-top: 40px; /* Push content down from the top */
 }
 
 /* Content Card */
 .content-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   width: 100%;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  box-sizing: border-box; /* Ensure padding and border are included in width */
+  max-width: 950px; /* Increased max width for larger card */
+  box-sizing: border-box;
+  margin-top: 20px; /* Space above the card */
+}
+
+/* Profile Info Section */
+.profile-info, .change-password, .saved-recipes-container, .my-reviews {
+  margin-bottom: 20px;
 }
 
 /* Profile Picture Container */
@@ -35,13 +41,14 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  position: relative; /* Position relative for the reset button */
 }
 
 /* Profile Picture */
 .profile-picture {
   width: 150px;
   height: 150px;
-  max-width: 100%; /* Ensure the image doesn't exceed its container */
+  max-width: 100%;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #ddd;
@@ -56,27 +63,29 @@
 /* Button Container */
 .button-container {
   display: flex;
-  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-  gap: 10px; /* Space between buttons */
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 10px;
-  justify-content: center; /* Center buttons horizontally */
+  justify-content: center;
 }
 
 /* Select Picture Button */
-.btn-select-picture {
+.btn-select-picture, .btn-save-changes {
   min-width: 140px;
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: bold;
-  color: #99a6b4;
-  background-color: #ffffff;
-  border: 2px solid #a4aeb9;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-/* Select Picture Button hover effect */
+.btn-select-picture {
+  color: #99a6b4;
+  background-color: #ffffff;
+  border: 2px solid #a4aeb9;
+}
+
 .btn-select-picture:hover {
   background-color: #d7dfe7;
   color: #afaeae;
@@ -84,42 +93,30 @@
   transform: translateY(-3px);
 }
 
-/* Save Changes Button */
 .btn-save-changes {
-  min-width: 140px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: bold;
   color: #ffffff;
   background: linear-gradient(45deg, #6b00b6, #a3009b);
   border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Save Changes Button hover effect */
 .btn-save-changes:hover {
   background: linear-gradient(45deg, #a3009b, #6b00b6);
   transform: translateY(-3px);
 }
-
-/* Tab Content */
-.profile-info,
-.change-password,
-.saved-recipes-container,
-.my-reviews {
-  padding: 20px;
-}
-
 /* Change Password Section */
-.change-password {
-  margin-top: 20px;
+.change-password form {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+  align-items: center; 
 }
 
-/* Form Styling */
+.change-password .form-group {
+  width: 60%; /* Reduce this to 60% to make it 40% wider than default */
+  margin-bottom: 20px;
+}
+
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -128,7 +125,33 @@
   border-radius: 5px;
   padding: 10px;
   width: 100%;
-  box-sizing: border-box; /* Include padding in width */
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+/* Alerts */
+.alert-validation {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.alert-danger {
+  color: #d9534f;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
 
 /* Recipe Grid */
@@ -141,18 +164,18 @@
 
 /* Recipe Card */
 .recipe-card {
-  flex: 1 1 calc(33.333% - 40px); /* Adjust width and allow flexibility */
+  flex: 1 1 calc(33.333% - 40px);
   max-width: 300px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  box-sizing: border-box;
 }
 
 .recipe-image {
   width: 100%;
-  height: auto; /* Allow image to scale */
+  height: auto;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -205,17 +228,28 @@
   transform: translateY(-5px);
   cursor: pointer;
 }
+/* For smaller screens, adjust the width for better responsiveness */
+@media (max-width: 768px) {
+  .change-password .form-group {
+    width: 80%; /* Reduce the width on tablets */
+  }
+}
 
+@media (max-width: 576px) {
+  .change-password .form-group {
+    width: 100%; /* Full width on mobile devices */
+  }
+}
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
   .main-content {
-    max-width: 90%; /* Increase max-width on smaller screens */
+    max-width: 90%;
   }
 }
 
 @media (max-width: 768px) {
   .recipe-card {
-    flex: 1 1 calc(50% - 40px); /* Two items per row */
+    flex: 1 1 calc(50% - 40px);
   }
 
   .btn-select-picture,
@@ -227,7 +261,7 @@
 
 @media (max-width: 576px) {
   .recipe-card {
-    flex: 1 1 calc(100% - 40px); /* One item per row */
+    flex: 1 1 calc(100% - 40px);
   }
 
   .btn-select-picture,

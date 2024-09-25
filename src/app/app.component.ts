@@ -60,15 +60,11 @@ export class AppComponent implements OnInit {
     return true; 
   }
 
-  // Detect screen resize to update the mobile flag
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.isMobile = event.target.innerWidth < 768;
   }
-  
-  // toggleSidebar() {
-    //   this.isSidebarCollapsed = !this.isSidebarCollapsed;
-    // }
+
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed; // Toggle collapsed state on all devices
   }
