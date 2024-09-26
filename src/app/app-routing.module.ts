@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, data: { breadcrumb: 'Register', animation: 'register' }},
   { path: 'mainpage', component: MainPageComponent, data: { breadcrumb: 'Main Page', animation: 'mainpage' }},
   { path: 'recipes', children: [
-      { path: 'list', component: RecipesListComponent, data: { breadcrumb: 'Recipes List', animation: 'list' }},
+      { path: 'list', component: RecipesListComponent, data: { breadcrumb: 'Recipes', animation: 'list' }},
       { path: 'create', component: RecipeAddEditComponent, data: { breadcrumb: 'Create Recipe', animation: 'create' }},
       { path: 'edit/:id', component: RecipeAddEditComponent, data: { breadcrumb: 'Edit Recipe', animation: 'edit/:id' }},
       { path: ':id', component: RecipeDetailComponent, data: { breadcrumb: 'Recipe Details', animation: ':id' }},

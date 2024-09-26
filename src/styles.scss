@@ -22,22 +22,6 @@ html, body {
   overflow: hidden;
 }
 
-// /* Sticky Header Styling */
-// .header {
-//   position: sticky;
-//   top: 0;
-//   background-color: #343a40; /* Dark background for the header */
-//   z-index: 1000;
-//   border-bottom: 1px solid #495057;
-//   width: 100%;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 10px 20px; /* Adjust padding as needed */
-//   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
-//   transition: background-color 0.3s ease; /* Smooth background transition */
-// }
-
 /* Adjusting main content margin */
 .main-content {
   display: flex;
@@ -50,9 +34,9 @@ html, body {
 /* Main content area styling */
 .content {
   flex: 1;
-  padding: 20px;
+  //padding: 20px;
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 0px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }

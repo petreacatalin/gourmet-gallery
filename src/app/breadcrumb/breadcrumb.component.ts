@@ -43,7 +43,7 @@ export class BreadcrumbComponent implements OnInit {
     if (url.includes('recipes')) {
       if (route.snapshot.routeConfig?.path !== 'list') {
         breadcrumbs.push({
-          label: 'Recipes List',
+          label: 'Recipes',
           url: '/recipes/list' // Link to the recipes list
         });
       }

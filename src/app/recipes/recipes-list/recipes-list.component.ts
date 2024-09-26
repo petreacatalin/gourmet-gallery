@@ -19,7 +19,7 @@ import { SidebarService } from 'src/app/sidebar/sidebar.service';
 export class RecipesListComponent implements OnInit {
   recipes: Recipe[] = [];
   displayedRecipes: Recipe[] = [];
-  sortBy: string = 'title';
+  sortOption: string = 'title_asc'; // Default sort option
   filterText: string = '';
   itemsPerPage: number = 8;
   currentPage: number = 1;
@@ -29,6 +29,7 @@ export class RecipesListComponent implements OnInit {
   currentUser: any;
   ratings?: Rating[];
   isPulsing = false; // State for pulsating effect
+  sortOrder: 'asc' | 'desc' = 'asc'; // Default sorting order
   constructor(
     private recipeService: RecipeService,
      private route: ActivatedRoute,
@@ -97,31 +98,55 @@ export class RecipesListComponent implements OnInit {
         this.sidebarService.toggleSidebar();
       }
   }
-
+  clearFilter(): void {
+    this.filterText = '';
+    this.applyFilter(); // Reset the filter after clearing
+  }
   updateDisplayedRecipes(): void {
     if (!Array.isArray(this.recipes)) {
       console.error('Data is not an array:', this.recipes);
       return;
     }
-
+  
     let filteredRecipes = this.recipes.filter(recipe =>
       recipe.title.toLowerCase().includes(this.filterText.toLowerCase())
     );
-
-    if (this.sortBy === 'title') {
-      filteredRecipes.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
+  
+    // Sort recipes based on the selected criteria
+    filteredRecipes.sort((a, b) => {
+      const [sortBy, order] = this.sortOption.split('_');
+      
+      let comparison = 0;
+      
+      if (sortBy === 'title') {
+        comparison = a.title.localeCompare(b.title);
+      } else if (sortBy === 'ratingsNumber') {
+        comparison = a.ratingsNumber - b.ratingsNumber;
+      } else if (sortBy === 'averageRating') {
+        comparison = a.averageRating - b.averageRating;
+      }
+      else if (sortBy === 'createdAt') {
+        comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        console.log(comparison)
+      }
+      return order === 'asc' ? comparison : -comparison; // Reverse order for descending
+    });
+  
     this.totalPages = Math.ceil(filteredRecipes.length / this.itemsPerPage);
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-
+  
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.displayedRecipes = filteredRecipes.slice(startIndex, endIndex);
   }
+  
+toggleSortOrder(): void {
+  this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+  this.updateDisplayedRecipes(); // Reapply the sorting
+}
 
   sortRecipes(event: Event): void {
-    this.sortBy = (event.target as HTMLSelectElement).value;
+    this.sortOption = (event.target as HTMLSelectElement).value;
     this.updateDisplayedRecipes();
   }
 

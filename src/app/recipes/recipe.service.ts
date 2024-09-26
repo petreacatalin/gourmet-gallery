@@ -38,6 +38,11 @@ export class RecipeService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
+  getPopularRecipes(limit: number): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/popular?limit=${limit}`);
+  }
+  
+
   uploadImage(file: File): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);

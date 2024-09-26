@@ -2,12 +2,14 @@
 .recipes-container {
   padding: 20px;
   background-color: #f5f5f5;
+  
 }
 
 .card {
   transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
   border-radius: 8px;
   overflow: hidden; /* Ensures no overflow of content */
+  
 }
 
 /* Card Title */
@@ -28,6 +30,12 @@
 /* Card Body and Footer */
 .card-body {
   padding: 15px;
+  cursor: pointer !important;
+  
+}
+
+#sortSelect {
+  cursor: pointer;
 }
 
 .card-footer {
@@ -65,10 +73,11 @@
   border-radius: 50%;
   padding: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+  cursor: pointer !important;
   transition: background-color 0.3s, box-shadow 0.3s;
   display: flex;
-  align-items: center;
+  vertical-align: -1px;
+ // align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
@@ -107,6 +116,7 @@
 
 .card-body {
   padding: 16px; /* Ensure there's enough padding */
+  
 }
 
 /* Responsive Design Adjustments */
@@ -184,6 +194,7 @@
   border-radius: 4px;
   font-size: 0.875rem;
   padding: 0.75rem 1rem;
+  cursor: pointer !important;
   background-color: #fff;
   border: 1px solid #ced4da;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -201,6 +212,26 @@
 
 .search-sort-container .form-control {
   max-width: 100%; /* Ensure the input box takes full width on small screens */
+}
+
+/* Positioning the reset button inside the input field */
+.reset-button {
+  position: absolute;
+  top: 70%;
+  right: 17px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  align-self: center;
+  font-size: 18px; /* Adjust size as needed */
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  line-height: 1;
+}
+
+.reset-button:hover {
+  color: #000;
 }
 
 /* Responsive Adjustments */

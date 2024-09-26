@@ -40,6 +40,7 @@ import {  MatTabsModule} from '@angular/material/tabs';
 import { ToastComponent } from './utils/toast/toast.component';
 import { ConfirmDialogComponent } from './recipes/confirm-dialog/confirm-dialog.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ChunkPipe } from './chunk.pipe';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -67,6 +68,7 @@ export function tokenGetter() {
     ToastComponent,
     ConfirmDialogComponent,
     BreadcrumbComponent,
+    ChunkPipe,
   ],
   imports: [
     BrowserModule,

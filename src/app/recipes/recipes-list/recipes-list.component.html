@@ -4,25 +4,33 @@
    <br>
     <h2 class="recipe-heading mb-4">Recipes</h2>
 
-    <div class="row mb-4 align-items-center search-sort-container">
-      <!-- Sorting Control -->
-      <div class="col-12 col-md-4 mb-3 mb-md-0">
-        <label for="sortSelect" class="form-label">Sort By:</label>
-        <select id="sortSelect" class="form-select" [(ngModel)]="sortBy" (change)="sortRecipes($event)">
-          <option value="title">Name</option>
-        </select>
-      </div>
-    
+   <div class="row mb-4 align-items-center search-sort-container">
+  <!-- Sorting Control -->
+  <div class="col-12 col-md-4 mb-3 mb-md-0">
+    <label for="sortSelect" class="form-label">Sort By</label>
+    <select id="sortSelect" class="form-select" [(ngModel)]="sortOption" (change)="sortRecipes($event)">
+      <option value="title_asc">Name (A-Z)</option>
+      <option value="title_desc">Name (Z-A)</option>
+      <option value="averageRating_asc">Average rating (Low to High)</option>
+      <option value="averageRating_desc">Average rating (High to Low)</option>
+      <option value="ratingsNumber_asc">Ratings number (Low to High)</option>
+      <option value="ratingsNumber_desc">Ratings number (High to Low)</option>
+      <option value="createdAt_asc">Created At (Oldest First)</option>
+      <option value="createdAt_desc">Created At (Newest First)</option>
+    </select>
+  </div>
+  
       <!-- Filtering Control -->
-      <div class="col-12 col-md-4 mb-3 mb-md-0">
-        <label for="filterInput" class="form-label">Filter:</label>
-        <input type="text" id="filterInput" class="form-control" placeholder="Search by name" [(ngModel)]="filterText"
-          (input)="applyFilter()">
+      <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative">
+        <label for="filterInput" class="form-label">Filter</label>
+        <input type="text" id="filterInput" class="form-control" placeholder="Search by name" [(ngModel)]="filterText" (input)="applyFilter()">
+        
+        <!-- X reset button -->
+        <button *ngIf="filterText" type="button" class="reset-button" (click)="clearFilter()">&#x2716;</button>
       </div>
-    
       <!-- Items per Page Control -->
       <div class="col-12 col-md-4">
-        <label for="itemsPerPageSelect" class="form-label">Items per page:</label>
+        <label for="itemsPerPageSelect" class="form-label">Items per page</label>
         <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage($event)">
           <option value="8">8</option>
           <option value="12">12</option>
