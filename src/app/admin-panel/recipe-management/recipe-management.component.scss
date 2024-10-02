@@ -1,0 +1,106 @@
+.filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end; /* Align filter to the right */
+  }
+  
+  .mat-table {
+    width: 100%; /* Full width for the table */
+  }
+  
+  .mat-header-cell {
+    background-color: #f5f5f5; /* Light background for header */
+    font-weight: bold; /* Bold text for header */
+    text-align: left; /* Align text to the left */
+    padding: 16px; /* Padding for cells */
+  }
+  
+  .mat-cell {
+    padding: 16px; /* Consistent padding for table cells */
+    border-bottom: 1px solid #e0e0e0; /* Light border between rows */
+  }
+  
+  .mat-button {
+    margin-right: 5px; /* Space between buttons */
+  }
+  
+  .mat-elevation-z8 {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
+  }
+  
+  .mat-paginator {
+    margin-top: 20px; /* Space above paginator */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .filter-container {
+      flex-direction: column; /* Stack the filter on small screens */
+      align-items: flex-start; /* Align to the left */
+    }
+  
+    .mat-button {
+      margin: 5px 0; /* Space between buttons in a column layout */
+    }
+  }
+
+  /* Add custom styles for buttons */
+.approve-button {
+    background-color: #6ec5a8; /* Soft green */
+    color: white;
+    border-radius: 20px; /* Adjusted for smaller size */
+    padding: 8px 16px; /* Reduced padding */
+    font-size: 14px; /* Smaller font size */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+.approve-button:hover {
+    background-color: #5db99c; /* Darker soft green on hover */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.reject-button {
+    background-color: #ff6f61; /* Soft coral */
+    color: white;
+    border-radius: 20px; /* Adjusted for smaller size */
+    padding: 8px 16px; /* Reduced padding */
+    font-size: 14px; /* Smaller font size */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+.reject-button:hover {
+    background-color: #ff5b4a; /* Darker coral on hover */
+    transform: translateY(-2px);
+}
+
+.edit-button {
+    background-color: #2196f3; /* Soft blue */
+    color: white;
+    border-radius: 20px; /* Adjusted for smaller size */
+    padding: 8px 16px; /* Reduced padding */
+    font-size: 14px; /* Smaller font size */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+.edit-button:hover {
+    background-color: #1976d2; /* Darker blue on hover */
+    transform: translateY(-2px);
+}
+
+.delete-button {
+    background-color: #ffcc00; /* Soft yellow */
+    color: white;
+    border-radius: 20px; /* Adjusted for smaller size */
+    padding: 8px 16px; /* Reduced padding */
+    font-size: 14px; /* Smaller font size */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+.delete-button:hover {
+    background-color: #ffb300; /* Darker yellow on hover */
+    transform: translateY(-2px);
+}

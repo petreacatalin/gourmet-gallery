@@ -14,26 +14,25 @@ export class MainPageComponent implements OnInit {
   categories: Recipe[] = [];
   popularRecipes: Recipe[] = [];
   recipesToShow: number = 6; // Set the number of recipes to display
-  limit: number = 10; // Set the desired limit
-
+  limit: number = 15; // Set the desired limit
+  latestRecipes: Recipe[] = [];
   constructor(public authService: AuthService, private recipeService: RecipeService) {}
 
 
   ngOnInit(): void {
-    this.fetchCategories();
+    this.fetchLatestRecipes();
     this.fetchPopularRecipes();
   }
 
-  fetchCategories(): void {
-    this.recipeService.getRecipes().subscribe(data => {
-      this.categories = data;
-    });
+  fetchLatestRecipes(): void {
+    this.recipeService.getLatestRecipes(this.limit).subscribe((recipes) => {
+      this.latestRecipes = recipes;
+    }); 
   }
 
   fetchPopularRecipes() {
     this.recipeService.getPopularRecipes(this.limit).subscribe((recipes) => {
       this.popularRecipes = recipes;
-      console.log(recipes)
     });  
   }
 

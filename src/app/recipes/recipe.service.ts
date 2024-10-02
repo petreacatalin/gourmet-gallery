@@ -41,7 +41,10 @@ export class RecipeService {
   getPopularRecipes(limit: number): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.baseUrl}/popular?limit=${limit}`);
   }
-  
+
+  getLatestRecipes(limit: number): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.baseUrl}/latest?limit=${limit}`);
+  }
 
   uploadImage(file: File): Observable<string> {
     const formData = new FormData();
@@ -50,5 +53,17 @@ export class RecipeService {
     return this.http.post<string>(`${environment.baseUrl}/upload/upload`, formData, {
       responseType: 'text' as 'json' 
     }); 
+  }
+
+  getPendingRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${environment.baseUrl}/adminpanel/pending-recipes`);
+  }
+
+  approveRecipe(id: number): Observable<void> {
+    return this.http.post<void>(`${environment.baseUrl}/adminpanel/approve-recipe/${id}`, {});
+  }
+
+  rejectRecipe(id: number): Observable<void> {
+    return this.http.post<void>(`${environment.baseUrl}/adminpanel/reject-recipe/${id}`, {});
   }
 }

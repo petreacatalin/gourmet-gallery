@@ -127,7 +127,6 @@ export class RecipesListComponent implements OnInit {
       }
       else if (sortBy === 'createdAt') {
         comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-        console.log(comparison)
       }
       return order === 'asc' ? comparison : -comparison; // Reverse order for descending
     });

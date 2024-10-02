@@ -1,0 +1,91 @@
+.category-management {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  min-width: 120px;
+}
+
+.category-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  background-color: #e0e0e0;
+}
+
+.mat-cell {
+  padding: 12px 8px;
+}
+
+.mat-icon-button {
+  padding: 8px;
+  margin-right: 5px;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .category-management {
+    padding: 10px;
+  }
+
+  .form-container {
+    padding: 10px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+}
+
+.category-table th {
+  background-color: #f0f0f0;
+}
+
+.category-table td {
+  padding: 8px;
+}
+
+.button-group {
+  margin-top: 16px;
+}

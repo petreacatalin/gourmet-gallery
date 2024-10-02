@@ -1,0 +1,77 @@
+<div class="category-management">
+  <h2>{{ isEdit ? 'Edit Category' : 'Add New Category' }}</h2>
+
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm" class="form-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Category Name</mat-label>
+      <input matInput required [(ngModel)]="currentCategory.name" name="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="currentCategory.description" name="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Main Category (if subcategory)</mat-label>
+      <mat-select [(ngModel)]="currentCategory.parentCategoryId" name="parentCategoryId">
+        <mat-option [value]="null">No Parent (Main Category)</mat-option>
+        <mat-option *ngFor="let category of mainCategories" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="button-group">
+      <button mat-raised-button color="primary" type="submit">
+        {{ isEdit ? 'Update' : 'Add' }} Category
+      </button>
+      <button mat-button type="button" (click)="cancelEdit()" *ngIf="isEdit">Cancel</button>
+    </div>
+  </form>
+
+  <h3>Category List</h3>
+
+  <table class="category-table">
+    <tr *ngFor="let category of mainCategories">
+      <td [style.paddingLeft.px]="getIndentation(category)">
+        <span (click)="toggleExpand(category.id)" style="cursor: pointer;">
+          {{ isExpanded(category.id) ? '-' : '+' }} {{ category.name }}
+        </span>
+      </td>
+      <td>{{ category.description }}</td>
+      <td>
+        {{ category.parentCategoryId ? getCategoryNameById(category.parentCategoryId) : 'Top-level Category' }}
+      </td>
+      <td>
+        <button mat-icon-button (click)="editCategory(category)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteCategory(category.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <div *ngFor="let category of mainCategories">
+    <div *ngIf="isExpanded(category.id)">
+      <table class="category-table" style="margin-left: 20px;"> 
+        <tr *ngFor="let subCategory of getSubcategories(category.id)">
+          <td [style.paddingLeft.px]="getIndentation(subCategory)">
+            {{ subCategory.name }}
+          </td>
+          <td>{{ subCategory.description }}</td>
+          <td>
+            <button mat-icon-button (click)="editCategory(subCategory)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCategory(subCategory.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

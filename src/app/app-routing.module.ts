@@ -12,8 +12,10 @@ import { UserProfileComponent } from './auth/user-profile/user-profile.component
 import { ForgotPasswordComponent } from './auth/password/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/password/reset-password/reset-password.component';
 import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
+  { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Admin Panel', animation: 'admin-panel', role: 'Admin' } },
   { path: 'login', component: LoginComponent, data: { breadcrumb: 'Login', animation: 'login' }},
   { path: 'register', component: RegisterComponent, data: { breadcrumb: 'Register', animation: 'register' }},
   { path: 'mainpage', component: MainPageComponent, data: { breadcrumb: 'Main Page', animation: 'mainpage' }},

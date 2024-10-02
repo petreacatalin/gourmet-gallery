@@ -41,6 +41,14 @@ import { ToastComponent } from './utils/toast/toast.component';
 import { ConfirmDialogComponent } from './recipes/confirm-dialog/confirm-dialog.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { ChunkPipe } from './chunk.pipe';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { RecipeManagementComponent } from './admin-panel/recipe-management/recipe-management.component';
+import { CategoryManagementComponent } from './admin-panel/category-management/category-management.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -69,6 +77,9 @@ export function tokenGetter() {
     ConfirmDialogComponent,
     BreadcrumbComponent,
     ChunkPipe,
+    AdminPanelComponent,
+    CategoryManagementComponent,
+    RecipeManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,10 +101,15 @@ export function tokenGetter() {
     MatCardModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatTreeModule,
     MatDividerModule,
     CommonModule,    
     MatStepperModule,
     MatTabsModule,
+    MatToolbarModule,
+    MatPaginatorModule,
+    MatTableModule, // Ensure this is included
+    MatSortModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'

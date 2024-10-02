@@ -5,4 +5,5 @@ export interface ApplicationUser {
     email: string;
     password?: string;
     profilePictureUrl?:string;
+    role?: string;
   }

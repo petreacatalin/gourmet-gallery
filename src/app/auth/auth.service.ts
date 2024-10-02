@@ -59,6 +59,13 @@ export class AuthService {
     );
   }
 
+  hasRole(role: string): boolean {
+    if (!this.getToken) return false;
+    const decodedToken: any = jwtDecode(this.getToken()!);
+    console.log(decodedToken.role)
+    return decodedToken.role === role; // Adjust based on how roles are structured
+  }
+
   loggedIn(): Observable<boolean> {
     return this.isloggedIn.asObservable();
   }
@@ -78,6 +85,7 @@ export class AuthService {
         email: decodedToken.email,
         lastName: decodedToken.given_name,
         firstName: decodedToken.family_name,
+        role: decodedToken.role,
         //profilePictureUrl: decodedToken.unique_name
       };
       //this.userCurrently = userDetail;

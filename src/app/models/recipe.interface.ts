@@ -8,6 +8,14 @@ import { Step } from "./step.interface";
 import { ApplicationUser } from "./applicationUser.interface";
 import { InformationTime } from "./informationTime.interface";
 import { NutritionFacts } from "./nutritionFacts.interface";
+import { Category } from "./category.interface";
+
+
+export enum RecipeStatus {
+  Pending = 0,
+  Approved = 1,
+  Rejected = 2,
+}
 
 export interface Recipe {
   id?: number;
@@ -35,4 +43,19 @@ export interface Recipe {
   file?: any;
   createdAt: Date;       
   updatedAt?: Date;
+  status: number;
+  category?: Category[];
+}
+
+export function getStatusString(status: RecipeStatus): string {
+  switch (status) {
+      case RecipeStatus.Pending:
+          return 'Pending';
+      case RecipeStatus.Approved:
+          return 'Approved';
+      case RecipeStatus.Rejected:
+          return 'Rejected';
+      default:
+          return 'Unknown';
+  }
 }
