@@ -34,7 +34,7 @@ export class RecipeManagementComponent implements OnInit {
         this.dataSource.sort = this.sort;
       });
     } else {
-      this.recipeService.getRecipes().subscribe(recipes => {
+      this.recipeService.getRecipes(true).subscribe(recipes => {
         this.dataSource.data = recipes;
         this.totalRecipes = recipes.length;
         this.dataSource.paginator = this.paginator;

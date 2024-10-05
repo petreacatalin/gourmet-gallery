@@ -23,7 +23,6 @@
     "@auth0/angular-jwt": "^5.2.0",
     "@popperjs/core": "^2.11.8",
     "@types/bootstrap": "^5.2.10",
-    "@angular/flex-layout": "^15.0.0",
     "bootstrap": "^5.3.3",
     "jwt-decode": "^4.0.0",
     "rxjs": "~7.5.0",

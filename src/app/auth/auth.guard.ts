@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     if (isLoggedIn) {
       // Optional: check for role
       if (requiredRole && !this.authService.hasRole(requiredRole)) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/forbidden']);
         return false; // User does not have the required role
       }
       return true; // User is authenticated and has the required role (if applicable)

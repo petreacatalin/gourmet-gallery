@@ -66,11 +66,16 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserSub();
     this.routeSub = this.route.params.subscribe(params => {
-      const id = +params['id'];
-      this.getRecipe(id);
+      const id = +params['id'];         // Get the recipe ID
+      const slug = params['slug'];      // Get the recipe slug
+  
+      if (id && slug) {
+        this.getRecipe(id, slug);       // Pass both ID and slug
+      }
+  
       this.loadComments(id);
     });
-   
+  
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
@@ -82,8 +87,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.onScroll.bind(this));
   }
 
-  getRecipe(id: number): void {
-    this.recipeSub = this.recipeService.getRecipeById(id).subscribe(recipe => {
+  getRecipe(id: number, slug: string): void {
+    this.recipeSub = this.recipeService.getRecipeByIdAndSlug(id, slug).subscribe(recipe => {
       this.recipe = recipe as Recipe;
     });
   }

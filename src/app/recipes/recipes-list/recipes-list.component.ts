@@ -91,17 +91,15 @@ export class RecipesListComponent implements OnInit {
     this.toastService.showToast(`‘${recipeName}’ has been removed from your saved recipes.`, 'error');
   }
   
-  navigateToRecipe(recipeId: number) {
-    this.router.navigate(['/recipes', recipeId]);
-    if(this.sidebarService.isCollapsedSubject.value === false)
-      {
-        this.sidebarService.toggleSidebar();
-      }
+  navigateToRecipe(recipeId: number, slug: string) {
+    this.router.navigate(['/recipes', recipeId, slug]); // Add slug to the navigation
   }
+  
   clearFilter(): void {
     this.filterText = '';
     this.applyFilter(); // Reset the filter after clearing
   }
+
   updateDisplayedRecipes(): void {
     if (!Array.isArray(this.recipes)) {
       console.error('Data is not an array:', this.recipes);

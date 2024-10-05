@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { Recipe } from '../models/recipe.interface';
 import { environment } from 'src/environments/environment';
@@ -13,14 +13,26 @@ export class RecipeService {
 
   constructor(private http: HttpClient) { }
 
-  getRecipes(): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.baseUrl}`)
+  getRecipes(isAdmin?: boolean): Observable<Recipe[]> {
+    let params = new HttpParams();
+    
+    // Add isAdmin as a query parameter if it's defined
+    if (isAdmin !== undefined) {
+      params = params.set('isAdmin', isAdmin.toString());
+    }
+    
+    return this.http.get<Recipe[]>(`${this.baseUrl}`, { params });
   }
+  
   
   getRecipeById(id: number): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
   }
-
+  
+  getRecipeByIdAndSlug(id: number, slug: string): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.baseUrl}/${id}/${slug}`);
+  }
+  
   createRecipe(recipe:Recipe): Observable<Recipe> {
     return this.http.post<Recipe>(`${this.baseUrl}`, recipe);
   }

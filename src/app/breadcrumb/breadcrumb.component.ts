@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { Recipe } from '../models/recipe.interface';
+import { RecipeService } from '../recipes/recipe.service';
 
 interface Breadcrumb {
   label: string;
@@ -15,8 +17,9 @@ interface Breadcrumb {
 
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Breadcrumb[] = [];
+  recipeTitle: string | undefined; // Store the recipe title
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private recipeService: RecipeService) {}
 
   ngOnInit() {
     this.router.events
@@ -30,16 +33,18 @@ export class BreadcrumbComponent implements OnInit {
     if (!route) {
       return breadcrumbs;
     }
-  
+
+    // Skip breadcrumb for 'mainpage'
     if (route.snapshot.routeConfig?.path === 'mainpage') {
       return []; 
     }
-  
+
     const routeURL: string = route.snapshot.url.map(segment => segment.path).join('/');
     const fullURL = url ? `${url}/${routeURL}` : routeURL;
-  
+
     const breadcrumbLabel = route.snapshot.data['breadcrumb'];
-  
+
+    // Add Recipes breadcrumb
     if (url.includes('recipes')) {
       if (route.snapshot.routeConfig?.path !== 'list') {
         breadcrumbs.push({
@@ -48,11 +53,18 @@ export class BreadcrumbComponent implements OnInit {
         });
       }
     }
-  
-    if (route.snapshot.params['id'] && route.snapshot.routeConfig?.path === ':id') {
-      breadcrumbs.push({
-        label: route.snapshot.params['id'], // Use the ID as a label
-        url: `/${url}` // Link to the current route's URL
+
+    // Handle recipe detail route with ID and slug
+    if (route.snapshot.params['id'] && route.snapshot.routeConfig?.path === ':id/:slug') {
+      const recipeId = route.snapshot.params['id'];
+      this.recipeService.getRecipeById(recipeId).subscribe((recipe: Recipe) => {
+        this.recipeTitle = recipe.title; // Set the recipe title from the service
+
+        // Add recipe title to breadcrumbs after fetching
+        breadcrumbs.push({
+          label: this.recipeTitle!, // Use the recipe title as the label
+          url: `/${url}` // Link to the current route's URL
+        });
       });
     } else if (breadcrumbLabel) {
       breadcrumbs.push({
@@ -60,14 +72,16 @@ export class BreadcrumbComponent implements OnInit {
         url: `/${fullURL}` // Link to the current route's URL
       });
     }
-  
+
+    // Add Main Page breadcrumb
     if (breadcrumbs.length > 0) {
       breadcrumbs.unshift({
         label: 'Main Page',
         url: '/mainpage'
       });
     }
-  
+
+    // Recursively call for child routes
     return this.buildBreadcrumbs(route.firstChild!, fullURL, breadcrumbs);
   }
-}  
+}

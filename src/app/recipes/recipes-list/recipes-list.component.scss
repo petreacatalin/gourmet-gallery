@@ -1,8 +1,7 @@
 /* Container adjustments for responsiveness */
 .recipes-container {
   padding: 20px;
-  background-color: #f5f5f5;
-  
+  background-color: #efefef; /* Light gray background for better contrast */
 }
 
 .card {
@@ -11,7 +10,9 @@
   overflow: hidden; /* Ensures no overflow of content */
   
 }
-
+.custom-card{
+  padding: 0px;
+}
 /* Card Title */
 .card-title {
   font-family: "Playfair Display", serif;

@@ -216,3 +216,15 @@ h2 {
     width: 250px; /* Adjust logo size for better visibility on mobile */
   }
 }
+.far {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust position as needed */
+  transform: translateY(-50%);
+  color: #888; /* Change color as needed */
+  cursor: pointer;
+}
+
+.far:hover {
+  color: #555; /* Change color on hover */
+}

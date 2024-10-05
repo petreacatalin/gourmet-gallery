@@ -23,6 +23,7 @@
 /* Introductory Section Styling */
 .intro-section {
   text-align: center;
+  margin-top: 30px;
   margin-bottom: 30px;
   background-color: #fdfdfd;
   padding: 20px;
@@ -51,8 +52,17 @@
   .intro-section p {
     font-size: 1rem;
   }
+  .custom-card {
+    max-width: 90%; /* More compact on smaller screens like tablets */
+  }
 }
 
+@media (max-width: 480px) {
+  .custom-card {
+    max-width: 100%; /* Full width on mobile devices */
+    padding: 10px; /* Reduce padding on mobile */
+  }
+}
 
 /* CSS for form container */
 .form-container {
@@ -66,13 +76,14 @@
 
 .custom-card {
   width: 100%; /* Full width */
-  max-width: 800px; /* Maximum width */
+  max-width: 1300px; /* Maximum width */
   background-color: #ffffff; /* White background for the card */
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
   padding: 24px; /* Padding inside the card */
-  margin: 10px; /* Margin around the card */
+  margin: 10px; /* Margin ar ound the card */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  align-self: center;
 }
 
 .custom-card:hover {
@@ -81,7 +92,7 @@
 }
 
 .custom-card-content {
-  padding: 24px; /* Padding inside content */
+  padding: 20px; /* Padding inside content */
 }
 
 .form-fields {

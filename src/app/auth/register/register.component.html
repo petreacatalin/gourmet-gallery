@@ -60,31 +60,34 @@
       </div>
     </div>
 
-    <!-- Password -->
-    <div class="form-group">
-      <div class="floating-label">
-        <input id="password" formControlName="password" type="password" class="form-control" placeholder=" ">
-        <label for="password">Password</label>
-      </div>
-      <div class="alert-validation" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
-        <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
-        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
-        <div *ngIf="registerForm.get('password')?.errors?.['backendError']">{{ registerForm.get('password')?.errors?.['backendError'] }}</div>
-      </div>
-    </div>
+  <!-- Password -->
+<div class="form-group">
+  <div class="floating-label">
+    <input [type]="hidePassword ? 'password' : 'text'" id="password" formControlName="password" class="form-control" placeholder=" ">
+    <label for="password">Password</label>
+    <i (click)="togglePasswordVisibility()" class="far" [ngClass]="hidePassword ? 'fa-eye-slash' : 'fa-eye'" style="cursor: pointer;"></i>
+  </div>
+  <div class="alert-validation" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+    <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
+    <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+    <div *ngIf="registerForm.get('password')?.errors?.['backendError']">{{ registerForm.get('password')?.errors?.['backendError'] }}</div>
+  </div>
+</div>
 
-    <!-- Confirm Password -->
-    <div class="form-group">
-      <div class="floating-label">
-        <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" placeholder=" ">
-        <label for="confirmPassword">Confirm Password</label>
-      </div>
-      <div class="alert-validation" *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
-        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</div>
-        <div *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</div>
-        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['backendError']">{{ registerForm.get('confirmPassword')?.errors?.['backendError'] }}</div>
-      </div>
-    </div>
+<!-- Confirm Password -->
+<div class="form-group">
+  <div class="floating-label">
+    <input [type]="hideConfirmPassword ? 'password' : 'text'" id="confirmPassword" formControlName="confirmPassword" class="form-control" placeholder=" ">
+    <label for="confirmPassword">Confirm Password</label>
+    <i (click)="toggleConfirmPasswordVisibility()" class="far" [ngClass]="hideConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" style="cursor: pointer;"></i>
+  </div>
+  <div class="alert-validation" *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+    <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</div>
+    <div *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</div>
+    <div *ngIf="registerForm.get('confirmPassword')?.errors?.['backendError']">{{ registerForm.get('confirmPassword')?.errors?.['backendError'] }}</div>
+  </div>
+</div>
+
 
     <button type="submit" class="btn btn-primary">Register</button>
     <div class="login-link">

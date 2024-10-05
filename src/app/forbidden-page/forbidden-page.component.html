@@ -1,0 +1,21 @@
+<!-- forbidden-page.component.html -->
+<div class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="forbiddenModalLabel" aria-hidden="true" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="forbiddenModalLabel">Access Forbidden</h5>
+        </div>
+        <div class="modal-body">
+          <p>You do not have permission to access this page.</p>
+          <p>Click the button below to return to the main page.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="redirectToMainPage()">Go to Main Page</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Optional overlay (to darken background like in a modal) -->
+  <div class="modal-backdrop fade show"></div>
+  

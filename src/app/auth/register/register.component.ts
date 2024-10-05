@@ -16,6 +16,10 @@ export class RegisterComponent {
     // Add more error messages as needed
   };
 
+  hidePassword: boolean = true; // to toggle password visibility
+  hideConfirmPassword: boolean = true; // to toggle confirm password visibility
+
+
   constructor(
      private fb: FormBuilder,
      private authService: AuthService,
@@ -77,5 +81,13 @@ export class RegisterComponent {
       });
     }
     this.spinnerService.hide();
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 }

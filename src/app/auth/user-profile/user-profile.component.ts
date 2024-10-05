@@ -139,7 +139,7 @@ export class UserProfileComponent implements OnInit {
     this.newImageUrl = null;
   }
    
-  navigateToRecipe(recipeId: number) {
-    this.router.navigate(['/recipes', recipeId]);
+  navigateToRecipe(recipeId: number, slug: string) {
+    this.router.navigate(['/recipes', recipeId, slug]); // Add slug to the navigation
   }
 }

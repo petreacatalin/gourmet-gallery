@@ -49,6 +49,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RecipeManagementComponent } from './admin-panel/recipe-management/recipe-management.component';
 import { CategoryManagementComponent } from './admin-panel/category-management/category-management.component';
 import { MatTreeModule } from '@angular/material/tree';
+import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -80,6 +81,7 @@ export function tokenGetter() {
     AdminPanelComponent,
     CategoryManagementComponent,
     RecipeManagementComponent,
+    ForbiddenPageComponent,
   ],
   imports: [
     BrowserModule,

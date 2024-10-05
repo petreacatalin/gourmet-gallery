@@ -162,10 +162,12 @@ addIngredient() {
 
   checkEditMode(): void {
     this.route.params.subscribe(params => {
-      if (params['id']) {
+      if (params['id'] && params['slug']) {
         this.isEditMode = true;
         this.recipeId = +params['id'];
-        this.recipeService.getRecipeById(this.recipeId).subscribe(
+        const slug = params['slug'];  // Get the slug from route parameters
+        
+        this.recipeService.getRecipeByIdAndSlug(this.recipeId, slug).subscribe(
           (recipe: Recipe) => {
             this.recipeForm.patchValue({
               title: recipe.title,
@@ -180,12 +182,12 @@ addIngredient() {
               difficultyLevel: recipe.difficultyLevel,
               //otherCategories: recipe.otherCategories
             });
-
+  
             const ingredientsArray = this.ingredients;
             recipe.ingredientsTotal.ingredients.forEach((ingredient: Ingredient) => {
               ingredientsArray.push(this.formBuilder.group(ingredient));
             });
-
+  
             const stepsArray = this.steps;
             recipe.instructions.steps.forEach((step: Step) => {
               stepsArray.push(this.formBuilder.group(step));
@@ -193,19 +195,18 @@ addIngredient() {
           },
           (error) => {
             console.error('Error fetching recipe:', error);
-            // Optionally show user feedback here
           }
         );
       }
     });
   }
+  
 
   onSubmit(): void {
     this.spinnerService.show();
 
     if (this.recipeForm.invalid) {
         this.spinnerService.hide();
-        console.log(this.recipeForm)
         return;
     }
 

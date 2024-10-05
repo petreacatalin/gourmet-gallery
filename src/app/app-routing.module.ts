@@ -13,6 +13,7 @@ import { ForgotPasswordComponent } from './auth/password/forgot-password/forgot-
 import { ResetPasswordComponent } from './auth/password/reset-password/reset-password.component';
 import { ResetPasswordMessageComponent } from './auth/password/reset-password-message/reset-password-message.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 
 const routes: Routes = [
   { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Admin Panel', animation: 'admin-panel', role: 'Admin' } },
@@ -22,16 +23,17 @@ const routes: Routes = [
   { path: 'recipes', children: [
       { path: 'list', component: RecipesListComponent, data: { breadcrumb: 'Recipes', animation: 'list' }},
       { path: 'create', component: RecipeAddEditComponent, data: { breadcrumb: 'Create Recipe', animation: 'create' }},
-      { path: 'edit/:id', component: RecipeAddEditComponent, data: { breadcrumb: 'Edit Recipe', animation: 'edit/:id' }},
-      { path: ':id', component: RecipeDetailComponent, data: { breadcrumb: 'Recipe Details', animation: ':id' }},
+      { path: 'edit/:id/:slug', component: RecipeAddEditComponent, data: { breadcrumb: 'Edit Recipe', animation: 'edit/:id' }},
+      { path: ':id/:slug', component: RecipeDetailComponent, data: { breadcrumb: 'Recipes Details', animation: ':id' }},
     ],  
   },
-  { path: 'user-profile', component: UserProfileComponent, data: { breadcrumb: 'User Profile', animation: 'user-profile' }, canActivate: [AuthGuard] },
+  { path: 'user-profile', component: UserProfileComponent, data: { breadcrumb: 'User Profile', animation: 'user-profile' } },
   { path: 'forgot-password', component: ForgotPasswordComponent, data: { breadcrumb: 'Forgot Password', animation: 'forgot-password' }},
   { path: 'reset-password', component: ResetPasswordComponent, data: { breadcrumb: 'Reset Password', animation: 'reset-password' }},
   { path: 'reset-password-message', component: ResetPasswordMessageComponent, data: { breadcrumb: 'Reset Password Message', animation: 'reset-password-message' }},
+  { path: 'forbidden', component: ForbiddenPageComponent },
   { path: '', redirectTo: 'mainpage', pathMatch: 'full', data: { breadcrumb:'mainpage', animation: 'mainpage' }},
-  { path: '**', redirectTo: 'mainpage', data: { breadcrumb: 'mainpage', animation: 'mainpage' }}
+  { path: '**', redirectTo: 'mainpage', data: { breadcrumb: 'mainpage', animation: 'mainpage' }},
 ];
 
 @NgModule({

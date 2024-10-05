@@ -30,7 +30,7 @@
 
     <ng-template #loggedIn>
       <div class="logged-in text-end text-white">
-        Hello, 
+        Hello,  
         <u><a routerLink="/user-profile" class="text-white">
           {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
         </a></u>
@@ -52,6 +52,11 @@
         <li class="nav-item">
           <a routerLink="/mainpage" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
             <i class="bi bi-house me-2"></i> Home
+          </a>
+        </li>
+        <li class="nav-item"  *ngIf="authService.hasRole('Admin')">
+          <a routerLink="/admin-panel" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
+            <i class="bi bi-house me-2"></i> Admin Panel
           </a>
         </li>
         <li class="nav-item">

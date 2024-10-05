@@ -60,8 +60,12 @@ export class AuthService {
   }
 
   hasRole(role: string): boolean {
+    debugger
     if (!this.getToken) return false;
     const decodedToken: any = jwtDecode(this.getToken()!);
+    // if(decodedToken == 'undefined'){
+    //   return false;
+    // }
     console.log(decodedToken.role)
     return decodedToken.role === role; // Adjust based on how roles are structured
   }

@@ -45,6 +45,7 @@ export interface Recipe {
   updatedAt?: Date;
   status: number;
   category?: Category[];
+  slug?:string;
 }
 
 export function getStatusString(status: RecipeStatus): string {
