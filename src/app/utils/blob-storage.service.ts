@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class BlobStorageService {
 
-  private baseUrl = 'https://localhost:7201/api';
-  // private baseUrl = 'https://gourmet-gallery-be.azurewebsites.net/api'; // Adjust this URL as per your backend API
+  //private baseUrl = 'https://localhost:7201/api';
+  private baseUrl = 'https://gourmet-gallery-be.azurewebsites.net/api'; // Adjust this URL as per your backend API
 
   constructor(private http: HttpClient) {}
 

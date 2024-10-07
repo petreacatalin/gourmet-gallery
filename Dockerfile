@@ -22,6 +22,12 @@ RUN ng build --configuration production
 # Step 2: Serve the Angular app with Nginx
 FROM nginx:alpine
 
+# Remove default Nginx configuration file
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy the custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d
+
 # Copy the built Angular app from the previous stage
 COPY --from=build /app/dist/gourmet-gallery /usr/share/nginx/html
 
@@ -30,6 +36,3 @@ EXPOSE 80
 
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
-
-
-
