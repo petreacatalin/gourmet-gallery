@@ -43,38 +43,62 @@ export class RecipesListComponent implements OnInit {
      }
 
 
-  ngOnInit(): void {
-    this.authService.getProfile().subscribe(user => {
-      this.currentUser = user;
-    });
-
-    this.route.queryParams.subscribe(params => {
-      if (params['search']) {
-        this.filterText = params['search'];
-      }
-      this.recipeService.getRecipes().pipe(
-        tap(recipes => {
-          this.recipes = recipes;
-          this.updateDisplayedRecipes();
-        })
-      ).subscribe();
-    });
-   // Load favorite recipes for the current user
-   this.authService.getProfile().subscribe(user => {
-    if (user) {
-      this.userProfileService.getFavorites(user.id).subscribe(favorites => {
-        this.favoriteRecipeIds = new Set(favorites.map(recipe => recipe.id!));
-        this.updateDisplayedRecipes();
+     ngOnInit(): void {
+      this.checkAndLoadProfileData();
+  
+      // Get query params and fetch recipes based on search filters
+      this.route.queryParams.subscribe(params => {
+        if (params['search']) {
+          this.filterText = params['search'];
+        }
+        this.loadRecipes();
       });
     }
-  });
 
-  // this.recipeService.getRatingsByRecipeId(10).subscribe(data => {
-  //   this.ratings = data;
-  // })
+  checkAndLoadProfileData(): void {
+    if (this.authService.isLoggedIn()) {
+      this.loadProfileData();
+    } else {
+      this.loadRecipes();
+    }
   }
 
+  loadProfileData(): void {
+    this.authService.getProfile().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+        this.loadFavorites(user.id);  
+      },
+      error: (error) => {
+        console.error('Error loading profile data:', error);
+      }
+    });
+  }
 
+  loadFavorites(userId: string): void {
+    this.userProfileService.getFavorites(userId).subscribe({
+      next: (favorites) => {
+        this.favoriteRecipeIds = new Set(favorites.map(recipe => recipe.id!));
+        this.updateDisplayedRecipes();  // Update displayed recipes to reflect favorites
+      },
+      error: (err) => {
+        console.log('Error fetching favorites:', err);
+      }
+    });
+  }
+
+  loadRecipes(): void {
+    this.recipeService.getRecipes().pipe(
+      tap(recipes => {
+        this.recipes = recipes;
+        this.updateDisplayedRecipes();
+      })
+    ).subscribe({
+      error: (err) => {
+        console.log('Error fetching recipes:', err);
+      }
+    });
+  }
   getStars(averageRating: number): number[] {
     const fullStars = Math.floor(averageRating);
     const halfStar = averageRating % 1 > 0.5 ? 1 : 0;

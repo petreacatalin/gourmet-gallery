@@ -27,7 +27,7 @@
 .recipe-image {
   display: flex;
   justify-content: center; /* Center the content horizontally */
-  max-width: 55%;
+  max-width: 85%;
   height: auto;
   border-radius: 12px;
   margin: 20px auto; /* Center image with automatic left and right margins */
@@ -352,6 +352,10 @@ button {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 900;
+  font-size: 40px; /* Move font size here for better readability */
+  line-height: 1.2; /* Set line height to control space between lines */
+  text-align: center; /* Center the text */
+  margin: 0; /* Remove default margin to prevent overflow */
 }
 
 .josefin-slab-font {

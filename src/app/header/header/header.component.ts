@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadProfileData();
+    this.checkAndLoadProfileData();
   }
 
   onSearch() {
@@ -31,9 +31,25 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  checkAndLoadProfileData(): void {
+    // Check if the user is logged in
+    if (this.authService.isLoggedIn()) {
+      // Only load profile data if the user is authenticated
+      this.loadProfileData();
+    } else {
+      // Handle cases where the user is not logged in
+      console.log('User not logged in.');
+    }
+  }
+
   loadProfileData(): void {
-    this.authService.getProfile().subscribe(user => {
-      this.currentUser = user;
+    this.authService.getProfile().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+      },
+      error: (error) => {
+        console.error('Error loading profile data:', error);
+      }
     });
   }
 
