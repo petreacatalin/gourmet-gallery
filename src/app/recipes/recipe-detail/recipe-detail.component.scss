@@ -27,15 +27,25 @@
 .recipe-image {
   display: flex;
   justify-content: center; /* Center the content horizontally */
-  max-width: 85%;
+  max-width: 55%;
   height: auto;
   border-radius: 12px;
   margin: 20px auto; /* Center image with automatic left and right margins */
 }
 
+@media (max-width: 768px) {
+  .recipe-image {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    max-width: 85%;
+    height: auto;
+    border-radius: 12px;
+    margin: 20px auto; /* Center image with automatic left and right margins */
+  }
+}
 /* Card Content */
 .mat-card-content {
-  padding: 16px;
+  padding: 26px;
   border-bottom: 1px solid #e9ecef;
 }
 
@@ -193,6 +203,7 @@
 .custom-stepper-container {
   position: relative;
   width: 100%;
+  font-size: 16px;
   padding: 20px;
 }
 
@@ -288,9 +299,17 @@
 
   .nutrition-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns for the first row */
+    grid-template-columns: repeat(2, 1fr); /* Three columns for the first row */
     gap: 16px; /* Space between items */
     margin-top: 20px;
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Three columns for the first row */
+    gap: 16px; /* Space between items */
+    margin-top: 20px;
+    max-width: 100%;
   }
 
   .nutrition-item {
@@ -300,8 +319,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     text-align: center;
+    justify-content: center !important;
     font-size: 1rem;
     font-weight: 500;
+    max-width: 100%;
   }
 
   .nutrition-item:hover {
@@ -309,20 +330,11 @@
     transform: translateY(-4px);
   }
 
-  /* Adjusting for second row items */
-  .nutrition-item:nth-child(4) {
-    grid-column: 1 / span 1;
-    grid-row: 2;
-  }
 
-  .nutrition-item:nth-child(5) {
-    grid-column: 2 / span 1;
-    grid-row: 2;
-  }
 
   @media (max-width: 1024px) {
     .nutrition-grid {
-      grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
+      grid-template-columns: repeat(1, 1fr); /* Two columns for medium screens */
     }
   }
 
@@ -352,10 +364,9 @@ button {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 900;
-  font-size: 40px; /* Move font size here for better readability */
-  line-height: 1.2; /* Set line height to control space between lines */
-  text-align: center; /* Center the text */
-  margin: 0; /* Remove default margin to prevent overflow */
+  font-size: 20px;
+  line-height: 1.2; 
+  margin: 0; 
 }
 
 .josefin-slab-font {

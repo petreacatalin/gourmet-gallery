@@ -1,7 +1,7 @@
 <mat-card class="recipe-card">
   <!-- Card Header -->
   <mat-card-header style="display: flex; justify-content: center;">
-    <p class="playfair-font">{{ recipe?.title }}</p>
+    <p class="playfair-font" style="font-size: 40px;">{{ recipe?.title }}</p>
   </mat-card-header>
   <mat-divider></mat-divider>
 
@@ -56,17 +56,15 @@
   <mat-card-header>
     <mat-card-title>Ingredients</mat-card-title>
   </mat-card-header>
-    <div class="row mt-4">
-        <mat-card-content class="col-md-6">
-          <div class="nutrition-grid">
-            <div  *ngIf="recipe?.ingredientsTotal?.ingredients">
-              <li class="nutrition-item" *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
+        <mat-card-content>
+          <div class="ingredients-grid">
+            <div *ngIf="recipe?.ingredientsTotal?.ingredients">
+              <div class="nutrition-item" *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
                 {{ ingredient.name }} - {{ ingredient.quantity }}
-              </li>
+              </div>
             </div>
           </div>
         </mat-card-content>
-    </div>
 </mat-card>
 
 

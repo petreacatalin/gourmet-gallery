@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ApplicationUser } from '../models/applicationUser.interface';
 import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
@@ -16,12 +16,23 @@ export class MainPageComponent implements OnInit {
   recipesToShow: number = 6; // Set the number of recipes to display
   limit: number = 15; // Set the desired limit
   latestRecipes: Recipe[] = [];
+  chunkSize = 3;
   constructor(public authService: AuthService, private recipeService: RecipeService) {}
 
 
   ngOnInit(): void {
+    this.updateChunkSize();
     this.fetchLatestRecipes();
     this.fetchPopularRecipes();
+  }
+
+  @HostListener('window:resize')
+  onResize() { 
+    this.updateChunkSize();
+  }
+
+  updateChunkSize() {
+    this.chunkSize = window.innerWidth <= 768 ? 1 : 3; 
   }
 
   fetchLatestRecipes(): void {

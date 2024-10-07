@@ -27,11 +27,11 @@
           </div>
         <div id="popularRecipesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5750">
             <div class="carousel-inner">
-                <ng-container *ngFor="let recipeChunk of (popularRecipes | chunk: 3); let i = index">
+                <ng-container *ngFor="let recipeChunk of (popularRecipes | chunk: chunkSize); let i = index">
                     <div class="carousel-item" [class.active]="i === 0">
                         <div class="row justify-content-center">
                             <ng-container *ngFor="let recipe of recipeChunk">
-                                <div class="col-lg-3 col-md-4 mb-3">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3"> <!-- Updated here -->
                                     <div class="card h-100 shadow border-0">
                                         <a [routerLink]="['/recipes', recipe.id, recipe.slug]" class="recipe-card">
                                             <img [src]="recipe.imageUrl" class="card-img-top fixed-image" [alt]="recipe.title">
@@ -84,7 +84,7 @@
           </div>
         <div id="latestRecipesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
             <div class="carousel-inner">
-                <ng-container *ngFor="let recipeChunk of (latestRecipes | chunk: 3); let i = index">
+                <ng-container *ngFor="let recipeChunk of (latestRecipes | chunk: chunkSize); let i = index">
                     <div class="carousel-item" [class.active]="i === 0">
                         <div class="row justify-content-center">
                             <ng-container *ngFor="let recipe of recipeChunk">
