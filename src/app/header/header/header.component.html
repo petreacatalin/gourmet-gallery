@@ -1,6 +1,5 @@
 <header class="p-3 text-bg-dark sticky-header">
   <!-- Hamburger Toggler (Visible on all devices) -->
-  <!-- Hamburger Toggler -->
   <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-label="Toggle menu">
     <i class="fas" [ngClass]="{'fa-times': menuOpen, 'fa-bars': !menuOpen}"></i>
   </button>
@@ -12,28 +11,31 @@
     </a>
 
     <!-- Search Bar -->
-    <form class="search-form" role="search" (submit)="onSearch(); $event.preventDefault()">
-      <div class="input-group">
-        <input type="search" class="form-control form-control-dark text-bg-dark" [(ngModel)]="searchText"
-          placeholder="Search..." aria-label="Search" name="search">
-        <button type="submit" class="btn btn-outline-light">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </form>
+    <div  class="search-form">
+      <form role="search" (submit)="onSearch(); $event.preventDefault()">
+        <div class="input-group">
+          <input type="search" class="form-control form-control-dark text-bg-dark" [(ngModel)]="searchText"
+            placeholder="Search..." aria-label="Search" name="search">
+          <button type="submit" class="btn btn-outline-light">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
 
     <!-- User Authentication Buttons (Right) -->
     <div class="auth-buttons" *ngIf="!authService.isLoggedIn(); else loggedIn">
-      <button type="button" class="btn btn-outline-light me-2" routerLink="/login">Login</button>
-      <button type="button" class="btn btn-success" routerLink="/register">Sign-up</button>
+      <button type="button" class="btn btn-outline-light me-2" routerLink="/login">Log In</button>
+      <button type="button" class="btn btn-success-light me-2" routerLink="/register">Sign-up</button>
+
     </div>
 
     <ng-template #loggedIn>
       <div class="logged-in text-end text-white">
-        Hello,  
+        Hello,
         <u><a routerLink="/user-profile" class="text-white">
-          {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
-        </a></u>
+            {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
+          </a></u>
         <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
       </div>
     </ng-template>
@@ -46,15 +48,14 @@
         <i class="fas fa-times"></i> <!-- Close icon for the side menu -->
       </button>
     </div>
-    <!-- Menu content -->
     <div *ngIf="menuOpen" class="menu-content">
-      <ul class="nav flex-column mb-auto">
+      <ul class="nav flex-column mb-auto">        
         <li class="nav-item">
           <a routerLink="/mainpage" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
             <i class="bi bi-house me-2"></i> Home
           </a>
         </li>
-        <li class="nav-item"  *ngIf="authService.hasRole('Admin')">
+        <li class="nav-item" *ngIf="authService.hasRole('Admin')">
           <a routerLink="/admin-panel" routerLinkActive="active" class="nav-link text-white" (click)="closeMenu()">
             <i class="bi bi-house me-2"></i> Admin Panel
           </a>
@@ -70,7 +71,7 @@
           </a>
         </li>
         <hr class="text-white">
-        
+
         <!-- User Dropdown -->
         <div class="nav-item dropdown" *ngIf="!authService.isLoggedIn()">
           <li><a class="dropdown-item" routerLink="/login" (click)="closeMenu()">Log In</a></li>

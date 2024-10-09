@@ -117,6 +117,11 @@ h2 {
   border-radius: 6px;
   font-size: 16px; /* Font size for PC */
   padding: 12px; /* Padding for PC */
+  display: inline-flex; /* Changed from 'flex' to 'inline-flex' */
+  align-items: center; /* Center items vertically */
+  justify-content: center;
+  position: relative; /* Position for the arrow */
+  overflow: hidden;
 }
 
 .btn-primary:hover {
@@ -181,9 +186,17 @@ h2 {
 @media (max-width: 768px) {
   
   .register-form {
-    max-width: 80%; /* Full width for mobile devices */
+    max-width: 85%; /* Full width for mobile devices */
     padding: 30px; /* Increased padding for mobile devices */
     border-radius: 12px; /* Rounded corners for mobile devices */
+    width: 85%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
   }
 
   h2 {
@@ -227,4 +240,23 @@ h2 {
 
 .far:hover {
   color: #555; /* Change color on hover */
+}
+
+.arrow {
+  position: absolute;
+  animation: move 1s linear infinite;
+  margin-left: 100px;
+  margin-top: 22px;
+}
+
+@keyframes move {
+  0% {
+      transform: translate(0, -50%); /* Start position */
+  }
+  50% {
+      transform: translate(5px, -50%); /* Move right */
+  }
+  100% {
+      transform: translate(0, -50%); /* Back to start */
+  }
 }

@@ -55,6 +55,8 @@ export class LoginComponent implements OnInit {
       );
     } else {
       this.markFormGroupTouched(this.loginForm);
+      this.spinnerService.hide();
+
     }
   }
 

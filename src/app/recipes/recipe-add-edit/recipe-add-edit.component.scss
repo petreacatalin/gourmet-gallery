@@ -1,3 +1,4 @@
+
 /* CSS for modal */
 .modal-sheet {
   display: flex;
@@ -52,16 +53,43 @@
   .intro-section p {
     font-size: 1rem;
   }
+  
   .custom-card {
-    max-width: 90%; /* More compact on smaller screens like tablets */
+    max-width: 88%; /* More compact on smaller screens like tablets */
   }
 }
 
 @media (max-width: 480px) {
+  .form-container{
+    max-width: 85%;
+  }
+
+  .ingredient-row {
+    flex-direction: column; /* Stack the ingredient and quantity vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+  }
+  .ingredient-row .ingredient-input,
+  .ingredient-row .quantity-input {
+    width: 100%;
+    margin-bottom: 5px; /* Add some space below the inputs */
+  }
   .custom-card {
-    max-width: 100%; /* Full width on mobile devices */
+    max-width: 80%; /* Full width on mobile devices */
     padding: 10px; /* Reduce padding on mobile */
   }
+}
+
+.ingredient-row .ingredient-input,
+.ingredient-row .quantity-input {
+  flex: 1; /* Ensure both inputs take up equal space */
+  box-sizing: border-box; /* Include padding and borders in the width */
+}
+.ingredient-row {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  gap: 10px; /* Space between the fields and the button */
+  margin-bottom: 10px; /* Space below each row */
+  justify-content: space-between; /* Ensure space between the ingredient and quantity inputs */
 }
 
 /* CSS for form container */
@@ -75,8 +103,8 @@
 }
 
 .custom-card {
-  width: 100%; /* Full width */
-  max-width: 1300px; /* Maximum width */
+ // width: 85%; /* Full width */
+  max-width: 900px; /* Maximum width */
   background-color: #ffffff; /* White background for the card */
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
@@ -129,6 +157,7 @@ button[type="submit"] {
   border-radius: 8px; /* Slightly rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
   transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+  
 }
 
 .section-card:hover {
@@ -142,9 +171,15 @@ button[type="submit"] {
 
 @media (max-width: 768px) {
   .custom-card {
-    max-width: 100%; /* Full width for card on small screens */
-    margin: 5px; /* Smaller margin */
+    max-width: 95%; /* Full width for card on small screens */
   }
+  .form-container {
+    min-height: 100vh; /* Full viewport height */
+    background-color: #f0f2f5; /* Light gray background for better contrast */
+    padding: 20px; /* Padding */
+    max-width: fit-content;
+  }
+  
 
   .modal-dialog {
     max-width: 100%; /* Full width for modal on small screens */
@@ -155,44 +190,51 @@ button[type="submit"] {
   }
 }
 
-/* Style for Publish Recipe button */
+/* Style for Publish Recipe button - Minimalist with lighter default */
 .btn-publish-recipe {
-  min-width: 160px; /* Minimum width */
-  padding: 12px 28px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  color: #ffffff; /* Text color */
-  background: linear-gradient(45deg, #6b00b6, #a3009b); /* Gradient background */
-  border: none; /* Remove default border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+  min-width: 140px; /* Reduced minimum width for a sleeker look */
+  padding: 10px 20px; /* Slightly smaller padding */
+  font-size: 15px; /* Smaller, clean font size */
+  font-weight: 500; /* Medium weight text for a modern look */
+  color: #1d4b3b; /* Dark gray text for contrast */
+  border: 2px solid #1d4b3b; /* Thin border for definition */
+  border-radius: 4px; /* Slightly rounded corners */
+  background: transparent;
   cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition */
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Ensure shadows and effects stay within bounds */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  position: relative; /* For future pseudo-elements or positioning */
+  overflow: hidden; /* Keep overflow hidden */
+  background-color: #256951; /* Darker gray on hover */
+  color: #ffffff; /* White text on hover for contrast */
+  transform: translateY(-2px); /* Subtle lift effect on hover */
+  border: 1.5px solid #adb5bd; /* Thin border for definition */
+  border-radius: 4px; 
 }
 
 /* Button hover effect */
+/* Button hover effect */
 .btn-publish-recipe:hover {
-  background: linear-gradient(45deg, #a3009b, #6b00b6); /* Reverse gradient on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
+  background-color: #1d4b3b; /* Dark green background on hover */
+  color: #ffffff; /* White text on hover for contrast */
+  transform: translateY(-3px); /* Slight lift effect on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Added shadow for depth */
+  border: 1.5px solid #adb5bd; /* Keep the border consistent */
 }
+
 
 /* Button focus effect */
 .btn-publish-recipe:focus {
   outline: none; /* Remove default focus outline */
-  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.7), 0 4px 8px rgba(0, 0, 0, 0.3); /* Custom focus outline with inner shadow */
+  box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.5); /* Minimal focus effect */
 }
 
 /* Button disabled state */
 .btn-publish-recipe:disabled {
-  background: #d3d3d3; /* Disabled background color */
-  color: #9e9e9e; /* Disabled text color */
+  background-color: #d8d8d8; /* Lighter gray for disabled state */
+  color: #ffffff; /* White text */
   cursor: not-allowed; /* Not allowed cursor */
-  box-shadow: none; /* Remove shadow */
-  transition: none; /* Remove transition */
 }
+
 
 /* Container for form fields and remove button */
 .ingredient-row, .step-row {
@@ -243,52 +285,76 @@ button[type="submit"] {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Custom focus outline */
 }
 
-/* Style for Add Ingredient Button */
-.btn-futuristic-add {
-  min-width: 114px;
-  padding: 0px 0px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #ffffff;
-  background: linear-gradient(45deg, #ababab, #07d8db);
-  border: none;
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* General Button Styling for Add Ingredient and Add Step */
+.btn-add-ingredient,
+.btn-add-step {
+  min-width: 100px; /* Consistent minimum width */
+  padding: 2px 10px; /* Similar padding for a clean look */
+  font-size: 15px; /* Consistent font size */
+  font-weight: 500; /* Medium weight text */
+  color: #4a4a4a; /* Dark gray text for contrast */
+  background-color: #f5f5f5; /* Light gray background for a minimalist look */
+  border: 2px solid #272727; /* Thin border for definition */
+  border-radius: 4px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
 }
 
-/* Button hover effect for Add Ingredient Button */
-.btn-futuristic-add:hover {
-  background: linear-gradient(45deg, #968695, #7b7b7c); /* Reverse gradient on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
+/* Button hover effect for Add Ingredient and Add Step */
+.btn-add-ingredient:hover,
+.btn-add-step:hover {
+  background-color: #333333; /* Darker gray on hover */
+  color: #ffffff; /* White text on hover for contrast */
+  transform: translateY(-2px); /* Subtle lift effect on hover */
 }
 
-/* Style for Add Step Button */
-.btn-futuristic-add-step {
-  min-width: 114px;
-  padding: 0px 0px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #ffffff;
-  background: linear-gradient(45deg, #ababab, #07d8db);
-  border: none;
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* Focus effect for Add Ingredient and Add Step */
+.btn-add-ingredient:focus,
+.btn-add-step:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.5); /* Minimal focus effect */
 }
 
-/* Button hover effect for Add Step Button */
-.btn-futuristic-add-step:hover {
-  background: linear-gradient(45deg, #5c5c5c, #d1d1d1); /* Reverse gradient on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.7); /* Deeper shadow on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
+/* Button disabled state for Add Ingredient and Add Step */
+.btn-add-ingredient:disabled,
+.btn-add-step:disabled {
+  background-color: #c3c3c3; /* Lighter gray for disabled state */
+  color: #ffffff; /* White text */
+  cursor: not-allowed; /* Not allowed cursor */
+}
+
+/* Style for Select Picture Button */
+.btn-select-picture {
+  min-width: 140px; /* Consistent minimum width */
+  padding: 10px 15px; /* Similar padding for a clean look */
+  font-size: 15px; /* Consistent font size */
+  font-weight: 500; /* Medium weight text */
+  color: #020101; /* Dark gray text for contrast */
+  background-color: #f5f5f5; /* Light gray background for a minimalist look */
+  border: 2px solid #272727; /* Thin border for definition */
+  border-radius: 4px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smoo ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Select Picture Button hover effect */
+.btn-select-picture:hover {
+  background-color: #333333; /* Darker gray on hover */
+  color: #ffffff; /* White text on hover for contrast */
+  transform: translateY(-2px); /* Subtle lift effect on hover */
+}
+
+/* Focus effect for Select Picture Button */
+.btn-select-picture:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.5); /* Minimal focus effect */
+}
+
+/* Button disabled state for Select Picture */
+.btn-select-picture:disabled {
+  background-color: #c3c3c3; /* Lighter gray for disabled state */
+  color: #ffffff; /* White text */
+  cursor: not-allowed; /* Not allowed cursor */
 }
 
 /* Fade-in effect */
@@ -330,33 +396,11 @@ button[type="submit"] {
 
 /* Button Container */
 .button-container {
-  display: flex;
   gap: 10px; /* Space between buttons */
   margin-top: 10px;
-}
-
-/* Select Picture Button */
-.btn-select-picture {
-  min-width: 160px; /* Minimum width */
-  padding: 9px 20px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  color: #99a6b4; /* Text color */
-  background-color: #ffffff; /* White background */
-  border: 2px solid #a4aeb9; /* Blue border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition */
-}
-
-/* Select Picture Button hover effect */
-.btn-select-picture:hover {
-  background-color: #d7dfe7; /* Blue background on hover */
-  color: #afaeae; /* White text on hover */
-  border-color: #a1b0bf; /* Darker blue border on hover */
-  transform: translateY(-3px); /* Lift effect on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.6); /* Shadow for depth */
+  display: flex; /* Enable Flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically (if needed) */
 }
 
 /* Profile Picture Container */
@@ -369,10 +413,12 @@ button[type="submit"] {
 
 /* Profile Picture */
 .recipe-picture {
-  max-width: 100%; /* Responsive width */
-  height: auto; /* Auto height to maintain aspect ratio */
-  border-radius: 7%;
-  object-fit: cover;
-  border: 3px solid #ddd;
-  margin-bottom: 10px;
+  width: 100%; /* Ensures image fits card width */
+  height: 200px; /* Fixed height */
+  object-fit: fit; /* Ensures image fits without distortion */
+  border-radius: 10px; /* Soft edges */
+  margin-bottom: 10px; /* Spacing below the image */
+  border: 2px solid #e0e0e0; /* Light border around the image */
 }
+
+

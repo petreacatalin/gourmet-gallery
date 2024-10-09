@@ -12,7 +12,7 @@
     margin: 0; /* Reset default margin */
     padding: 0; /* Reset default padding */
     list-style: none; /* Remove default list style */
-    font-family: 'Arial', sans-serif; /* Font family */
+    font-family: 'Lora', serif; /* Font family */
 }
 
 .breadcrumb-item {
@@ -24,6 +24,7 @@
     content: '>'; /* Custom separator */
     margin-right: 1rem; /* Space before the separator */
     color: #6c757d; /* Color for the separator */
+    opacity: 50%;
 }
 
 .breadcrumb-item a {

@@ -16,7 +16,7 @@
 
 /* Adjusting header size on scroll */
 .sticky-header.shrink {
-  height: 50px; /* Reduced height */
+  height: 70px; /* Reduced height */
   padding: 0 10px; /* Reduced padding */
 }
 
@@ -67,6 +67,7 @@
 
 /* Search Bar Styling */
 .search-form {
+  max-width: 100%;
   flex-grow: 1; /* Make the search bar wider */
   margin-left: 20px; /* Space between the logo and search bar */
   display: flex;
@@ -79,17 +80,51 @@
 }
 
 /* Container for Auth Buttons or User Info */
-.auth-buttons,
-.logged-in {
-  display: flex;
-  align-items: center;
-  margin-left: auto; /* Automatically pushes the auth buttons to the right */
+/* Auth Buttons Styling */
+.auth-buttons button {
+  background-color: #1d4b3b; /* Updated color for Sign-up */
+  color: white; /* White text color */
+  font-size: 1rem; /* Regular font size */
+  border-radius: 6px; /* Less rounded corners */
+  padding: 8px 20px; /* Adjusted padding for a balanced look */
+  border: 2px solid transparent; /* No border by default */
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
 }
 
-/* Adjust the space between individual buttons */
-.auth-buttons button, 
-.logged-in button {
-  margin-left: 15px; /* Control spacing between buttons */
+.auth-buttons .btn-outline-light {
+  background-color: transparent; /* Transparent for Log-in */
+  border-color: white; /* White border */
+  border-radius: 6px; /* Matching less-rounded style */
+}
+
+.auth-buttons button:hover {
+  background-color: #145634; /* Darker shade of green on hover */
+  border-color: white; /* White border on hover */
+}
+
+.auth-buttons .btn-outline-light:hover {
+  background-color: white; /* White background on hover */
+  color: #343a40; /* Dark text on hover */
+  border-color: white; /* Keep border white */
+}
+
+/* Mobile Specific Styling */
+@media (max-width: 768px) {
+  .auth-buttons button {
+    font-size: 0.85rem; /* Slightly smaller font on mobile */
+    padding: 3px 8px; /* Adjusted padding for mobile */
+    border-radius: 4px; /* Slightly less rounded on mobile */
+  }
+
+  .search-form{
+    width: 100%; /* Ensure the input group takes available space */
+   max-width: 500px; /* Maximum width for search bar */
+  }
+  
+  .auth-buttons {
+    margin-left: 10px; /* Ensure space on the right */
+    margin-right: -22px;
+  }
 }
 
 /* Right-align text for logged-in state */
@@ -231,7 +266,31 @@
   }
 
 }
+@media (max-width: 576px) {
+  .search-form {
+    max-width: 40%;
+    flex-grow: 1; /* Make the search bar wider */
+    margin-left: 50px; /* Space between the logo and search bar */
+    display: flex;
+    justify-content: center;
+  }
 
+  .logo-container {
+    max-width: 80px; /* Smaller logo size */
+     display: none; /* Hide search bar on extra-small devices */
+
+  }
+
+  .auth-buttons,
+  .logged-in {
+    flex-direction: column; /* Stack auth buttons */
+    align-items: flex-end;
+  }
+
+  .navbar-toggler {
+    font-size: 2rem; /* Slightly smaller icon on very small screens */
+  }
+}
 
 /* Hamburger Toggler Styling */
 .navbar-toggler {

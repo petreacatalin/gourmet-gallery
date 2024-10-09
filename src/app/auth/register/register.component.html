@@ -87,11 +87,11 @@
     <div *ngIf="registerForm.get('confirmPassword')?.errors?.['backendError']">{{ registerForm.get('confirmPassword')?.errors?.['backendError'] }}</div>
   </div>
 </div>
-
-
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Register
+      <i class="fas fa-arrow-right arrow"></i>
+    </button>
     <div class="login-link">
-      Already have an account? <a [routerLink]="['/login']">Login here!</a>
+      Already have an account? <a [routerLink]="['/login']">Log in here!</a>
     </div>
   </form>
 </div>

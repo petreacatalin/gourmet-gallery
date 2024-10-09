@@ -20,7 +20,7 @@
   <div class="form-wrapper">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <img src="assets/images/logo.png" class="logo" alt="Gourmet Logo">
-      <h2>Login</h2>
+      <h2>Log In</h2>
       <div class="form-group">
         <label for="userName">Email</label>
         <input id="userName" formControlName="userName" type="text" class="form-control" placeholder="Enter your e-mail">
@@ -45,7 +45,9 @@
             Email or password is invalid!
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">Log In
+        <i class="fas fa-arrow-right arrow"></i>
+      </button>
       <div class="register-link">
         Don't have an account? <a [routerLink]="['/register']">Register here!</a>
       </div>

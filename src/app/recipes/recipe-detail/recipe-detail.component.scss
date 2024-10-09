@@ -11,6 +11,15 @@
 
 }
 
+.recipe-title{
+  font-style: normal !important;
+  font-family: 'Playfair Display', serif; /* Apply chosen font */
+  font-size: 2.5em; /* Adjust size as needed */
+  color: #1d4b3b; /* Choose a suitable color */
+  margin-bottom: 15px;
+  font-size: 28px;
+  line-height: 0.9;
+}
 .recipe-card:hover {
   box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25); /* Slightly more pronounced shadow on hover */
   transform: translateY(-4px); /* Slight lift effect */
@@ -20,8 +29,9 @@
 .mat-card-header {
   background-color: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
-  padding: 30px;
+  padding: 10px;
   border-radius: 12px 12px 0 0; /* Rounded top corners */
+  margin-top: 2px;
 }
 
 .recipe-image {
@@ -37,7 +47,7 @@
   .recipe-image {
     display: flex;
     justify-content: center; /* Center the content horizontally */
-    max-width: 85%;
+    max-width: 90%;
     height: auto;
     border-radius: 12px;
     margin: 20px auto; /* Center image with automatic left and right margins */
@@ -45,8 +55,9 @@
 }
 /* Card Content */
 .mat-card-content {
-  padding: 26px;
-  border-bottom: 1px solid #e9ecef;
+  padding: 20px;
+  overflow: hidden;
+
 }
 
 .mat-card-content p {
@@ -64,6 +75,14 @@
 .mat-card-content ul li,
 .mat-card-content ol li {
   margin-bottom: 8px;
+}
+
+.mat-card-title{
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 964;
+  font-size: 20px;
+  font-style: italic;
 }
 
 /* Subtitle Styling */
@@ -140,7 +159,7 @@
 
     .mat-card-header {
       border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 10px;
+      padding-bottom: 5px;
     }
 
     .mat-card-content {
@@ -204,12 +223,8 @@
   position: relative;
   width: 100%;
   font-size: 16px;
-  padding: 20px;
-}
+  padding: 10px;
 
-.custom-stepper {
-  position: relative;
-  padding-left: 30px;
 }
 
 .custom-step {
@@ -229,6 +244,7 @@
   justify-content: center;
   font-size: 16px;
   font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
   color: #fff;
   transition: background-color 0.3s ease;
   margin-right: 20px;
@@ -238,6 +254,10 @@
 .step-content {
   flex: 1;
   position: relative;
+  width: 200px; /* Set a width for the container */
+  word-wrap: break-word; /* Allows breaking long words */
+  overflow-wrap: break-word; /* Modern equivalent of word-wrap */
+  white-space: normal; /* Normal wrapping behavior */
 }
 
 .step-line {
@@ -278,6 +298,14 @@
   margin-top: 1rem;
 }
 
+.reply-button{
+  background-color: #f5f5f5;
+  color: #222020;
+
+  &:hover {
+    box-shadow: 0 5px 10px rgba(46, 46, 46, 0.3);
+  }
+}
 .nested-comments {
   margin-left: 2rem;
 }
@@ -342,6 +370,14 @@
     .nutrition-grid {
       grid-template-columns: 1fr; /* Single column for small screens */
     }
+
+    .ingredients-grid {
+      display: flex;
+      grid-template-columns: repeat(1, 1fr); /* Three columns for the first row */
+      gap: 16px; /* Space between items */
+      margin-top: 20px;
+      max-width: 50%;
+    }
   }
 }
 
@@ -378,11 +414,14 @@ button {
 .gupter-regular {
   font-family: "Gupter", serif;
   font-size: medium;
-  font-weight: 200;
+  font-weight: 150;
   font-style: normal;
+  opacity: 85%;
 }
 
 .submitted{
-  font-size: 5px;
+  font-size: large;
   display: inline;
+  font-style: italic;
+  opacity: 80%;
 }

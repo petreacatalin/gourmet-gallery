@@ -2,6 +2,11 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Lora:wght@600&family=Merriweather:ital,wght@1,300;1,400&family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Lora:wght@600&family=Quicksand:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@1,664&family=Source+Sans+3&display=swap');
+
 
 html, body {
   height: 100%;
@@ -34,8 +39,6 @@ html, body {
 /* Main content area styling */
 .content {
   flex: 1;
-  //padding: 20px;
-  //background-color: #efefef; /* Light gray background for better contrast */
   background-color: #f0f2f5; /* Light gray background for better contrast */
 
   border-radius: 0px;
@@ -77,12 +80,5 @@ footer {
   .breadcrumb-item {
     margin-right: 0; /* Remove right margin */
     margin-bottom: 0.5rem; /* Add bottom margin */
-  }
-}
-
-@media (max-width: 576px) {
-  .main-content {
-    margin-left: 0;
-    padding-top: 60px; /* Adjust if needed */
   }
 }

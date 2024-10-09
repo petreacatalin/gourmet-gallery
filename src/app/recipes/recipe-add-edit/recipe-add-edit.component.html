@@ -13,7 +13,7 @@
           </strong>
         </div>
         <div class="modal-footer flex-column w-200 gap-2 pb-3 border-top-0">
-          <button type="button" routerLink="/login" class="btn btn-lg btn-primary">Login</button>
+          <button type="button" routerLink="/login" class="btn btn-lg btn-primary">Log In</button>
         </div>
       </div>
     </div>
@@ -24,165 +24,174 @@
   <div class="intro-section">
     <h2>Share Your Favorite Recipe with the World!</h2>
     <p>
-      Welcome to our community of food lovers! Whether you're a seasoned chef or a home cook, 
-      we can't wait to see what you create. Use the form below to publish your recipe. 
-      Fill out the details, upload an appetizing photo, and let others enjoy your culinary masterpiece!
+      Welcome to our community of food lovers! Whether you're a seasoned chef or a home cook,
+      we can't wait to see what you create. Use the form below to publish your recipe.
+    </p>
+    <p>Fill out the details, upload an appetizing photo, and let others enjoy your culinary masterpiece!
     </p>
   </div>
 
-<div class="container fade-in" *ngIf="isLoggedIn">
-  <div class="form-container">
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-      <mat-card class="custom-card">
-        <mat-card-title>Publish your Recipe </mat-card-title>
-        <mat-card-content class="custom-card-content">
-          <!-- Title -->
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Title</mat-label>
-            <input matInput formControlName="title" type="text">
-            <mat-error *ngIf="recipeForm.get('title')?.hasError('required')">
-              Title is <strong>required</strong>
-            </mat-error>
-            <mat-error *ngIf="recipeForm.get('title')?.hasError('maxlength')">
-              Title must contain a maximum of <strong>70 characters</strong>.
-            </mat-error>
-          </mat-form-field>
+  <div class="container fade-in" *ngIf="isLoggedIn">
+    <div class="form-container">
+      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+        <mat-card class="custom-card">
+          <mat-card-title>Publish your Recipe </mat-card-title>
+          <mat-card-content class="custom-card-content">
+            <!-- Title -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Title</mat-label>
+              <input matInput formControlName="title" type="text">
+              <mat-error *ngIf="recipeForm.get('title')?.hasError('required')">
+                Title is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="recipeForm.get('title')?.hasError('maxlength')">
+                Title must contain a maximum of <strong>70 characters</strong>.
+              </mat-error>
+            </mat-form-field>
 
-          <!-- Description -->
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="description"></textarea>
-            <mat-error *ngIf="recipeForm.get('description')?.hasError('required')">
-              Description is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+            <!-- Description -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+              <mat-error *ngIf="recipeForm.get('description')?.hasError('required')">
+                Description is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
 
-          <mat-card class="section-card">
-            <mat-card-title>Recipe Image</mat-card-title>
-            <div class="step-row">
-              <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-input">
-              <img *ngIf="this.newImageUrl" [src]="this.newImageUrl" alt="Recipe Picture" class="recipe-picture">
-              <button mat-icon-button *ngIf="this.newImageUrl" (click)="removeSelectedfile()" class="btn-remove">
-                <mat-icon>close</mat-icon>
-              </button>
-            </div>
-            <div class="button-container">
-              <button type="file" id="fileInput" (click)="triggerFileInput()" class="btn-select-picture">Select Picture</button>
-            </div>
-          </mat-card>
-                  <!-- Ingredients Card -->
-          <mat-card class="section-card">
-            <mat-card-title>Ingredients</mat-card-title>
-            <mat-card-content>
-              <div formGroupName="ingredientsTotal">
-                <div formArrayName="ingredients">
-                  <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i" class="ingredient-row">
-                    <mat-form-field appearance="outline" class="compact-form-field">
-                      <mat-label>Ingredient {{ i + 1 }}</mat-label>
-                      <input matInput formControlName="name" type="text">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="compact-form-field">
-                      <mat-label>Quantity</mat-label>
-                      <input matInput formControlName="quantity" type="text">
-                    </mat-form-field>
-                    <button mat-icon-button (click)="removeIngredient(i)" class="btn-remove">
-                      <mat-icon>close</mat-icon>
-                    </button>
-                  </div>
-                  <!-- Add Ingredient Button -->
-                  <button mat-raised-button type="button" class="btn-futuristic-add" (click)="addIngredient()">Add Ingredient</button>
+            <mat-card class="section-card">
+              <mat-card-title>Recipe Image</mat-card-title>
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-input">
+                <img *ngIf="this.newImageUrl" [src]="this.newImageUrl" alt="Recipe Picture" class="recipe-picture">
+                <div class="button-container">
+                  <button mat-icon-button *ngIf="this.newImageUrl" (click)="removeSelectedfile()" class="btn-remove">
+                    <mat-icon>close</mat-icon>
+                  </button>
                 </div>
+              <div class="button-container">
+                <button type="file" id="fileInput" (click)="triggerFileInput()" class="btn-select-picture">Select
+                  Picture</button>
               </div>
-            </mat-card-content>
-          </mat-card>
-
-          <!-- Steps Card -->
-          <mat-card class="section-card">
-          <mat-card-title>Steps</mat-card-title>
-          <mat-card-content>
-            <div formGroupName="instructions">
-              <div formArrayName="steps">
-                <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i" class="container-step">
-                  <div class="step-row">
-                    <mat-form-field appearance="outline" class="compact-form-field">
-                      <mat-label>Step {{ i + 1 }}</mat-label>
-                      <textarea matInput formControlName="description"></textarea>
-                    </mat-form-field>
-                    <button mat-icon-button (click)="removeStep(i)" class="btn-remove">
-                      <mat-icon>close</mat-icon>
-                    </button>
+            </mat-card>
+            <!-- Ingredients Card -->
+            <mat-card class="section-card">
+              <mat-card-title>Ingredients</mat-card-title>
+              <mat-card-content>
+                <div formGroupName="ingredientsTotal">
+                  <div formArrayName="ingredients">
+                    <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i"
+                      class="ingredient-row">
+                      <mat-form-field appearance="outline" class="compact-form-field">
+                        <mat-label>Ingredient {{ i + 1 }}</mat-label>
+                        <input matInput formControlName="name" type="text">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="compact-form-field">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput formControlName="quantity" type="text">
+                      </mat-form-field>
+                      <button mat-icon-button (click)="removeIngredient(i)" class="btn-remove">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </div>
+                    <!-- Add Ingredient Button -->
+                    <div class="button-container">
+                      <button mat-raised-button type="button" class="btn-add-ingredient" (click)="addIngredient()">Add
+                        Ingredient</button>
+                    </div>
                   </div>
                 </div>
-                <!-- Add Step Button -->
-                <button mat-raised-button type="button" class="btn-futuristic-add-step" (click)="addStep()">Add Step</button>
-              </div>
-            </div>
-          </mat-card-content>
-          </mat-card>
+              </mat-card-content>
+            </mat-card>
 
-          <!-- Tags -->
-          <mat-form-field appearance="outline">
-            <mat-label>Tags</mat-label>
-            <input matInput formControlName="tags" type="text">
-          </mat-form-field>
+            <!-- Steps Card -->
+            <mat-card class="section-card">
+              <mat-card-title>Steps</mat-card-title>
+              <mat-card-content>
+                <div formGroupName="instructions">
+                  <div formArrayName="steps">
+                    <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i" class="container-step">
+                      <div class="step-row">
+                        <mat-form-field appearance="outline" class="compact-form-field">
+                          <mat-label>Step {{ i + 1 }}</mat-label>
+                          <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+                        <button mat-icon-button (click)="removeStep(i)" class="btn-remove">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- Add Step Button -->
+                    <div class="button-container">
+                      <button mat-raised-button type="button" class="btn-minimalist btn-add-step"
+                        (click)="addStep()">Add Step</button>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
 
-          <!-- Meal Type -->
-          <mat-form-field appearance="outline">
-            <mat-label>Meal Type</mat-label>
-            <mat-select formControlName="mealType">
-              <mat-option *ngFor="let type of mealTypes" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Tags -->
+            <mat-form-field appearance="outline">
+              <mat-label>Tags</mat-label>
+              <input matInput formControlName="tags" type="text">
+            </mat-form-field>
 
-          <!-- Cuisine -->
-          <mat-form-field appearance="outline">
-            <mat-label>Cuisine</mat-label>
-            <mat-select formControlName="cuisine">
-              <mat-option *ngFor="let type of cuisines" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Meal Type -->
+            <mat-form-field appearance="outline">
+              <mat-label>Meal Type</mat-label>
+              <mat-select formControlName="mealType">
+                <mat-option *ngFor="let type of mealTypes" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <!-- Dietary Restrictions -->
-          <mat-form-field appearance="outline">
-            <mat-label>Dietary Restrictions</mat-label>
-            <mat-select formControlName="dietaryRestrictions">
-              <mat-option *ngFor="let type of dietaryRestrictions" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Cuisine -->
+            <mat-form-field appearance="outline">
+              <mat-label>Cuisine</mat-label>
+              <mat-select formControlName="cuisine">
+                <mat-option *ngFor="let type of cuisines" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <!-- Cooking Method -->
-          <mat-form-field appearance="outline">
-            <mat-label>Cooking Method</mat-label>
-            <mat-select formControlName="cookingMethod">
-              <mat-option *ngFor="let type of cookingMethods" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Dietary Restrictions -->
+            <mat-form-field appearance="outline">
+              <mat-label>Dietary Restrictions</mat-label>
+              <mat-select formControlName="dietaryRestrictions">
+                <mat-option *ngFor="let type of dietaryRestrictions" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <!-- Main Ingredient -->
-          <mat-form-field appearance="outline">
-            <mat-label>Main Ingredient</mat-label>
-            <mat-select formControlName="mainIngredient">
-              <mat-option *ngFor="let type of mainIngredients" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Cooking Method -->
+            <mat-form-field appearance="outline">
+              <mat-label>Cooking Method</mat-label>
+              <mat-select formControlName="cookingMethod">
+                <mat-option *ngFor="let type of cookingMethods" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <!-- Occasion -->
-          <mat-form-field appearance="outline">
-            <mat-label>Occasion</mat-label>
-            <mat-select formControlName="occasion">
-              <mat-option *ngFor="let type of occasions" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Main Ingredient -->
+            <mat-form-field appearance="outline">
+              <mat-label>Main Ingredient</mat-label>
+              <mat-select formControlName="mainIngredient">
+                <mat-option *ngFor="let type of mainIngredients" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <!-- Difficulty Level -->
-          <mat-form-field appearance="outline">
-            <mat-label>Difficulty Level</mat-label>
-            <mat-select formControlName="difficultyLevel">
-              <mat-option *ngFor="let type of difficultyLevels" [value]="type">{{ type }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Occasion -->
+            <mat-form-field appearance="outline">
+              <mat-label>Occasion</mat-label>
+              <mat-select formControlName="occasion">
+                <mat-option *ngFor="let type of occasions" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <!-- Other Categories
+            <!-- Difficulty Level -->
+            <mat-form-field appearance="outline">
+              <mat-label>Difficulty Level</mat-label>
+              <mat-select formControlName="difficultyLevel">
+                <mat-option *ngFor="let type of difficultyLevels" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Other Categories
           <mat-form-field appearance="outline">
             <mat-label>Other Categories</mat-label>
             <mat-select formControlName="otherCategories" multiple>
@@ -190,65 +199,65 @@
             </mat-select>
           </mat-form-field> -->
 
-          <!-- Information Time Card -->
-          <mat-card class="section-card">
-            <mat-card-title>Information Time</mat-card-title>
-            <mat-card-content>
-              <div formGroupName="informationTime">
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Prep Time (minutes)</mat-label>
-                  <input matInput formControlName="prepTime" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Cook Time (minutes)</mat-label>
-                  <input matInput formControlName="cookTime" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Stand Time (minutes)</mat-label>
-                  <input matInput formControlName="standTime" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Total Time (minutes)</mat-label>
-                  <input matInput formControlName="totalTime" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Servings</mat-label>
-                  <input matInput formControlName="servings" type="number">
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
+            <!-- Information Time Card -->
+            <mat-card class="section-card">
+              <mat-card-title>Information Time</mat-card-title>
+              <mat-card-content>
+                <div formGroupName="informationTime">
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Prep Time (minutes)</mat-label>
+                    <input matInput formControlName="prepTime" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Cook Time (minutes)</mat-label>
+                    <input matInput formControlName="cookTime" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Stand Time (minutes)</mat-label>
+                    <input matInput formControlName="standTime" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Total Time (minutes)</mat-label>
+                    <input matInput formControlName="totalTime" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Servings</mat-label>
+                    <input matInput formControlName="servings" type="number">
+                  </mat-form-field>
+                </div>
+              </mat-card-content>
+            </mat-card>
 
-          <!-- Nutrition Facts Card -->
-          <mat-card class="section-card">
-            <mat-card-title>Nutrition Facts</mat-card-title>
-            <mat-card-content>
-              <div formGroupName="nutritionFacts">
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Calories</mat-label>
-                  <input matInput formControlName="calories" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Fat (g)</mat-label>
-                  <input matInput formControlName="fat" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Carbs (g)</mat-label>
-                  <input matInput formControlName="carbs" type="number">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="compact-form-field">
-                  <mat-label>Protein (g)</mat-label>
-                  <input matInput formControlName="protein" type="number">
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
+            <!-- Nutrition Facts Card -->
+            <mat-card class="section-card">
+              <mat-card-title>Nutrition Facts</mat-card-title>
+              <mat-card-content>
+                <div formGroupName="nutritionFacts">
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Calories</mat-label>
+                    <input matInput formControlName="calories" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Fat (g)</mat-label>
+                    <input matInput formControlName="fat" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Carbs (g)</mat-label>
+                    <input matInput formControlName="carbs" type="number">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="compact-form-field">
+                    <mat-label>Protein (g)</mat-label>
+                    <input matInput formControlName="protein" type="number">
+                  </mat-form-field>
+                </div>
+              </mat-card-content>
+            </mat-card>
 
-        </mat-card-content>
-        <mat-card-actions>
-          <button type="submit" class="btn-publish-recipe">Publish Recipe</button>
-        </mat-card-actions>
-      </mat-card>
-    </form>
+          </mat-card-content>
+          <mat-card-actions>
+            <button type="submit" class="btn-publish-recipe">Publish Recipe</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
   </div>
-</div>

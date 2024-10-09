@@ -1,225 +1,208 @@
 .main-page {
-  .carousel-controls {
-    position: absolute;
-    top: 50%; /* Center vertically */
-    width: 100%; /* Full width */
-    display: flex;
-    justify-content: space-between; /* Space buttons to the edges */
-    transform: translateY(-50%); /* Adjust for centering */
-    padding: 0 30px; /* Adjust padding to move buttons further out */
-    z-index: 10; /* Ensure buttons are on top of other elements */
-  
-    .btn {
-      width: 70px; /* Increased width for better usability */
-      height: 70px; /* Increased height for better usability */
-      border-radius: 50%; /* Round buttons */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.8); /* Dark background for better visibility */
-      color: #fff; /* White text color */
-      border: 2px solid rgba(255, 255, 255, 0.8); /* White border for contrast */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
-      transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-  
-      &:hover {
-        background-color: #0ea041; /* Change hover background to a lighter green */
-        color: #fff; /* Keep text color white on hover */
-        transform: scale(1.1); /* Slightly scale on hover */
-      }
-  
-      .carousel-control-prev-icon,
-      .carousel-control-next-icon {
-        width: 40px; /* Increased width for icons */
-        height: 40px; /* Increased height for icons */
-        background-color: transparent; /* Remove icon background */
-        border-radius: 50%; /* Round icon backgrounds */
-        padding: 10px; /* Increased padding around icon for better touch target */
-        color: #fff; /* Ensure icon color is white */
-        font-size: 1.5rem; /* Increase font size for larger icon appearance */
-      }
-    }
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.carousel-controls {
+  position: absolute;
+  top: 50%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.carousel-controls .btn {
+  width: 45px;
+  height: 45px;
+  background-color: transparent;
+  border: none;
+  color: #585656;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: color 0.3s;
+}
+
+.carousel-controls .btn:hover {
+  color: #0ea041;
+}
+
+.trending-recipes {
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: left;
   }
 
+  .recipe-card {
+    text-decoration: none;
+    color: inherit;
+    //margin-bottom: 1rem;
+  }
 
-  .trending-recipes {
-    .section-title {
-      font-size: 2rem; // Adjust font size for visibility
-      font-family: 'Arial', sans-serif; // Set a nice font
-      font-weight: bold; // Make it bold
-      color: #333; // Dark color for visibility
-      margin-bottom: 1.5rem; // Add bottom margin for spacing
-      text-align: left; // Align title to the left
-    }
+  .recipe-card:hover {
+    color: #54585b;
+  }
 
-    .recipe-card {
-      text-decoration: none; // Remove underlines on card links
-      color: inherit; // Inherit color for text
+  .card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 250px;
+    max-height: 400px;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
 
-      &:hover {
-        color: #0056b3; // Color change on hover
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); // Add shadow on hover
-      }
-    }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
 
-    .card {
-      display: flex; // Use flexbox for card layout
-      flex-direction: column; // Arrange children vertically
-      height: 100%; // Allow card to expand
-      border-radius: 8px; // Card corners
-      overflow: hidden; // Prevent overflow
-      transition: transform 0.3s ease, box-shadow 0.3s ease; // Smooth transition
+  .card-img-top {
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 2px solid #f8f9fa;
+  }
 
-      &:hover {
-        transform: scale(1.03); // Slight scale effect on hover
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Shadow on hover for depth
-      }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #ffffff;
+    flex-grow: 1;
+  }
 
-      .card-img-top {
-        height: 200px; // Fixed height for images
-        object-fit: cover; // Ensure images cover the area without distortion
-        border-bottom: 2px solid #f8f9fa; // Subtle border for separation
-      }
+  .card-footer {
+    background-color: #fff;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-top: auto;
+  }
 
-      .card-body {
-        flex: 1; // Make card body take up remaining space
-        display: flex; // Enable flexbox for card body
-        flex-direction: column; // Arrange content vertically
-        justify-content: space-between; // Space between title and bottom info
-        padding: 1rem; // Add padding for spacing
-        background-color: #ffffff; // Ensure background is white for clarity
-        transition: background-color 0.3s; // Transition for background color
+  .card-title {
+    margin-bottom: 0.5rem;
+  }
 
-        &:hover {
-          background-color: #f8f9fa; // Light background on hover
-        }
-      }
+  .info-time,
+  .rating {
+    font-size: 0.75rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+  }
 
-      .card-title {
-        height: 2.4rem; // Set fixed height to limit space
-        overflow: hidden; // Hide overflow
-        text-overflow: ellipsis; // Add ellipsis for overflow text
-        white-space: nowrap; // Prevent line breaks
-        font-size: 1.1rem; // Slightly larger font size for emphasis
-        color: #333; // Darker color for better visibility
-      }
+  .rating {
+    display: flex;
+    align-items: center;
+  }
 
-      .info-time,
-      .rating {
-        font-size: 0.9rem; // Smaller font size for time and rating
-        color: #6c757d; // Grey color for the info time
-        display: flex; // Use flexbox for alignment
-        align-items: center; // Center align items vertically
-      }
+  .rating-stars {
+    color: #ffcc00;
+    font-size: 0.9rem;
+  }
 
-      .rating {
-        display: flex; // Use flexbox for alignment
-        align-items: center; // Center align items vertically
-        margin-top: 0.5rem; // Add some spacing above the rating
-      }
+  .bi-star {
+    color: #d3d3d3;
+  }
 
-      .rating-stars {
-        color: #ffcc00; // Color for filled stars
-        font-size: 1.2rem; // Size of the stars
+  .bi-star-half {
+    color: #ffcc00;
+  }
 
-        .bi-star {
-          color: #d3d3d3; // Color for empty stars
-        }
-
-        .bi-star-half {
-          color: #ffcc00; // Color for half stars
-        }
-      }
-
-      .rating-number {
-        font-size: 0.9rem; // Adjust font size if needed
-        margin-left: 5px; // Spacing between stars and number
-        color: #6c757d; // Grey color for the rating number
-      }
-    }
+  .rating-number {
+    font-size: 0.75rem;
+    margin-left: 5px;
+    color: #6c757d;
   }
 }
 
 .hero {
-  position: relative; /* Ensure the overlay is positioned correctly */
-  color: white; /* Default text color */
-  text-align: center; /* Center text */
+  position: relative;
+  color: white;
+  text-align: center;
 }
 
 .overlay {
-  position: absolute; /* Position overlay on top */
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(42, 37, 37, 0.5); /* Semi-transparent black overlay */
-  z-index: 1; /* Overlay above background but below text */
+  background-color: rgba(42, 37, 37, 0.5);
+  z-index: 1;
 }
 
 .container {
-  position: relative; /* Container for the content */
-  z-index: 2; /* Bring content above the overlay */
+  position: relative;
+  z-index: 2;
 }
 
 .display-4 {
-  font-size: 2.5rem; /* Adjusted size for heading */
-  font-weight: bold; /* Make it bold */
-  margin-bottom: 1rem; /* Spacing below the title */
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .lead {
-  font-size: 1.25rem; /* Slightly larger lead text */
-  margin-bottom: 2rem; /* Spacing below lead */
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .btn {
-  padding: 12px 30px; /* Increased padding for better button usability */
-  border-radius: 30px; /* More rounded corners */
-  margin: 0 10px; /* Space between buttons */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  padding: 10px 20px;
+  border-radius: 30px;
+  margin: 5px 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .btn-primary {
-  background-color: #0ea041;;
+  background-color: #0ea041;
   border-color: #0ea041;
-  border: 2px solid rgba(255, 255, 255, 0.8); /* Light border */
-  border-radius: 30px; /* More rounded corners */
-
 }
 
 .btn-primary:hover {
-  background-color: #0ea041;
-  box-shadow: 0 4px 20px rgba(18, 15, 15, 0.2); /* Add shadow on hover */
+  box-shadow: 0 2px 10px rgba(18, 15, 15, 0.1);
 }
 
 .btn-outline-light {
-  color: white; /* White text color */
-  border: 2px solid rgba(255, 255, 255, 0.8); /* Light border */
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .btn-outline-light:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
-  color: #fff; /* Keep text color white on hover */
-  box-shadow: 0 4px 20px rgba(22, 20, 20, 0.2); /* Add shadow on hover */
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(22, 20, 20, 0.1);
 }
 
 /* Newsletter Signup Section Styles */
 .newsletter-signup {
-  
   h2 {
-    color: #fff; /* White text color */
+    color: #fff;
   }
 
   p {
-    color: rgba(255, 255, 255, 0.8); /* Light grey text */
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .form-control {
-    border-radius: 30px; /* Rounded input */
+    border-radius: 30px;
   }
-  
+
   .btn-primary {
-    background-color: #0ea041; /* Match primary button color */
-    border-color: #0ea041; /* Match border color */
+    background-color: #0ea041;
+    border-color: #0ea041;
   }
 }

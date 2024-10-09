@@ -207,12 +207,17 @@ input[type="password"]:focus {
   background: linear-gradient(90deg, #1fcb41, #273b6f);
   color: white;
   border: none;
-  padding: 14px 22px; /* Increased padding */
+  padding: 14px 22px;
   cursor: pointer;
-  border-radius: 8px; /* Increased border-radius */
-  font-size: 18px; /* Increased font size */
+  border-radius: 8px;
+  font-size: 18px;
   transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
   font-family: 'Montserrat', sans-serif;
+  display: inline-flex; /* Changed from 'flex' to 'inline-flex' */
+  align-items: center; /* Center items vertically */
+  justify-content: center;
+  position: relative; /* Position for the arrow */
+  overflow: hidden;
 }
 
 .btn-primary:hover {
@@ -245,7 +250,7 @@ button[type="submit"] {
 
 @media (max-width: 768px) {
   .login-form {
-    max-width: 90%;
+    max-width: 100%;
   }
 }
 
@@ -289,4 +294,23 @@ button[type="submit"] {
   left: 0;
   font-size: 16px;
   color: #273b6f;
+}
+
+.arrow {
+  position: absolute;
+  animation: move 1s linear infinite;
+  margin-left: 100px;
+  margin-top: 18px;
+}
+
+@keyframes move {
+  0% {
+      transform: translate(0, -50%); /* Start position */
+  }
+  50% {
+      transform: translate(5px, -50%); /* Move right */
+  }
+  100% {
+      transform: translate(0, -50%); /* Back to start */
+  }
 }
