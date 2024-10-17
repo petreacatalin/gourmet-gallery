@@ -37,7 +37,6 @@ export class RecipesListComponent implements OnInit {
      private authService: AuthService,
      private toastService: ToastService,
      private router: Router,
-     private sidebarService: SidebarService
     
     ){
      }

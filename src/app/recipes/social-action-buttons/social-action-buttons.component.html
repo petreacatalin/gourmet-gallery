@@ -1,0 +1,38 @@
+ <!-- Rate/Save/Share Section -->
+ <div class="row mt-4">
+    <div class="col-12">
+      <div class="action-buttons">
+        <button class="icon-btn"  (click)="toggleFavorite(this.recipe!)" aria-label="Save Recipe">
+            <i class="fas fa-heart"></i>
+            <span class="tooltip">Save</span>Save 
+          </button>
+        <button class="icon-btn" (click)="rateRecipe()" aria-label="Rate Recipe">
+          <i class="fas fa-star"></i>
+          <span class="tooltip">Rate</span>Rate 
+        </button>
+        <div class="share-container">
+          <button class="icon-btn share-button" (click)="toggleShareOptions()" aria-label="Share Recipe">
+            <i class="fas fa-share"></i>
+            <span class="tooltip">Share</span> Share
+          </button>
+          <div class="share-options" [ngClass]="{'show': shareOptionsVisible}">
+            <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl" target="_blank"
+              aria-label="Share on Facebook">
+              <i class="fab fa-facebook-f"></i> 
+              <span class="tooltip">Facebook</span>
+            </a>
+            <a [href]="'https://www.facebook.com/dialog/send?link=' + currentUrl" target="_blank"
+              aria-label="Share on Messenger">
+              <i class="fab fa-facebook-messenger"></i> 
+              <span class="tooltip">Messenger</span> 
+            </a>
+            <a [href]="'mailto:?subject=Check out this recipe&body=I found this recipe that I think you would love: ' + currentUrl"
+              aria-label="Share via Email">
+              <i class="fas fa-envelope"></i> 
+              <span class="tooltip">Email</span> 
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

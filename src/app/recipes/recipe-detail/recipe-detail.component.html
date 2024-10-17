@@ -31,6 +31,11 @@
     </div>
   </div>
 
+  <!-- Social Action-Buttons : Rate/Save/Share -->
+  <ng-container *ngIf="recipe && currentUser">
+    <app-social-action-buttons [recipe]="recipe" [user]="currentUser" (rateClicked)="scrollToComments()">
+    </app-social-action-buttons>
+  </ng-container>
 
   <!-- Details Section -->
   <div class="recipe-details">
@@ -147,29 +152,30 @@
     </mat-card-content>
   </mat-card>
 
-  <!-- Comments Section -->
-  <div class="comments mt-4">
-    <!-- <mat-card-subtitle class="comments-title">Comments:</mat-card-subtitle> -->
 
+  <!-- Comments Section -->
+  <div class="comments mt-4" #commentsSection>
     <!-- Comment Form -->
     <mat-card class="comment-form-card mt-4 mb-4">
       <mat-card-header>
-        <mat-card-title>Leave a Comment</mat-card-title>
+        <mat-card-title>Tell Us What You Think</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
-          <div class="row">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Add a comment</mat-label>
-              <textarea matInput placeholder="Type your comment here" formControlName="content"></textarea>
-            </mat-form-field>
-            <!-- Description -->
-          </div>
+          <mat-form-field appearance="outline" style="width: 100%;" class="full-width">
+            <mat-label>Add a comment</mat-label>
+            <textarea matInput rows="3" placeholder="Type your comment here" formControlName="content"></textarea>
+            <button mat-icon-button (click)="resetCommentForm()" class="btn-remove" *ngIf="commentForm.dirty">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
           <div class="rating-form">
-            <p><strong>Rating:</strong></p>
+            <p><strong>Give a rating</strong></p>
             <div class="stars">
-              <mat-icon *ngFor="let star of stars" [ngClass]="getStarClass(star, commentForm.value.rating)"
-                (click)="rate(star)">star</mat-icon>
+              <mat-icon *ngFor="let star of stars; let i = index" [ngClass]="{
+                      'filled': i < hoverRating || i < commentForm.value.rating,
+                      'empty': i >= hoverRating && i >= commentForm.value.rating
+                    }" (mouseenter)="setHover(i + 1)" (mouseleave)="setHover(0)" (click)="rate(i + 1)">star</mat-icon>
             </div>
           </div>
           <div class="form-actions">
@@ -188,85 +194,165 @@
             <img *ngIf="comment.user?.profilePictureUrl" [src]="comment.user!.profilePictureUrl" class="profile-picture"
               alt="{{ comment.user?.email }}">
           </div>
-          <mat-card-title class="playfair-font">{{ comment.user?.firstName }} {{ comment.user?.lastName
-            }}</mat-card-title>
-          <mat-card-subtitle class="gupter-regular" style="color: rgb(185, 185, 185);">{{ comment.timestamp |
-            date:'short' }}</mat-card-subtitle>
+          <mat-card-title>{{ comment.user?.firstName }} {{ comment.user?.lastName }}</mat-card-title>
+          <mat-card-subtitle *ngIf="!comment.isEdited" class="gupter-regular">Submitted {{ comment.submitted | date:'short' }}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="comment.isEdited" class="gupter-regular">Updated {{ comment.updated | date:'short' }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{ comment.content }}</p>
+
+          <!-- Edit Form for Comment -->
+          <form *ngIf="isEditingComment(comment.id!)" [formGroup]="editCommentForm" (ngSubmit)="onEditSubmit(comment)">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Edit Comment</mat-label>
+              <textarea matInput rows="3" formControlName="content" *ngIf="editCommentForm.get('content')"></textarea>
+            </mat-form-field>
+            <div class="form-actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="editCommentForm.invalid">Save Edit</button>
+              <button mat-button (click)="cancelCommentEdit()">Cancel</button>
+            </div>
+          </form>
+          <!-- Display Comment Content -->
+          <p *ngIf="!isEditingComment(comment.id!)">{{ comment.content! }}</p>
+
           <div *ngIf="comment.rating" class="rating">
             <ng-container *ngFor="let star of stars">
               <mat-icon [ngClass]="getStarClass(star, comment.rating.ratingValue)">star</mat-icon>
             </ng-container>
           </div>
-          <div *ngIf="currentUser?.id === comment.applicationUserId">
-            <button mat-button (click)="onCommentEdit(comment)">Edit</button>
-            <button *ngIf="currentUser?.id === comment.user?.id" class="btn btn-outline-danger"
-              (click)="openDeleteDialog(comment.id!)">
+
+        <!-- Helpful / Not Helpful Buttons for replies -->
+        <div class="feedback-buttons mt-2">
+          <button mat-icon-button color="primary" (click)="markAsHelpful(comment)">
+              <mat-icon>thumb_up</mat-icon> {{ comment.helpfulCount || 0 }}
+          </button>
+        </div>
+
+          <div class="button-group">
+            <button mat-button *ngIf="currentUser?.id === comment.applicationUserId"
+              (click)="onCommentEdit(comment)">Edit</button>
+            <button mat-button *ngIf="currentUser?.id !== comment.applicationUserId"
+              (click)="toggleReplyForm(comment)">Reply</button>
+            <button mat-button *ngIf="currentUser?.id === comment.applicationUserId"
+              (click)="openDeleteDialog(comment.id!)" class="btn btn-outline-danger">
               <i class="bi bi-trash"></i>
             </button>
           </div>
-          <button mat-button class="reply-button" (click)="toggleReplyForm(comment)">Reply</button>
 
-          <!-- Reply Form -->
+          <!-- Reply Form for top-level comments -->
           <mat-card *ngIf="replyingToComment === comment" class="reply-form-card mt-4">
             <mat-card-header>
               <mat-card-title>Reply to {{ comment.user?.firstName }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
               <form [formGroup]="replyForm" (ngSubmit)="onReplySubmit(comment)">
-                <div class="row">
-                  <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Add a reply</mat-label>
-                    <textarea matInput placeholder="Type your reply here" formControlName="content"></textarea>
-                  </mat-form-field>
-                </div>
+                <mat-form-field appearance="outline" style="width: 100%;" class="full-width">
+                  <mat-label>Add a reply</mat-label>
+                  <textarea matInput placeholder="Type your reply here" formControlName="content"></textarea>
+                  <button mat-icon-button (click)="resetReplyForm()" class="btn-remove" *ngIf="replyForm.dirty">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
                 <div class="form-actions">
                   <button mat-raised-button color="primary" type="submit" [disabled]="replyForm.invalid">Submit
                     Reply</button>
+                  <button mat-raised-button color="secondary" (click)="toggleReplyForm(null)">Cancel</button>
                 </div>
               </form>
             </mat-card-content>
           </mat-card>
 
-          <!-- Nested comments (replies) -->
+          <!-- Nested replies -->
           <div *ngIf="comment.replies?.length" class="nested-comments">
-            <div *ngFor="let reply of comment.replies" class="nested-comment mb-3">
-              <mat-card-header>
-                <div mat-card-avatar class="profile-picture-wrapper">
-                  <img *ngIf="reply.user?.profilePictureUrl" [src]="reply.user!.profilePictureUrl"
-                    class="profile-picture" alt="{{ reply.user?.email }}">
-                </div>
-                <div class="row">
-                  <mat-card-title class="playfair-font">{{ reply.user?.firstName }} {{ reply.user?.lastName
-                    }}</mat-card-title>
-                  <mat-card-subtitle class="gupter-regular" style="color: rgb(185, 185, 185);">{{ reply.timestamp |
-                    date:'short' }}</mat-card-subtitle>
-                </div>
-              </mat-card-header>
-              <mat-card-content>
-                <p>{{ reply.content }}</p>
-                <div *ngIf="reply.rating" class="rating">
-                  <ng-container *ngFor="let star of stars">
-                    <mat-icon [ngClass]="getStarClass(star, reply.rating.ratingValue)">star</mat-icon>
-                  </ng-container>
-                </div>
-              </mat-card-content>
-            </div>
+            <ng-container *ngFor="let reply of comment.replies ,let i = index">
+              <mat-card class="nested-comment mb-2">
+                <mat-card-header>
+                  <div mat-card-avatar class="profile-picture-wrapper">
+                    <img *ngIf="reply.user?.profilePictureUrl" [src]="reply.user!.profilePictureUrl"
+                      class="profile-picture" alt="{{ reply.user?.email }}">
+                  </div>
+                  <mat-card-title>{{ reply.user?.firstName }} {{ reply.user?.lastName }}</mat-card-title>
+                  <mat-card-subtitle *ngIf="!reply.isEdited" class="gupter-regular">{{ reply.submitted | date:'short' }}</mat-card-subtitle>
+                  <mat-card-subtitle *ngIf="reply.isEdited" class="gupter-regular">{{ reply.updated | date:'short' }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+
+                  <!-- Edit Form for Reply -->
+                  <form *ngIf="isEditingReply(reply.id!)" [formGroup]="editReplyForm" (ngSubmit)="onEditReplySubmit(reply)">
+                    <mat-form-field appearance="outline" class="full-width">
+                      <mat-label>Edit Reply</mat-label>
+                      <textarea matInput rows="3" formControlName="content"></textarea>
+                    </mat-form-field>
+                    <div class="form-actions">
+                      <button mat-raised-button color="primary" type="submit" [disabled]="editReplyForm.invalid">Save Edit</button>
+                      <button mat-button (click)="cancelReplyEdit()">Cancel</button>
+                    </div>
+                  </form>
+                  <!-- Display Reply Content -->
+                  <p *ngIf="!isEditingReply(reply.id!)">{{ reply.content }}</p>
+
+
+                  <div class="button-group">
+                    <button mat-button *ngIf="currentUser?.id === reply.applicationUserId"
+                      (click)="onReplyEdit(reply)">Edit</button>
+                    <button mat-button *ngIf="currentUser?.id !== reply.applicationUserId"
+                      (click)="toggleReplyForm(reply)">Reply</button>
+                    <button mat-button *ngIf="currentUser?.id === reply.applicationUserId"
+                      (click)="openDeleteDialog(reply.id!)" class="btn btn-outline-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+
+                  <!-- Helpful / Not Helpful Buttons for replies -->
+                  <div class="feedback-buttons mt-2">
+                    <button mat-icon-button color="primary" (click)="markAsHelpful(reply)">
+                      <mat-icon>thumb_up</mat-icon> {{ reply.helpfulCount || 0 }}
+                    </button>
+                  </div>
+
+                  <!-- Recursive replies -->
+                  <div *ngIf="reply.replies?.length">
+                    <ng-container *ngFor="let nestedReply of reply.replies">
+                      <mat-card class="nested-comment mb-2">
+                        <mat-card-header>
+                          <div mat-card-avatar class="profile-picture-wrapper">
+                            <img *ngIf="nestedReply.user?.profilePictureUrl" [src]="nestedReply.user!.profilePictureUrl"
+                              class="profile-picture" alt="{{ nestedReply.user?.email }}">
+                          </div>
+                          <mat-card-title>{{ nestedReply.user?.firstName }} {{ nestedReply.user?.lastName
+                            }}</mat-card-title>
+                          <mat-card-subtitle>{{ nestedReply.submitted | date:'short' }}</mat-card-subtitle>
+                          <mat-card-subtitle>{{ nestedReply.updated | date:'short' }}</mat-card-subtitle>
+
+                        </mat-card-header>
+                        <mat-card-content>
+                          <p>{{ nestedReply.content }}</p>
+                          <div class="button-group">
+                            <button mat-button *ngIf="currentUser?.id === nestedReply.applicationUserId"
+                              (click)="onReplyEdit(nestedReply)">Edit</button>
+                            <button mat-button *ngIf="currentUser?.id !== nestedReply.applicationUserId"
+                              (click)="toggleReplyForm(nestedReply)">Reply</button>
+                            <button mat-button *ngIf="currentUser?.id === nestedReply.applicationUserId"
+                              (click)="openDeleteDialog(nestedReply.id!)" class="btn btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </mat-card-content>
+                      </mat-card>
+                    </ng-container>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </ng-container>
           </div>
         </mat-card-content>
       </div>
-    </div>
 
-    <!-- Load More Comments Button -->
-    <div class="load-more-container text-center mt-4">
-      <button mat-raised-button (click)="loadMoreComments()">
-        Load More Comments
-      </button>
+      <!-- Load More Comments Button -->
+      <div class="load-more-container text-center mt-4">
+        <button mat-raised-button (click)="loadMoreComments()">Load More Comments</button>
+      </div>
     </div>
-
   </div>
 </mat-card>
-
+<!-- Confirmation Dialog -->
 <app-confirm-dialog #confirmDialog></app-confirm-dialog>

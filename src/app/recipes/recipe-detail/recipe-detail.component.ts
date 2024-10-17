@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChildren, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, of, Subscription, tap } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Recipe } from 'src/app/models/recipe.interface';
@@ -13,6 +13,8 @@ import { RecipeService } from '../recipe.service';
 import { ToastService } from 'src/app/utils/toast/toast.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,19 +25,30 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe?: Recipe;
   comments: Comments[] = [];
   commentForm: FormGroup;
-  editForm: FormGroup | null = null;
+  editCommentForm: FormGroup;
+  editReplyForm: FormGroup;
   replyForm: FormGroup; 
   currentUser?: ApplicationUser; 
   visibleComments: Comments[] = [];  
   private confirmSubscription: Subscription | null = null;
   stars: number[] = [1, 2, 3, 4, 5];
+  hoverRating: number = 0; // For hover effect
   commentsToShow = 7; 
   hasMoreComments = true; // Flag to check if there are more comments to load
   currentStep: number = 0;
   replyingToComment: Comments | null = null;
+  editComment: Comments | null = null;
   commentToDeleteId?: number;
+  currentUrl?: string;
+  frontEndUrl?: string = "https://gourmetgallery.azurewebsites.net";
+  shareOptionsVisible: boolean = false;
+  editCommentId?: number | null; // Track which comment is being edited
+  editReplyId?: number | null ; // Track which reply is being edited
+
   @ViewChildren('stepContent') stepContents!: QueryList<ElementRef>;
   @ViewChild(ConfirmDialogComponent) confirmDialog!: ConfirmDialogComponent;
+  @ViewChild('commentsSection', { static: false }) commentsSection!: ElementRef;
+
   private routeSub: Subscription | undefined;
   private recipeSub: Subscription | undefined;
   private userSub: Subscription | undefined;
@@ -48,19 +61,25 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private fb: FormBuilder,
     private toastService: ToastService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+  
   ) {
     this.commentForm = this.fb.group({
       content: ['', Validators.required],
       rating: [null]
     });
-    this.editForm = this.fb.group({
+    this.editCommentForm = this.fb.group({
+      content: ['', Validators.required],
+      rating: [null]
+    });
+    this.editReplyForm = this.fb.group({
       content: ['', Validators.required],
       rating: [null]
     });
     this.replyForm = this.fb.group({
       content: ['', Validators.required]
     });
+
   }
 
   ngOnInit(): void {
@@ -75,8 +94,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   
       this.loadComments(id);
     });
-  
+
     window.addEventListener('scroll', this.onScroll.bind(this));
+    // + this.router.url; // Get the current URL
   }
 
   ngOnDestroy(): void {
@@ -168,8 +188,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         applicationUserId: this.currentUser.id,
         recipeId: this.recipe.id,
         user: this.currentUser,
-        timestamp: new Date(),
-        rating: rating
+        submitted: new Date(),
+        rating: rating,
+        isEdited: false,
+        helpfulCount: 0,
+        notHelpfulCount: 0,
       };
 
       this.commentService.addComment(newComment).subscribe(comment => {
@@ -185,57 +208,82 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     })
     
   }
-  else{
-    this.triggerError("You need to be logged in to submit comments.")
+    else{
+      this.triggerError("You need to be logged in to submit comments.")
 
-  }
-  }
-
-  onReplySubmit(comment: Comments): void {
-    if (this.replyingToComment && this.recipe && this.currentUser) {
-      const newReply: Comments = {
-        content: this.replyForm!.get('content')?.value,
-        applicationUserId: this.currentUser.id,
-        recipeId: this.recipe.id,
-        user: this.currentUser,
-        timestamp: new Date(),
-        parentCommentId: comment.id
-      };
-
-      this.commentService.addComment(newReply).subscribe(reply => {
-        const index = this.comments.findIndex(c => c.id === comment.id);
-        if (index > -1) {
-          if (!this.comments[index].replies) {
-            this.comments[index].replies = [];
-          }
-          this.comments[index].replies!.push(reply);
-        }
-        this.replyForm!.reset();
-        this.replyingToComment = null;
-      });
     }
   }
 
-  toggleReplyForm(comment: Comments): void {
+  onReplySubmit(parentComment: Comments): void {
+    if (this.replyForm.valid && this.currentUser) {
+      const newReply: Comments = {
+        content: this.replyForm.get('content')?.value,
+        applicationUserId: this.currentUser.id,
+        recipeId: this.recipe!.id,
+        user: this.currentUser,
+        submitted: new Date(),
+        parentCommentId: parentComment.id, // Important for keeping track of nested replies
+        isEdited: false,
+        helpfulCount: 0,
+        notHelpfulCount: 0,
+      };
+  
+      this.commentService.addComment(newReply).subscribe(reply => {
+        // Push reply into the correct parent's replies
+        if (!parentComment.replies) {
+          parentComment.replies = [];
+        }
+        parentComment.replies.push(reply);
+        this.replyForm.reset(); // Reset the reply form
+        this.replyingToComment = null; // Clear the reply form state
+      }, error => {
+        this.triggerError("Error submitting the reply.");
+      });
+    }
+  }
+  
+  
+  toggleReplyForm(comment: Comments | null): void {
+    this.replyForm.reset();
+
     this.replyingToComment = this.replyingToComment === comment ? null : comment;
   }
-
-  onCommentEdit(comment: Comments): void {
-    this.editForm = this.fb.group({
-      content: [comment.content, Validators.required],
-      rating: [comment.rating ? comment.rating.ratingValue : null]
-    });
-
+  
+  resetCommentForm(): void{
+    this.commentForm.reset();
   }
 
-  // onCommentDelete(commentId: number): void {
-  //   if (confirm('Are you sure you want to delete this comment?')) {
-  //     this.commentService.deleteComment(commentId).subscribe(() => {
-  //       this.comments = this.comments.filter(comment => comment.id !== commentId);
-  //       this.checkCommentsLength();
-  //     });
-  //   }
-  // }
+  resetReplyForm(): void{
+    this.replyForm.reset();
+  }
+  
+  isEditingComment(commentId: number): boolean {
+    return this.editCommentId === commentId;
+  }
+
+  isEditingReply(replyId: number): boolean {
+    return this.editReplyId === replyId;
+  }
+  
+  onCommentEdit(comment: Comments) {
+    this.editCommentId = comment.id; // Set the current comment to be edited
+    this.editCommentForm.patchValue({ content: comment.content }); // Pre-fill the form
+  }
+    
+  onReplyEdit(reply: Comments) {
+    this.editReplyId = reply.id;
+    this.editReplyForm.patchValue({ content: reply.content });
+  }
+
+  cancelCommentEdit() {
+    this.editCommentId = null; // Clear the edit state
+    this.editCommentForm.reset(); // Optionally reset the form
+  }
+
+  cancelReplyEdit() {
+    this.editReplyId = null; // Clear the edit state
+    this.editReplyForm.reset(); // Optionally reset the form
+  }
 
   openDeleteDialog(commentId: number): void {
     this.commentToDeleteId = commentId;
@@ -256,38 +304,109 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   onConfirmDelete(commentId: number): void {
     if (commentId) {
       this.commentService.deleteComment(commentId).subscribe(() => {
-        this.comments = this.comments.filter(comment => comment.id !== commentId);
+        // Check if this comment is a nested reply
+        let parentComment: Comments | undefined;
+        this.comments.forEach(comment => {
+          if (comment.replies) {
+            const replyIndex = comment.replies.findIndex(reply => reply.id === commentId);
+            if (replyIndex !== -1) {
+              parentComment = comment;
+              // Remove the reply from the parent's replies array
+              parentComment.replies!.splice(replyIndex, 1);
+            }
+          }
+        });
+  
+        // If it's not a reply, it must be a top-level comment
+        if (!parentComment) {
+          this.comments = this.comments.filter(comment => comment.id !== commentId);
+        }
+  
         this.checkCommentsLength();
-        this.triggerSuccess("Your comment has been removed!");
+        this.triggerSuccess("Your comment or reply has been removed!");
         this.cdr.detectChanges(); // Trigger change detection manually
       }, (error) => {
         console.log(error);
-        this.triggerError("Error deleting the comment.");
+        this.triggerError("Error deleting the comment or reply.");
       });
     }
   }
+  
+  onEditSubmit(comment: Comments) {
+    if (this.editCommentForm.valid && comment) {
+        const editform = this.editCommentForm.value;
+        comment.content = editform.content;
+        comment.rating = editform.rating; // Assuming you have a rating to update
+        
+        this.commentService.updateComment(comment).pipe(
+          tap(updatedComment => {
+            this.cancelCommentEdit();
+            this.triggerSuccess("Comment updated successfully!")
 
-  onEditSubmit(comment: Comments): void {
-    if (this.editForm && this.editForm.valid) {
-      const updatedComment: Comments = {
-        ...comment,
-        content: this.editForm.get('content')?.value,
-        rating: this.editForm.get('rating')?.value ? {
-          ratingValue: this.editForm.get('rating')?.value,
-          userId: comment.user?.id,
-          recipeId: this.recipe?.id
-        } : null
-      };
-
-      this.commentService.updateComment(updatedComment).subscribe(() => {
-        // Update local comment list
-        const index = this.comments.findIndex(c => c.id === comment.id);
-        if (index > -1) {
-          this.comments[index] = updatedComment;
-        }
-        this.editForm = null;
-      });
+          }),
+          catchError(error => {
+              console.error('Error updating comment:', error);
+              // Optionally, return an empty observable or handle the error accordingly
+              return of(null); // or throwError(error) to propagate the error
+          })
+      ).subscribe(updatedComment => {
+          if (updatedComment) {
+              const commentIndex = this.visibleComments.findIndex(c => c.id === comment.id);
+              if (commentIndex !== -1) {
+                  this.visibleComments[commentIndex].content = updatedComment.content; // Update the UI with the new content
+                  this.visibleComments[commentIndex].submitted = updatedComment.submitted; // Optionally update timestamp
+                  this.visibleComments[commentIndex].updated = updatedComment.updated; // Optionally update timestamp
+              }
+              this.resetEdit(); // Reset editing state
+              this.cancelCommentEdit();
+    
+          }
+        });
     }
+}
+
+  
+  onEditReplySubmit(reply: Comments) {
+    if (this.editReplyForm.valid) {
+      if (reply) { // Check if reply is defined
+        const editform = this.editReplyForm.value;
+        reply.content = editform.content;
+        reply.rating = editform.rating; // Assuming you have a rating to update
+        
+        
+        this.commentService.updateComment(reply).subscribe(updatedReply => {
+          // Update the UI after editing the reply
+          for (let comment of this.visibleComments) {
+            const replyIndex = comment.replies!.findIndex(r => r.id === reply.id);
+            if (replyIndex !== -1) {
+            this.triggerSuccess("Comment updated successfully!")
+
+              // console.log(comment.replies)
+              // console.log(updatedReply)
+              // comment.replies![replyIndex].content = updatedReply.content; // Update content
+              // comment.replies![replyIndex].submitted = updatedReply.submitted; // Optionally update timestamp
+              // comment.replies![replyIndex].updated = updatedReply.updated; // Optionally update timestamp
+              break; // Exit loop once we find the reply
+            }
+          }
+          this.resetEdit(); // Reset editing state
+          this.cancelReplyEdit();
+
+        }, error => {
+          console.error('Error updating reply:', error);
+        });
+      } else {
+        console.error('Reply object is null or undefined');
+      }
+    }
+  }
+
+  // Reset edit states
+  resetEdit() {
+    this.editCommentId = null;
+    this.editReplyId = null;
+    this.editCommentForm.reset();
+    this.cdr.markForCheck(); // Ensure UI updates
   }
 
   onScroll() {
@@ -305,4 +424,38 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
     this.currentStep = foundStep !== -1 ? foundStep : this.currentStep;
   }
+
+ scrollToComments() {
+    if (this.commentsSection) {
+      this.commentsSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  setHover(rating: number) {
+    this.hoverRating = rating;
+  }
+
+  markAsHelpful(comment: Comments): void {
+    if (!this.currentUser) {
+      this.triggerError("You need to be logged in to vote.");
+      return;
+    }
+
+    this.commentService.updateHelpfulCount(comment.id!).subscribe({
+      next: () => {
+        // Check if the user has voted (we need to handle this on the backend)
+        comment.helpfulCount = comment.helpfulCount > 0 ? comment.helpfulCount - 1 : comment.helpfulCount + 1; // Toggle the count
+        this.triggerSuccess("Thank you for your feedback!");
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          this.triggerError(error.error.message); // Handling BadRequest
+        } else {
+          console.error(error);
+          this.triggerError("An error occurred while processing your vote.");
+        }
+      }
+    });
+  }
+
 }

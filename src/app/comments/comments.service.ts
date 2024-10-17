@@ -25,10 +25,15 @@ export class CommentService {
   }
 
   updateComment(comment: Comments): Observable<Comments> {
+    console.log(comment)
     return this.http.put<Comments>(`${this.baseUrl}/${comment.id}`, comment);
   }
 
   deleteComment(commentId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${commentId}`);
+  }
+
+  updateHelpfulCount(commentId: number): Observable<{ helpfulCount: number, voted: boolean }> {
+    return this.http.post<{ helpfulCount: number, voted: boolean }>(`${this.baseUrl}/${commentId}/helpful`, {});
   }
 }

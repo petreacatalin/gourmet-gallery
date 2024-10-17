@@ -1,0 +1,89 @@
+
+.action-buttons {
+    display: flex;
+    gap: 15px; /* Increased gap between buttons */
+    margin-bottom: 10px;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .icon-btn {
+    background: transparent; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    outline: none; /* Remove outline */
+    padding: 15px; /* Increased padding for click area */
+    font-size: 1.5rem; /* Increase font size for buttons */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+    position: relative; /* For positioning tooltips */
+  }
+  
+  .icon-btn:hover {
+    transform: scale(1.2); /* Increase size on hover */
+  }
+  
+  .tooltip {
+    display: none; /* Hidden by default */
+    position: absolute; /* Position relative to button */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: #fff; /* White text */
+    padding: 5px; /* Padding for tooltip */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 0.75rem; /* Smaller font size for tooltip */
+    white-space: nowrap; /* Prevent text from wrapping */
+    z-index: 100; /* Ensure tooltip is above other elements */
+    bottom: 100%; /* Position above the button */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center adjustment */
+  }
+  
+  .icon-btn:hover .tooltip {
+    display: block; /* Show tooltip on hover */
+  }
+  
+  .share-container {
+    position: relative; /* Position relative for absolute child elements */
+  }
+  
+  .share-button {
+    position: relative; /* Position for the share button */
+  }
+  
+  .share-options {
+    display: none; /* Initially hidden */
+    position: absolute; /* Positioned absolutely */
+    left: 50px; /* Adjust to your preference */
+    top: 0; /* Align with the share button */
+    background-color: white; /* Background for the options */
+    border: 1px solid #ccc; /* Border for options */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding for options */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition */
+    z-index: 10; /* Ensure it's above other elements */
+    transform: scale(1.2); /* Increase size on hover */
+    scale: 1;
+  }
+  
+  .share-options.show {
+    display: block; /* Show when class is added */
+  }
+  
+  .share-options a {
+    display: flex; /* Flex for easy alignment */
+    align-items: center; /* Center items vertically */
+    color: #333; /* Color for icons */
+    text-decoration: none; /* Remove underline */
+    padding: 10px; /* Padding for click area */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  .share-options a:hover {
+    color: #0ea041; /* Change color on hover */
+    transform: scale(1.25); /* Increase size on hover */
+  }
+  
+  .share-options i {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
