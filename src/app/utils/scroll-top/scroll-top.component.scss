@@ -1,0 +1,32 @@
+/* Scroll-to-top arrow button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000; /* Ensure it's on top of other elements */
+  }
+  
+  .scroll-to-top:hover {
+    background-color: #444;
+    transform: scale(1.1);
+  }
+  
+  /* Show the button when the user scrolls 40% down the page */
+  .scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  

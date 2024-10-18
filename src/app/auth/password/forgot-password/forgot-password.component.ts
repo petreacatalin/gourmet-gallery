@@ -34,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.forgotPasswordForm.valid) {
       this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe(
         response => {
-          //alert('Password reset link sent to your email.');
+         
           this.router.navigate(['reset-password-message']); // Redirect back to login
         
           this.spinnerService.hide();

@@ -65,7 +65,7 @@ export class AuthService {
     if (!token) return false;
     const decodedToken: any = jwtDecode(this.getToken()!);
 
-    console.log(decodedToken.role)
+    //console.log(decodedToken.role)
     return decodedToken.role === role;
   }
 

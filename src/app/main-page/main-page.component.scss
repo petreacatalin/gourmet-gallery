@@ -1,209 +1,296 @@
-.main-page {
-  background-color: #f8f9fa;
-  overflow-x: hidden;
-}
-
-.carousel-controls {
-  position: absolute;
-  top: 50%;
-  width: 95%;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-
-.carousel-controls .btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border: none;
-  color: #585656;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  transition: color 0.3s;
-}
-
-.carousel-controls .btn:hover {
-  color: #0ea041;
-}
-
-.trending-recipes {
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1rem;
-    text-align: left;
+    /* General styles for glassmorphism effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.2); /* Translucent white background */
+      backdrop-filter: blur(10px); /* Apply backdrop blur */
+      border-radius: 15px; /* Rounded corners */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+      border: 1px solid rgba(255, 255, 255, 0.5); /* Light border */
   }
 
-  .recipe-card {
-    text-decoration: none;
-    color: inherit;
-    //margin-bottom: 1rem;
+  .main-page {
+      background-color: #f8f9fa;
+      overflow-x: hidden;
   }
 
-  .recipe-card:hover {
-    color: #54585b;
+  .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 95%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
   }
 
-  .card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 250px;
-    max-height: 400px;
-    margin: 0 auto;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+  .carousel-controls .btn {
+      width: 10px;
+      height: 45px;
+      background-color: transparent;
+      border: none;
+      color: #585656;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      transition: color 0.3s;
   }
 
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  .carousel-controls .btn:hover {
+      color: #0ea041;
   }
 
-  .card-img-top {
-    height: 150px;
-    object-fit: cover;
-    border-bottom: 2px solid #f8f9fa;
+  .trending-recipes {
+      .section-title {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #333;
+          margin-bottom: 1rem;
+          text-align: left;
+      }
+
+      .recipe-card {
+          text-decoration: none;
+          color: inherit;
+      }
+
+      .recipe-card:hover {
+          color: #54585b;
+      }
+
+      .card {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          max-width: 250px;
+          max-height: 400px;
+          margin: 0 auto;
+          border-radius: 8px;
+          overflow: hidden;
+          transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-img-top {
+          height: 150px;
+          object-fit: cover;
+          border-bottom: 2px solid #f8f9fa;
+      }
+
+      .card-body {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 1rem;
+          background-color: #ffffff;
+          flex-grow: 1;
+      }
+
+      .card-footer {
+          background-color: #fff;
+          border-top: 1px solid #e9ecef;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 15px;
+          margin-top: auto;
+      }
+
+      .card-title {
+          margin-bottom: 0.5rem;
+        
+      }
+
+      .info-time,
+      .rating {
+          font-size: 0.75rem;
+          color: #6c757d;
+          display: flex;
+          align-items: center;
+      }
+
+      .rating {
+          display: flex;
+          align-items: center;
+      }
+
+      .rating-stars {
+          color: #ffcc00;
+          font-size: 0.9rem;
+      }
+
+      .bi-star {
+          color: #d3d3d3;
+      }
+
+      .bi-star-half {
+          color: #ffcc00;
+      }
+
+      .rating-number {
+          font-size: 0.75rem;
+          margin-left: 5px;
+          color: #6c757d;
+      }
   }
 
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #ffffff;
-    flex-grow: 1;
+  .hero {
+      position: relative;
+      color: white;
+      text-align: center;
   }
 
-  .card-footer {
-    background-color: #fff;
-    border-top: 1px solid #e9ecef;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    margin-top: auto;
+  /* Overlay with blur */
+  .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(42, 37, 37, 0.5); /* Dark semi-transparent */
+      backdrop-filter: blur(10px); /* Apply blur effect */
+      z-index: 1;
   }
 
-  .card-title {
-    margin-bottom: 0.5rem;
+  .container {
+      position: relative;
+      z-index: 2;
   }
 
-  .info-time,
-  .rating {
-    font-size: 0.75rem;
-    color: #6c757d;
-    display: flex;
-    align-items: center;
+  .display-4 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
   }
 
-  .rating {
-    display: flex;
-    align-items: center;
+  .lead {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
   }
 
-  .rating-stars {
-    color: #ffcc00;
-    font-size: 0.9rem;
-  }
-
-  .bi-star {
-    color: #d3d3d3;
-  }
-
-  .bi-star-half {
-    color: #ffcc00;
-  }
-
-  .rating-number {
-    font-size: 0.75rem;
-    margin-left: 5px;
-    color: #6c757d;
-  }
-}
-
-.hero {
-  position: relative;
-  color: white;
-  text-align: center;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(42, 37, 37, 0.5);
-  z-index: 1;
-}
-
-.container {
-  position: relative;
-  z-index: 2;
-}
-
-.display-4 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.lead {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.btn {
-  padding: 10px 20px;
-  border-radius: 30px;
-  margin: 5px 10px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.btn-primary {
-  background-color: #1d4b3b;
-  border-color: #a8afaf;
-  border-width: 3px;
-}
-
-.btn-primary:hover {
-  box-shadow: 0 2px 10px rgba(18, 15, 15, 0.1);
-}
-
-.btn-outline-light {
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-}
-
-.btn-outline-light:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(22, 20, 20, 0.1);
-}
-
-/* Newsletter Signup Section Styles */
-.newsletter-signup {
-  h2 {
-    color: #fff;
-  }
-
-  p {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  .form-control {
-    border-radius: 30px;
+  .btn {
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin: 5px 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .btn-primary {
-    background-color: #1d4b3b;
-    border-color: #1d4b3b;
+      background-color: #1d4b3b;
+      border-color: #a8afaf;
+      border-width: 3px;
   }
-}
+
+  .btn-primary:hover {
+      box-shadow: 0 2px 10px rgba(18, 15, 15, 0.1);
+  }
+
+  .btn-outline-light {
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+  }
+
+  .btn-outline-light:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(22, 20, 20, 0.1);
+  }
+
+  /* Newsletter Signup Section Styles */
+  .newsletter-signup {
+      background: rgba(29, 75, 59, 0.7); /* Semi-transparent dark background */
+      backdrop-filter: blur(10px); /* Apply blur effect */
+      border-radius: 15px; /* Rounded corners */
+      padding: 30px; /* Padding for content */
+  }
+
+  .newsletter-signup h2 {
+      color: #fff;
+  }
+
+  .newsletter-signup p {
+      color: rgba(255, 255, 255, 0.8);
+  }
+
+  .form-control {
+      border-radius: 30px;
+  }
+
+  .btn-primary {
+      background-color: #1d4b3b;
+      border-color: #1d4b3b;
+  }
+
+  .presentation-section {
+      margin: 0px 10px 0px 10px;
+      background: rgba(248, 249, 250, 0.8); /* Semi-transparent light background */
+      padding: 50px 15px; /* Padding for top/bottom and smaller sides */
+      backdrop-filter: blur(10px); /* Apply blur effect */
+      border-radius: 15px; /* Rounded corners */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  }
+
+  .presentation-section h2 {
+      font-weight: bold; /* Make the heading bold */
+      font-size: 2.5rem; /* Larger font size for visibility */
+  }
+
+  .presentation-section p {
+      margin: 1.5em 0; /* Space out paragraphs */
+  }
+
+  .presentation-section .btn {
+      border-radius: 25px; /* Rounded button */
+      padding: 10px 20px; /* Increased padding for touch targets */
+  }
+
+  /* Responsive image styling */
+  .presentation-section img {
+      max-width: 100%; /* Makes the image responsive */
+      height: auto; /* Maintains aspect ratio */
+  }
+
+  /* Media queries for mobile responsiveness */
+  @media (max-width: 768px) {
+      .presentation-section h2 {
+          font-size: 1.8rem; /* Smaller font size for smaller screens */
+          text-align: center; /* Center align on smaller screens */
+      }
+
+      .presentation-section p {
+          font-size: 1rem; /* Adjust paragraph font size */
+          text-align: center; /* Center align text on mobile */
+      }
+
+     .explore {
+          width: 100%; /* Full-width button on mobile */
+      }
+
+      .image-container {
+          text-align: center; /* Center image */
+      }
+
+      .image-container img {
+          margin-bottom: 15px; /* Space below the image */
+      }
+  }
+
+  @media (max-width: 576px) {
+      .presentation-section h2 {
+          font-size: 1.5rem; /* Further decrease font size for extra-small devices */
+      }
+
+      .presentation-section .btn {
+          padding: 12px; /* Adjust padding for small buttons */
+      }
+  }
+
+  .spinner-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+  }

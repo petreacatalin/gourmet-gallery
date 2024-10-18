@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/utils/toast/toast.service';
 import { Rating } from 'src/app/models/rating.interface';
 import { Comments } from 'src/app/models/comments.interface';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -37,8 +38,9 @@ export class RecipesListComponent implements OnInit {
      private authService: AuthService,
      private toastService: ToastService,
      private router: Router,
-    
+     private spinnerService: SpinnerService,
     ){
+
      }
 
 
@@ -87,10 +89,12 @@ export class RecipesListComponent implements OnInit {
   }
 
   loadRecipes(): void {
+    this.spinnerService.show();
     this.recipeService.getRecipes().pipe(
       tap(recipes => {
         this.recipes = recipes;
         this.updateDisplayedRecipes();
+        this.spinnerService.hide()
       })
     ).subscribe({
       error: (err) => {

@@ -14,6 +14,7 @@ import { ToastService } from 'src/app/utils/toast/toast.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private toastService: ToastService,
     private cdr: ChangeDetectorRef,
-  
+    private spinnerService: SpinnerService,
   ) {
     this.commentForm = this.fb.group({
       content: ['', Validators.required],
@@ -84,6 +85,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUserSub();
+    this.spinnerService.show();
     this.routeSub = this.route.params.subscribe(params => {
       const id = +params['id'];         // Get the recipe ID
       const slug = params['slug'];      // Get the recipe slug
@@ -94,7 +96,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   
       this.loadComments(id);
     });
-
+    this.spinnerService.hide();
     window.addEventListener('scroll', this.onScroll.bind(this));
     // + this.router.url; // Get the current URL
   }

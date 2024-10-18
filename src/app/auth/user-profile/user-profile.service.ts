@@ -14,7 +14,6 @@ export class UserProfileService {
   uploadProfilePicture(file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    console.log(formData)
     return this.http.put(`${environment.baseUrl}/Account/profile-picture`, formData);
   }
 

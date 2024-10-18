@@ -51,6 +51,7 @@ import { CategoryManagementComponent } from './admin-panel/category-management/c
 import { MatTreeModule } from '@angular/material/tree';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { SocialActionButtonsComponent } from './recipes/social-action-buttons/social-action-buttons.component';
+import { ScrollTopComponent } from './utils/scroll-top/scroll-top.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -84,6 +85,7 @@ export function tokenGetter() {
     RecipeManagementComponent,
     ForbiddenPageComponent,
     SocialActionButtonsComponent,
+    ScrollTopComponent,
   ],
   imports: [
     BrowserModule,

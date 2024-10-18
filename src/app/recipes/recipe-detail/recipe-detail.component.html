@@ -278,9 +278,12 @@
 
                   <!-- Edit Form for Reply -->
                   <form *ngIf="isEditingReply(reply.id!)" [formGroup]="editReplyForm" (ngSubmit)="onEditReplySubmit(reply)">
-                    <mat-form-field appearance="outline" class="full-width">
+                    <mat-form-field appearance="outline" style="width: 100%" class="full-width">
                       <mat-label>Edit Reply</mat-label>
                       <textarea matInput rows="3" formControlName="content"></textarea>
+                        <button mat-icon-button (click)="cancelReplyEdit()" class="btn-remove" *ngIf="editReplyForm.dirty || editReplyForm.value">
+                          <mat-icon>close</mat-icon>
+                        </button>
                     </mat-form-field>
                     <div class="form-actions">
                       <button mat-raised-button color="primary" type="submit" [disabled]="editReplyForm.invalid">Save Edit</button>

@@ -3,6 +3,9 @@ import { ApplicationUser } from '../models/applicationUser.interface';
 import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../models/recipe.interface';
+import { SpinnerService } from '../utils/spinner/spinner.service';
+import { of, delay } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -12,18 +15,27 @@ import { Recipe } from '../models/recipe.interface';
 export class MainPageComponent implements OnInit {
   currentUser:ApplicationUser | undefined;
   categories: Recipe[] = [];
-  popularRecipes: Recipe[] = [];
   recipesToShow: number = 6; // Set the number of recipes to display
   limit: number = 15; // Set the desired limit
-  latestRecipes: Recipe[] = [];
+  popularRecipes$: Observable<Recipe[]> = new Observable<[]>;;
+  latestRecipes$: Observable<Recipe[]> = new Observable<[]>;
   chunkSize = 3;
-  constructor(public authService: AuthService, private recipeService: RecipeService) {}
+  isPopularLoading: boolean = false;
+  isLatestLoading: boolean = false; 
+  constructor(public authService: AuthService, 
+    private recipeService: RecipeService,
+    private spinnerService: SpinnerService,
+    
+  ){
+
+  }
 
 
   ngOnInit(): void {
     this.updateChunkSize();
-    this.fetchLatestRecipes();
-    this.fetchPopularRecipes();
+    this.loadLatestRecipes();
+    this.loadPopularRecipes();
+
   }
 
   @HostListener('window:resize')
@@ -34,17 +46,31 @@ export class MainPageComponent implements OnInit {
   updateChunkSize() {
     this.chunkSize = window.innerWidth <= 768 ? 1 : 3; 
   }
-
-  fetchLatestRecipes(): void {
-    this.recipeService.getLatestRecipes(this.limit).subscribe((recipes) => {
-      this.latestRecipes = recipes;
-    }); 
+  
+  loadPopularRecipes(): void {
+    this.isPopularLoading = true; // Start loading
+    this.popularRecipes$ = this.recipeService.getPopularRecipes(this.limit); // Assign observable directly
+    this.popularRecipes$.subscribe({
+      next: () => {
+        this.isPopularLoading = false; // End loading
+      },
+      error: () => {
+        this.isPopularLoading = false; // Handle error and stop loading
+      }
+    });
   }
 
-  fetchPopularRecipes() {
-    this.recipeService.getPopularRecipes(this.limit).subscribe((recipes) => {
-      this.popularRecipes = recipes;
-    });  
+  loadLatestRecipes(): void {
+    this.isLatestLoading = true; // Start loading
+    this.latestRecipes$ = this.recipeService.getLatestRecipes(this.limit); // Assign observable directly
+    this.latestRecipes$.subscribe({
+      next: () => {
+        this.isLatestLoading = false; // End loading
+      },
+      error: () => {
+        this.isLatestLoading = false; // Handle error and stop loading
+      }
+    });
   }
 
   getStars(averageRating: number): number[] {
@@ -59,6 +85,13 @@ export class MainPageComponent implements OnInit {
     ];
   }
   
+  chunkArray(array: any[], size: number): any[] {
+    const results = [];
+    while (array.length) {
+      results.push(array.splice(0, size));
+    }
+    return results;
+  }
   onSubscribe(){
 
   }

@@ -25,7 +25,6 @@ export class CommentService {
   }
 
   updateComment(comment: Comments): Observable<Comments> {
-    console.log(comment)
     return this.http.put<Comments>(`${this.baseUrl}/${comment.id}`, comment);
   }
 
