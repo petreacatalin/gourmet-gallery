@@ -246,6 +246,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   
   
   toggleReplyForm(comment: Comments | null): void {
+    debugger
     this.replyForm.reset();
 
     this.replyingToComment = this.replyingToComment === comment ? null : comment;
@@ -436,28 +437,50 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   setHover(rating: number) {
     this.hoverRating = rating;
   }
-
+  
   markAsHelpful(comment: Comments): void {
     if (!this.currentUser) {
       this.triggerError("You need to be logged in to vote.");
       return;
     }
-
-    this.commentService.updateHelpfulCount(comment.id!).subscribe({
-      next: () => {
-        // Check if the user has voted (we need to handle this on the backend)
-        comment.helpfulCount = comment.helpfulCount > 0 ? comment.helpfulCount - 1 : comment.helpfulCount + 1; // Toggle the count
-        this.triggerSuccess("Thank you for your feedback!");
+  
+    // Prevent voting on their own comment
+    if (comment.applicationUserId === this.currentUser.id) {
+      this.triggerError("You cannot vote on your own comment.");
+      return;
+    }
+  
+    // Call the backend to check if the current user has already voted
+    this.commentService.getUserVoteForComment(comment.id!).subscribe({
+      next: (hasVoted) => {
+        if (hasVoted) {
+          // If the user has already voted, decrease the helpful count, but not below 0
+          comment.helpfulCount = Math.max(0, comment.helpfulCount - 1);
+        } else {
+          // If the user hasn't voted, increase the helpful count
+          comment.helpfulCount++;
+        }
+  
+        // Call the backend to toggle the vote (increase or decrease helpful count)
+        this.commentService.updateHelpfulCount(comment.id!).subscribe({
+          next: () => {
+            this.triggerSuccess("Thank you for your feedback!");
+          },
+          error: (error) => {
+            if (error.status === 400) {
+              this.triggerError(error.error.message); // Handling error
+            } else {
+              console.error(error);
+              this.triggerError("An error occurred while processing your vote.");
+            }
+          }
+        });
       },
       error: (error) => {
-        if (error.status === 400) {
-          this.triggerError(error.error.message); // Handling BadRequest
-        } else {
-          console.error(error);
-          this.triggerError("An error occurred while processing your vote.");
-        }
+        console.error(error);
+        this.triggerError("An error occurred while checking your vote status.");
       }
     });
   }
-
+  
 }

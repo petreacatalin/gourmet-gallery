@@ -46,6 +46,7 @@ export interface Recipe {
   status: number;
   category?: Category[];
   slug?:string;
+  mostHelpfulPositiveComment: Comments;
 }
 
 export function getStatusString(status: RecipeStatus): string {

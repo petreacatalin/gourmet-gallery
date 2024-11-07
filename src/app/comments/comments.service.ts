@@ -33,6 +33,11 @@ export class CommentService {
   }
 
   updateHelpfulCount(commentId: number): Observable<{ helpfulCount: number, voted: boolean }> {
+   
     return this.http.post<{ helpfulCount: number, voted: boolean }>(`${this.baseUrl}/${commentId}/helpful`, {});
+  }
+  
+  getUserVoteForComment(commentId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/${commentId}/user-vote`);
   }
 }

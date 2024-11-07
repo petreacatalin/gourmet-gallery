@@ -65,6 +65,7 @@
 /* Ratings Count */
 .ratings-count {
   font-size: 0.875rem;
+  font-weight: 300;
   color: #6c757d; /* Subtle color for text */
 }
 
@@ -261,4 +262,24 @@
   .search-sort-container .form-control {
     font-size: 1rem;
   }
+}
+
+.time-icon {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f0f8ff; /* Soft blue background */
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 1.1em;
+  color: #c4c6c8; /* Icon color - bright blue */
+  box-shadow: 0 2px 4px rgba(85, 82, 82, 0.1);
+}
+
+.time-icon i {
+  font-size: 1.2em;
+}
+
+.time-icon span {
+  font-weight: 300;
+  color: #b6b8bd;
 }

@@ -152,14 +152,64 @@
     </mat-card-content>
   </mat-card>
 
+  <div class="review-section">
+    <button  (click)="scrollToComments()">
+    <!-- "Be First to Review" Section -->
+    <!-- Most Helpful Positive Review Section -->
+      <div class="no-reviews" *ngIf="!recipe?.mostHelpfulPositiveComment">
+        <p><strong>Be the first to review this recipe!</strong></p>
+        <p>Rate it and share your thoughts to help others.</p>
+      </div>
+    </button>
+  </div>
 
+    <div class="most-helpful-review-box" *ngIf="recipe?.mostHelpfulPositiveComment">
+        <h3 class="h3-title">Most helpful positive review</h3>
+      <div class="review-header">
+
+        <!-- Profile Picture and Username -->
+        <div class="profile-picture-wrapper">
+          <img 
+            *ngIf="recipe?.mostHelpfulPositiveComment?.user?.profilePictureUrl" 
+            [src]="recipe?.mostHelpfulPositiveComment?.user?.profilePictureUrl" 
+            class="profile-picture" 
+            alt="{{ recipe?.mostHelpfulPositiveComment?.user?.email }}"
+          />
+        </div>
+        <p class="user-name">
+          <strong>{{ recipe?.mostHelpfulPositiveComment?.user?.firstName }} {{ recipe?.mostHelpfulPositiveComment?.user?.lastName }}</strong> says:
+        </p>
+      </div>
+  
+      <!-- Star Rating -->
+      <div *ngIf="recipe?.mostHelpfulPositiveComment?.rating" class="rating">
+        <ng-container *ngFor="let star of stars">
+          <mat-icon [ngClass]="getStarClass(star, recipe?.mostHelpfulPositiveComment?.rating?.ratingValue)">star</mat-icon>
+        </ng-container>
+      </div>
+  
+      <!-- Review Content -->
+      <p class="review-content">{{ recipe?.mostHelpfulPositiveComment?.content }}</p>
+  
+      <!-- Helpful Votes and Submission Date -->
+      <div class="review-footer">
+        <div class="helpful-votes">
+          <div class="feedback-buttons mt-2">
+            <button mat-icon-button color="black" (click)="markAsHelpful(recipe?.mostHelpfulPositiveComment!)">
+              <mat-icon>thumb_up</mat-icon> {{ recipe?.mostHelpfulPositiveComment?.helpfulCount }} Helpful
+            </button>
+          </div>
+        </div>
+        <small>Submitted on: {{ recipe?.mostHelpfulPositiveComment?.submitted | date:'short' }}</small>
+      </div>
+    </div>
+  
+  
   <!-- Comments Section -->
   <div class="comments mt-4" #commentsSection>
     <!-- Comment Form -->
     <mat-card class="comment-form-card mt-4 mb-4">
-      <mat-card-header>
-        <mat-card-title>Tell Us What You Think</mat-card-title>
-      </mat-card-header>
+        <h3 class="h3-title">Tell us what you think</h3>
       <mat-card-content>
         <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
           <mat-form-field appearance="outline" style="width: 100%;" class="full-width">
@@ -170,7 +220,7 @@
             </button>
           </mat-form-field>
           <div class="rating-form">
-            <p><strong>Give a rating</strong></p>
+            <p style="margin-left: 4px;"><strong>Give a rating</strong></p>
             <div class="stars">
               <mat-icon *ngFor="let star of stars; let i = index" [ngClass]="{
                       'filled': i < hoverRating || i < commentForm.value.rating,
@@ -194,9 +244,9 @@
             <img *ngIf="comment.user?.profilePictureUrl" [src]="comment.user!.profilePictureUrl" class="profile-picture"
               alt="{{ comment.user?.email }}">
           </div>
-          <mat-card-title>{{ comment.user?.firstName }} {{ comment.user?.lastName }}</mat-card-title>
-          <mat-card-subtitle *ngIf="!comment.isEdited" class="gupter-regular">Submitted {{ comment.submitted | date:'short' }}</mat-card-subtitle>
-          <mat-card-subtitle *ngIf="comment.isEdited" class="gupter-regular">Updated {{ comment.updated | date:'short' }}</mat-card-subtitle>
+          <mat-card-title class="user-name">{{ comment.user?.firstName }} {{ comment.user?.lastName }}</mat-card-title>
+          <mat-card-subtitle *ngIf="!comment.isEdited"> <small>Submitted at {{ comment.submitted | date:'short' }}</small></mat-card-subtitle>
+          <mat-card-subtitle *ngIf="comment.isEdited"> <small> Edited at {{ comment.updated | date:'short' }} </small></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
 
@@ -212,7 +262,7 @@
             </div>
           </form>
           <!-- Display Comment Content -->
-          <p *ngIf="!isEditingComment(comment.id!)">{{ comment.content! }}</p>
+          <p class="review-content" *ngIf="!isEditingComment(comment.id!)">{{ comment.content! }}</p>
 
           <div *ngIf="comment.rating" class="rating">
             <ng-container *ngFor="let star of stars">
@@ -221,22 +271,24 @@
           </div>
 
         <!-- Helpful / Not Helpful Buttons for replies -->
-        <div class="feedback-buttons mt-2">
-          <button mat-icon-button color="primary" (click)="markAsHelpful(comment)">
-              <mat-icon>thumb_up</mat-icon> {{ comment.helpfulCount || 0 }}
+        <div class="helpful-votes">
+          <div class="feedback-buttons mt-2">
+          <button mat-icon-button color="black" (click)="markAsHelpful(comment)">
+              <mat-icon>thumb_up</mat-icon> {{ comment.helpfulCount || 0 }} Helpful
           </button>
         </div>
-
-          <div class="button-group">
-            <button mat-button *ngIf="currentUser?.id === comment.applicationUserId"
-              (click)="onCommentEdit(comment)">Edit</button>
-            <button mat-button *ngIf="currentUser?.id !== comment.applicationUserId"
-              (click)="toggleReplyForm(comment)">Reply</button>
-            <button mat-button *ngIf="currentUser?.id === comment.applicationUserId"
-              (click)="openDeleteDialog(comment.id!)" class="btn btn-outline-danger">
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
+      </div>
+      
+      <div class="button-group">
+        <button mat-button *ngIf="currentUser?.id === comment.applicationUserId"
+          (click)="onCommentEdit(comment)">Edit</button>
+        <button mat-button *ngIf="currentUser?.id !== comment.applicationUserId"
+          (click)="toggleReplyForm(comment)">Reply</button>
+        <button mat-button *ngIf="currentUser?.id === comment.applicationUserId"
+          (click)="openDeleteDialog(comment.id!)" class="btn btn-outline-danger">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
 
           <!-- Reply Form for top-level comments -->
           <mat-card *ngIf="replyingToComment === comment" class="reply-form-card mt-4">
@@ -270,9 +322,9 @@
                     <img *ngIf="reply.user?.profilePictureUrl" [src]="reply.user!.profilePictureUrl"
                       class="profile-picture" alt="{{ reply.user?.email }}">
                   </div>
-                  <mat-card-title>{{ reply.user?.firstName }} {{ reply.user?.lastName }}</mat-card-title>
-                  <mat-card-subtitle *ngIf="!reply.isEdited" class="gupter-regular">{{ reply.submitted | date:'short' }}</mat-card-subtitle>
-                  <mat-card-subtitle *ngIf="reply.isEdited" class="gupter-regular">{{ reply.updated | date:'short' }}</mat-card-subtitle>
+                  <mat-card-title class="user-name">{{ reply.user?.firstName }} {{ reply.user?.lastName }}</mat-card-title>
+                  <mat-card-subtitle *ngIf="!reply.isEdited"> <small> Submitted at {{ reply.submitted | date:'short' }}</small></mat-card-subtitle>
+                  <mat-card-subtitle *ngIf="reply.isEdited"> <small> Edited at {{ reply.updated | date:'short' }}</small></mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
 
@@ -291,7 +343,7 @@
                     </div>
                   </form>
                   <!-- Display Reply Content -->
-                  <p *ngIf="!isEditingReply(reply.id!)">{{ reply.content }}</p>
+                  <p class="review-content" *ngIf="!isEditingReply(reply.id!)">{{ reply.content }}</p>
 
 
                   <div class="button-group">
@@ -306,11 +358,13 @@
                   </div>
 
                   <!-- Helpful / Not Helpful Buttons for replies -->
-                  <div class="feedback-buttons mt-2">
-                    <button mat-icon-button color="primary" (click)="markAsHelpful(reply)">
-                      <mat-icon>thumb_up</mat-icon> {{ reply.helpfulCount || 0 }}
+                  <div class="helpful-votes">
+                    <div class="feedback-buttons mt-2">
+                    <button mat-icon-button color="black" (click)="markAsHelpful(reply)">
+                      <mat-icon>thumb_up</mat-icon> {{ reply.helpfulCount || 0 }} Helpful
                     </button>
                   </div>
+                </div>
 
                   <!-- Recursive replies -->
                   <div *ngIf="reply.replies?.length">
@@ -321,10 +375,10 @@
                             <img *ngIf="nestedReply.user?.profilePictureUrl" [src]="nestedReply.user!.profilePictureUrl"
                               class="profile-picture" alt="{{ nestedReply.user?.email }}">
                           </div>
-                          <mat-card-title>{{ nestedReply.user?.firstName }} {{ nestedReply.user?.lastName
+                          <mat-card-title class="user-name">{{ nestedReply.user?.firstName }} {{ nestedReply.user?.lastName
                             }}</mat-card-title>
                           <mat-card-subtitle>{{ nestedReply.submitted | date:'short' }}</mat-card-subtitle>
-                          <mat-card-subtitle>{{ nestedReply.updated | date:'short' }}</mat-card-subtitle>
+                          <small> {{ nestedReply.updated | date:'short' }}</small>
 
                         </mat-card-header>
                         <mat-card-content>

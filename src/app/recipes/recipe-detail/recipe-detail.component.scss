@@ -20,10 +20,6 @@
   font-size: 32px;
   line-height: 0.9;
 }
-.recipe-card:hover {
-  box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25); /* Slightly more pronounced shadow on hover */
-  transform: translateY(-4px); /* Slight lift effect */
-}
 
 /* Card Header */
 .mat-card-header {
@@ -77,23 +73,23 @@
   margin-bottom: 8px;
 }
 
-.mat-card-title{
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 964;
-  font-size: 20px;
-  font-style: italic;
-}
+// .mat-card-title{
+//   font-family: "Playfair Display", serif;
+//   font-optical-sizing: auto;
+//   font-weight: 964;
+//   font-size: 20px;
+//   font-style: italic;
+// }
 
 /* Subtitle Styling */
-.mat-card-subtitle {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #495057;
-}
+// .mat-card-subtitle {
+//   margin-top: 20px;
+//   margin-bottom: 10px;
+//   font-family: 'Montserrat', sans-serif;
+//   font-weight: 600;
+//   font-size: 1.2rem;
+//   color: #495057;
+// }
 
 /* Recipe Details */
 .recipe-details {
@@ -121,7 +117,7 @@
   color: #0ea041; /* Primary brand color */
   border-bottom: 2px solid  #0ea041;; /* Bottom border for emphasis */
   padding-bottom: 10px; /* Space below the title */
-  font-family: 'Montserrat', sans-serif;
+ // font-family: 'Montserrat', sans-serif;
 }
 
 .comments-list {
@@ -163,7 +159,7 @@
     }
 
     .mat-card-content {
-      padding-top: 10px;
+      padding-top: 15px;
     }
   }
 
@@ -452,4 +448,122 @@ button {
   display: inline;
   font-style: italic;
   opacity: 80%;
+}
+
+.review-section {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  justify-self: center;
+
+}
+
+/* "Be the First to Review" Styling */
+.no-reviews {
+  padding: 20px;
+  text-align: center;
+  color: #5f6368;
+  font-size: 1.1em;
+  background-color: #ffffff;
+  border: 2px dashed #0c971f;
+  border-radius: 10px;
+}
+
+/* Most Helpful Positive Review Box */
+.most-helpful-review-box {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.most-helpful-review-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+.most-helpful-review-box h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.h3-title{
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-picture-wrapper {
+  margin-right: 12px;
+}
+
+.profile-picture {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #325a73;
+}
+
+.rating {
+  display: inline-flex;
+  margin: 12px 0;
+  font-size: 1.2em;
+}
+
+.rating .filled {
+  color: #FFD700; /* Gold color for filled stars */
+}
+.rating .empty {
+  color: #ccc; /* Gray color for empty stars */
+}
+
+.review-content {
+  font-size: 1em;
+  background-color: #f7f7f7;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #4a7eb9;
+  margin: 16px 0;
+  color: #34495e;
+ // font-style: italic;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.helpful-votes {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #000;
+}
+
+.helpful-votes mat-icon {
+  font-size: 1.2em;
+  margin-right: 4px;
+  color: #000;
 }

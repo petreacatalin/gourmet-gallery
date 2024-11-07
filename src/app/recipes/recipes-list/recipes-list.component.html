@@ -55,8 +55,14 @@
               <ng-container *ngFor="let star of getStars(recipe.averageRating)">
                 <i class="bi" [ngClass]="{'bi-star-fill': star === 1, 'bi-star': star === 0}"></i>
               </ng-container>
+              <p class="ratings-count mb-0" style="font-size: 14px; opacity: 0.75; margin-left: 5px;"> {{recipe.ratingsNumber}} Ratings</p>
             </div>
-            <p class="ratings-count mb-0" style="font-size: 14px; opacity: 0.75;">({{recipe.ratingsNumber}} ratings)</p>
+             
+        <!-- Stylish Clock Icon with Total Time -->
+        <div class="time-icon d-flex align-items-center">
+          <i class="bi bi-clock"></i>
+          <span class="ms-2">{{ recipe.informationTime?.totalTime }} mins</span>
+        </div>
           </div>
           <div *ngIf="this.currentUser" class="favorite-icon position-absolute top-0 end-0 m-2"
             (click)="toggleFavorite(recipe); $event.stopPropagation();">
