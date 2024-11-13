@@ -25,13 +25,13 @@ export interface Recipe {
   instructions: Instructions;
   tags?: string;
   imageUrl?: string;
-  mealType?: MealType;
-  cuisine?: Cuisine;
+  mealTypeId?: number;
+  cuisineId?: number;
   dietaryRestrictions?: DietaryRestrictions;
-  cookingMethod?: CookingMethod;
-  mainIngredient?: MainIngredient;
-  occasion?: Occasion;
   difficultyLevel?: DifficultyLevel;
+ // cookingMethod?: CookingMethod;
+  //mainIngredient?: MainIngredient;
+  occasionId?: number;
   applicationUserId?: string;
   applicationUser: ApplicationUser;
   comments?: Comments[];
@@ -47,6 +47,7 @@ export interface Recipe {
   category?: Category[];
   slug?:string;
   mostHelpfulPositiveComment: Comments;
+  selectedSubcategories?: Category[];
 }
 
 export function getStatusString(status: RecipeStatus): string {

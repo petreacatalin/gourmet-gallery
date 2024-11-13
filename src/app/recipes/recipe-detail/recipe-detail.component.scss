@@ -8,7 +8,7 @@
   background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-
+  padding: 30px;
 }
 
 .recipe-title{
@@ -28,6 +28,7 @@
   padding: 10px;
   border-radius: 12px 12px 0 0; /* Rounded top corners */
   margin-top: 2px;
+  margin-bottom: 10px;
 }
 
 .recipe-image {
@@ -53,7 +54,6 @@
 .mat-card-content {
   padding: 20px;
   overflow: hidden;
-
 }
 
 .mat-card-content p {
@@ -183,12 +183,17 @@
   }
 
   .comment-form-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 20px;
+    background-color: #ffffff; /* Clean, white background for the card */
+    border-radius: 16px; /* Soft rounded corners */
+    padding: 20px; /* Spacious padding inside the card */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Light shadow for subtle depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+    margin-top: 24px; /* Space above the card */
+    max-width: 1200px; /* Maximum width for readability */
+    margin: 20px auto; /* Center the card horizontally with spacing around it */
+    font-family: 'Roboto', sans-serif; /* Modern font */
+    background: #fafafa; /* Very light background color */
+    border: 1px solid #e0e0e0; /* Subtle border to define the card */
   }
 
   .comment-form-card .full-width {
@@ -342,13 +347,37 @@
 
 /* Nutrition Facts */
 .nutrition-facts {
+  background-color: #ffffff; /* Clean, white background for the card */
+  border-radius: 16px; /* Soft rounded corners */
+  padding: 20px; /* Spacious padding inside the card */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Light shadow for subtle depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  margin-top: 24px; /* Space above the card */
+  margin: 20px auto; /* Center the card horizontally with spacing around it */
+  font-family: 'Roboto', sans-serif; /* Modern font */
+  background: #fafafa; /* Very light background color */
+  border: 1px solid #e0e0e0; /* Subtle border to define the card */
+  
   .mat-card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
-    padding: 16px;
-    border-radius: 12px 12px 0 0;
+  background-color: #f7f7f7; /* Light gray background for header */
+  border-bottom: 2px solid #e0e0e0; /* Thin separator line */
+  padding: 16px;
+  font-size: 1.4rem; /* Slightly larger font for title */
+  font-weight: 600; /* Bold title for emphasis */
+  color: #333; /* Dark text for contrast */
+  letter-spacing: 1px; /* Slight letter spacing for modern look */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   }
 
+  .ingredients{
+    align-items: center !important;
+    display: flex;
+    align-self: center !important;
+    justify-content: center;
+  }
+  
   .nutrition-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Three columns for the first row */
@@ -405,6 +434,10 @@
   }
 }
 
+.nutrition-facts:hover{
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4);
+}
+
 /* Additional Styles */
 body {
   font-family: 'Roboto', sans-serif;
@@ -450,6 +483,67 @@ button {
   opacity: 80%;
 }
 
+/* "Be the First to Review" Section Container */
+.no-reviews-container {
+  display: flex;
+  justify-content: center;
+  width: 50%; /* Adjust the width to half of the parent container */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+/* "Be the First to Review" Button */
+.no-reviews-button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  cursor: pointer;
+  display: block;
+}
+
+/* "Be the First to Review" Box */
+.no-reviews {
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  color: #3a3f45;
+  background: linear-gradient(135deg, #ffffff, #f4f9ff);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.no-reviews:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon Styling */
+.review-icon {
+  font-size: 48px;
+  color: #0c971f;
+  margin-bottom: 12px;
+  transition: color 0.3s;
+}
+
+.no-reviews:hover .review-icon {
+  color: #0a7f18;
+}
+
+/* Text Styling */
+.review-title {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #2d3e50;
+  margin: 8px 0;
+}
+
+.review-subtitle {
+  font-size: 1em;
+  color: #4a5f73;
+}
+
+/* Styling for the Parent Review Section */
 .review-section {
   margin: 20px 0;
   padding: 20px;
@@ -458,52 +552,51 @@ button {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   justify-content: center;
   justify-self: center;
-
+  display: flex;
+  justify-content: center;
 }
 
-/* "Be the First to Review" Styling */
-.no-reviews {
-  padding: 20px;
-  text-align: center;
-  color: #5f6368;
-  font-size: 1.1em;
-  background-color: #ffffff;
-  border: 2px dashed #0c971f;
-  border-radius: 10px;
+/* Make sure the parent container is centered and responsive */
+@media (max-width: 768px) {
+  .no-reviews-container {
+    width: 90%; /* Make it larger on small screens */
+  }
 }
 
-/* Most Helpful Positive Review Box */
+
+/* Most Helpful Positive Review Box - Enhanced Styling */
 .most-helpful-review-box {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background: linear-gradient(135deg, #ffffff, #f0f8ff); /* Light gradient background */
+  border: 1px solid #b0c4de;
+  border-top: 4px solid #628fcf; /* Top border highlight */
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(66, 133, 244, 0.3); /* Enhanced shadow */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 20px;
 }
 .most-helpful-review-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 6px 18px rgba(66, 133, 244, 0.35); /* Bolder shadow on hover */
 }
 
+/* Title Styling */
 .most-helpful-review-box h3 {
-  font-size: 1.5em;
-  font-weight: bold;
+  font-size: 1.6em;
+  font-weight: 400;
   color: #2c3e50;
-  margin-bottom: 16px;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 300;
+  border-bottom: 2px solid #b0c4de;
+  padding-bottom: 6px;
 }
 
-.h3-title{
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #2c3e50;
-  margin-bottom: 16px;
-}
-
+/* Review Header - Profile and Username */
 .review-header {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .profile-picture-wrapper {
@@ -511,42 +604,46 @@ button {
 }
 
 .profile-picture {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #b0c4de; /* Soft border for profile */
 }
 
 .user-name {
   font-size: 1.2em;
   font-weight: bold;
-  color: #325a73;
+  color: #4a5568;
 }
 
+/* Star Rating - Minimal Glow Effect */
 .rating {
   display: inline-flex;
-  margin: 12px 0;
   font-size: 1.2em;
+  margin: 8px 0;
+  color: #ffb300;
 }
 
 .rating .filled {
-  color: #FFD700; /* Gold color for filled stars */
+  color: #ffb300; /* Gold color */
 }
 .rating .empty {
-  color: #ccc; /* Gray color for empty stars */
+  color: #d1d5d8;
 }
 
+/* Review Content - Light Background and Border */
 .review-content {
   font-size: 1em;
   background-color: #f7f7f7;
-  padding: 12px;
+  padding: 14px;
   border-radius: 8px;
-  border-left: 4px solid #4a7eb9;
+  border-left: 4px solid #4a7eb9; /* Accent color on the left */
   margin: 16px 0;
   color: #34495e;
- // font-style: italic;
 }
 
+/* Footer with Helpful Votes */
 .review-footer {
   display: flex;
   justify-content: space-between;
@@ -559,11 +656,12 @@ button {
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #000;
+  color: #4a5568;
 }
 
 .helpful-votes mat-icon {
   font-size: 1.2em;
   margin-right: 4px;
-  color: #000;
+  color: #4a5568;
 }
+

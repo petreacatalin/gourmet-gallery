@@ -45,7 +45,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   shareOptionsVisible: boolean = false;
   editCommentId?: number | null; // Track which comment is being edited
   editReplyId?: number | null ; // Track which reply is being edited
-
+  isOwner: boolean = true;
   @ViewChildren('stepContent') stepContents!: QueryList<ElementRef>;
   @ViewChild(ConfirmDialogComponent) confirmDialog!: ConfirmDialogComponent;
   @ViewChild('commentsSection', { static: false }) commentsSection!: ElementRef;
@@ -64,6 +64,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private cdr: ChangeDetectorRef,
     private spinnerService: SpinnerService,
+    private router: Router,
   ) {
     this.commentForm = this.fb.group({
       content: ['', Validators.required],
@@ -87,11 +88,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.getUserSub();
     this.spinnerService.show();
     this.routeSub = this.route.params.subscribe(params => {
-      const id = +params['id'];         // Get the recipe ID
-      const slug = params['slug'];      // Get the recipe slug
+      const id = +params['id'];   
+      const slug = params['slug'];     
   
       if (id && slug) {
-        this.getRecipe(id, slug);       // Pass both ID and slug
+        this.getRecipe(id, slug);
       }
   
       this.loadComments(id);
@@ -437,7 +438,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   setHover(rating: number) {
     this.hoverRating = rating;
   }
-  
+  onEdit(): void {
+    if (this.recipe) {
+      this.router.navigate(['/recipes/edit/', this.recipe.id, this.recipe.slug]);
+      console.log(this.recipe.id, this.recipe.slug)
+    }
+  }
   markAsHelpful(comment: Comments): void {
     if (!this.currentUser) {
       this.triggerError("You need to be logged in to vote.");

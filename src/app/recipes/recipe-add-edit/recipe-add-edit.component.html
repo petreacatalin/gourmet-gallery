@@ -129,67 +129,78 @@
               </mat-card-content>
             </mat-card>
 
-            <!-- Tags -->
+            <!-- Tags
             <mat-form-field appearance="outline">
               <mat-label>Tags</mat-label>
               <input matInput formControlName="tags" type="text">
-            </mat-form-field>
+            </mat-form-field> -->
+              <!-- Dinners Subcategory Searchable Dropdown -->
+              <mat-card class="section-card">
+                <mat-card-title>Categories</mat-card-title>
+                <mat-card-content>
+                   <mat-form-field appearance="outline">
+                <mat-label>Dinner Subcategories</mat-label>
+                <input type="text" matInput [matAutocomplete]="dinnerAuto" formControlName="dinnerCategory" placeholder="Select Dinner Category">
+                <mat-autocomplete #dinnerAuto="matAutocomplete" [displayWith]="displayCategoryName">
+                  <mat-option *ngFor="let subcategory of filteredDinners" [value]="subcategory">
+                    {{ subcategory.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            
+              <!-- Meals Subcategory Searchable Dropdown -->
+              <mat-form-field appearance="outline">
+                <mat-label>Meal Subcategories</mat-label>
+                <input type="text" matInput [matAutocomplete]="mealAuto" formControlName="mealCategory" placeholder="Select Meal Category">
+                <mat-autocomplete #mealAuto="matAutocomplete" [displayWith]="displayCategoryName">
+                  <mat-option *ngFor="let subcategory of filteredMeals" [value]="subcategory">
+                    {{ subcategory.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            
+              <!-- Ingredients Subcategory Searchable Dropdown -->
+              <mat-form-field appearance="outline">
+                <mat-label>Ingredient Subcategories</mat-label>
+                <input type="text" matInput [matAutocomplete]="ingredientAuto" formControlName="ingredientCategory" placeholder="Select Ingredient Category">
+                <mat-autocomplete #ingredientAuto="matAutocomplete" [displayWith]="displayCategoryName">
+                  <mat-option *ngFor="let subcategory of filteredIngredients" [value]="subcategory">
+                    {{ subcategory.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            
+              <!-- Occasions Subcategory Searchable Dropdown -->
+              <mat-form-field appearance="outline">
+                <mat-label>Occasion Subcategories</mat-label>
+                <input type="text" matInput [matAutocomplete]="occasionAuto" formControlName="occasionCategory" placeholder="Select Occasion Category">
+                <mat-autocomplete #occasionAuto="matAutocomplete" [displayWith]="displayCategoryName">
+                  <mat-option *ngFor="let subcategory of filteredOccasions" [value]="subcategory">
+                    {{ subcategory.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            
+              <!-- Cuisines Subcategory Searchable Dropdown -->
+              <mat-form-field appearance="outline">
+                <mat-label>Cuisine Subcategories</mat-label>
+                <input type="text" matInput [matAutocomplete]="cuisineAuto" formControlName="cuisineCategory" placeholder="Select Cuisine Category">
+                <mat-autocomplete #cuisineAuto="matAutocomplete" [displayWith]="displayCategoryName">
+                  <mat-option *ngFor="let subcategory of filteredCuisines" [value]="subcategory">
+                    {{ subcategory.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
 
-            <!-- Meal Type -->
-            <mat-form-field appearance="outline">
-              <mat-label>Meal Type</mat-label>
-              <mat-select formControlName="mealType">
-                <mat-option *ngFor="let type of mealTypes" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Cuisine -->
-            <mat-form-field appearance="outline">
-              <mat-label>Cuisine</mat-label>
-              <mat-select formControlName="cuisine">
-                <mat-option *ngFor="let type of cuisines" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Dietary Restrictions -->
-            <mat-form-field appearance="outline">
-              <mat-label>Dietary Restrictions</mat-label>
-              <mat-select formControlName="dietaryRestrictions">
-                <mat-option *ngFor="let type of dietaryRestrictions" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Cooking Method -->
-            <mat-form-field appearance="outline">
-              <mat-label>Cooking Method</mat-label>
-              <mat-select formControlName="cookingMethod">
-                <mat-option *ngFor="let type of cookingMethods" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Main Ingredient -->
-            <mat-form-field appearance="outline">
-              <mat-label>Main Ingredient</mat-label>
-              <mat-select formControlName="mainIngredient">
-                <mat-option *ngFor="let type of mainIngredients" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Occasion -->
-            <mat-form-field appearance="outline">
-              <mat-label>Occasion</mat-label>
-              <mat-select formControlName="occasion">
-                <mat-option *ngFor="let type of occasions" [value]="type">{{ type }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Difficulty Level -->
+            <!-- Difficulty Level
             <mat-form-field appearance="outline">
               <mat-label>Difficulty Level</mat-label>
               <mat-select formControlName="difficultyLevel">
                 <mat-option *ngFor="let type of difficultyLevels" [value]="type">{{ type }}</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <!-- Other Categories
           <mat-form-field appearance="outline">

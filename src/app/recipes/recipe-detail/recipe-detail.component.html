@@ -3,8 +3,8 @@
   <mat-card-header style="display: flex; justify-content: center;">
     <p class="recipe-title">{{ recipe?.title }}</p>
   </mat-card-header>
-  <mat-divider></mat-divider>
-
+  <!-- <mat-divider></mat-divider> -->
+  <!-- <button *ngIf="isOwner" (click)="onEdit()">Edit</button> -->
   <!-- Description Section -->
   <div class="row mt-4">
     <div class="col-12">
@@ -14,6 +14,7 @@
       <mat-card-content>
         <p>{{ recipe?.description }}</p>
         <div class="submitted">
+          <br>
           <p style="display: inline; ">Submitted by </p>
           <p style="display: inline;"><b>{{recipe?.applicationUser?.firstName}}
               {{recipe?.applicationUser?.lastName}}</b></p>
@@ -42,16 +43,16 @@
     <div class="row mt-4">
       <div class="col-md-6">
         <mat-card-content>
-          <p><strong>Meal Type:</strong> {{ recipe?.mealType }}</p>
-          <p><strong>Cuisine:</strong> {{ recipe?.cuisine }}</p>
+          <p><strong>Meal Type:</strong> {{ recipe?.occasionId }}</p>
+          <p><strong>Cuisine:</strong> {{ recipe?.mealTypeId }}</p>
           <p><strong>Dietary Restrictions:</strong> {{ recipe?.dietaryRestrictions }}</p>
         </mat-card-content>
       </div>
       <div class="col-md-6">
         <mat-card-content>
-          <p><strong>Cooking Method:</strong> {{ recipe?.cookingMethod }}</p>
+          <!-- <p><strong>Cooking Method:</strong> {{ recipe?.cookingMethod }}</p>
           <p><strong>Main Ingredient:</strong> {{ recipe?.mainIngredient }}</p>
-          <p><strong>Occasion:</strong> {{ recipe?.occasion }}</p>
+          <p><strong>Occasion:</strong> {{ recipe?.occasion }}</p> -->
           <p><strong>Difficulty Level:</strong> {{ recipe?.difficultyLevel }}</p>
         </mat-card-content>
       </div>
@@ -59,11 +60,11 @@
   </div>
 
   <!-- Ingredients Section -->
-  <mat-card class="nutrition-facts mt-4">
+  <mat-card class="nutrition-facts ingredients mt-4">
     <mat-card-header>
       <mat-card-title>Ingredients</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="ingredients">
       <div class="ingredients-grid">
         <div *ngIf="recipe?.ingredientsTotal?.ingredients">
           <div class="nutrition-item" *ngFor="let ingredient of recipe?.ingredientsTotal?.ingredients">
@@ -152,35 +153,34 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="review-section">
-    <button  (click)="scrollToComments()">
-    <!-- "Be First to Review" Section -->
-    <!-- Most Helpful Positive Review Section -->
-      <div class="no-reviews" *ngIf="!recipe?.mostHelpfulPositiveComment">
-        <p><strong>Be the first to review this recipe!</strong></p>
-        <p>Rate it and share your thoughts to help others.</p>
-      </div>
-    </button>
-  </div>
-
-    <div class="most-helpful-review-box" *ngIf="recipe?.mostHelpfulPositiveComment">
-        <h3 class="h3-title">Most helpful positive review</h3>
-      <div class="review-header">
-
-        <!-- Profile Picture and Username -->
-        <div class="profile-picture-wrapper">
-          <img 
-            *ngIf="recipe?.mostHelpfulPositiveComment?.user?.profilePictureUrl" 
-            [src]="recipe?.mostHelpfulPositiveComment?.user?.profilePictureUrl" 
-            class="profile-picture" 
-            alt="{{ recipe?.mostHelpfulPositiveComment?.user?.email }}"
-          />
+  <!-- No reviews section -->
+   <div >
+      <button class="no-reviews-button" (click)="scrollToComments()">
+        <div class="no-reviews" *ngIf="!recipe?.mostHelpfulPositiveComment">
+          <mat-icon class="review-icon" aria-hidden="true">rate_review</mat-icon>
+          <p class="review-title"><strong>Be the first to review this recipe!</strong></p>
+          <p class="review-subtitle">Rate it and share your thoughts to help others.</p>
         </div>
-        <p class="user-name">
-          <strong>{{ recipe?.mostHelpfulPositiveComment?.user?.firstName }} {{ recipe?.mostHelpfulPositiveComment?.user?.lastName }}</strong> says:
-        </p>
-      </div>
-  
+      </button>
+    </div>
+
+      <!-- Reviews Section  -->
+      <div class="most-helpful-review-box" *ngIf="recipe?.mostHelpfulPositiveComment">
+        <h3 class="h3-title">Most helpful positive review</h3>
+        <div class="review-header">
+      
+          <!-- Profile Picture and Username -->
+          <div class="profile-picture-wrapper">
+            <img *ngIf="recipe?.mostHelpfulPositiveComment?.user?.profilePictureUrl"
+              [src]="recipe?.mostHelpfulPositiveComment?.user?.profilePictureUrl" class="profile-picture"
+              alt="{{ recipe?.mostHelpfulPositiveComment?.user?.email }}" />
+          </div>
+          <p class="user-name">
+            <strong>{{ recipe?.mostHelpfulPositiveComment?.user?.firstName }} {{
+              recipe?.mostHelpfulPositiveComment?.user?.lastName }}</strong> says:
+          </p>
+        </div>
+    
       <!-- Star Rating -->
       <div *ngIf="recipe?.mostHelpfulPositiveComment?.rating" class="rating">
         <ng-container *ngFor="let star of stars">
@@ -208,8 +208,8 @@
   <!-- Comments Section -->
   <div class="comments mt-4" #commentsSection>
     <!-- Comment Form -->
-    <mat-card class="comment-form-card mt-4 mb-4">
-        <h3 class="h3-title">Tell us what you think</h3>
+    <mat-card class="comment-form-card nutrition-facts mt-4 mb-4">
+        <h2 class="h3-title"><strong>Tell us what you think</strong></h2>
       <mat-card-content>
         <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
           <mat-form-field appearance="outline" style="width: 100%;" class="full-width">
@@ -377,8 +377,8 @@
                           </div>
                           <mat-card-title class="user-name">{{ nestedReply.user?.firstName }} {{ nestedReply.user?.lastName
                             }}</mat-card-title>
-                          <mat-card-subtitle>{{ nestedReply.submitted | date:'short' }}</mat-card-subtitle>
-                          <small> {{ nestedReply.updated | date:'short' }}</small>
+                          <mat-card-subtitle  *ngIf="!nestedReply.isEdited">Submitted at {{ nestedReply.submitted | date:'short' }}</mat-card-subtitle>
+                          <mat-card-subtitle  *ngIf="nestedReply.isEdited"> Edited at {{ nestedReply.updated | date:'short' }}</mat-card-subtitle >
 
                         </mat-card-header>
                         <mat-card-content>

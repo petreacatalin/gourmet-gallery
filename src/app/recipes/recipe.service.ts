@@ -16,7 +16,6 @@ export class RecipeService {
   getRecipes(isAdmin?: boolean): Observable<Recipe[]> {
     let params = new HttpParams();
     
-    // Add isAdmin as a query parameter if it's defined
     if (isAdmin !== undefined) {
       params = params.set('isAdmin', isAdmin.toString());
     }
@@ -78,4 +77,5 @@ export class RecipeService {
   rejectRecipe(id: number): Observable<void> {
     return this.http.post<void>(`${environment.baseUrl}/adminpanel/reject-recipe/${id}`, {});
   }
+
 }

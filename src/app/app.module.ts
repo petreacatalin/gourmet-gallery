@@ -52,7 +52,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { SocialActionButtonsComponent } from './recipes/social-action-buttons/social-action-buttons.component';
 import { ScrollTopComponent } from './utils/scroll-top/scroll-top.component';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -116,6 +116,8 @@ export function tokenGetter() {
     MatPaginatorModule,
     MatTableModule, // Ensure this is included
     MatSortModule,
+    MatSelectModule,
+    MatAutocompleteModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'

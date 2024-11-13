@@ -9,7 +9,9 @@ import { MealType, Cuisine, DietaryRestrictions, CookingMethod, MainIngredient, 
 import { AuthService } from 'src/app/auth/auth.service';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
-import { Observable, map, catchError, throwError } from 'rxjs';
+import { Observable, map, catchError, throwError, startWith } from 'rxjs';
+import { CategoriesService } from '../categories.service';
+import { Category } from 'src/app/models/category.interface';
 
 @Component({
   selector: 'app-recipe-add-edit',
@@ -18,20 +20,32 @@ import { Observable, map, catchError, throwError } from 'rxjs';
 })
 export class RecipeAddEditComponent implements OnInit {
   recipeForm!: FormGroup;
-  mealTypes = Object.keys(MealType).filter(key => isNaN(Number(key)));
-  cuisines = Object.keys(Cuisine).filter(key => isNaN(Number(key)));
-  dietaryRestrictions = Object.keys(DietaryRestrictions).filter(key => isNaN(Number(key)));
-  cookingMethods = Object.keys(CookingMethod).filter(key => isNaN(Number(key)));
-  mainIngredients = Object.keys(MainIngredient).filter(key => isNaN(Number(key)));
-  occasions = Object.keys(Occasion).filter(key => isNaN(Number(key)));
-  difficultyLevels = Object.keys(DifficultyLevel).filter(key => isNaN(Number(key)));
+  // mealTypes = Object.keys(MealType).filter(key => isNaN(Number(key)));
+  // cuisines = Object.keys(Cuisine).filter(key => isNaN(Number(key)));
+  // dietaryRestrictions = Object.keys(DietaryRestrictions).filter(key => isNaN(Number(key)));
+  // cookingMethods = Object.keys(CookingMethod).filter(key => isNaN(Number(key)));
+  // mainIngredients = Object.keys(MainIngredient).filter(key => isNaN(Number(key)));
+  // occasions = Object.keys(Occasion).filter(key => isNaN(Number(key)));
+  // difficultyLevels = Object.keys(DifficultyLevel).filter(key => isNaN(Number(key)));
   //otherCategories = Object.keys(OtherCategories).filter(key => isNaN(Number(key)));
   selectedFile: File | null = null;
   newImageUrl: string | ArrayBuffer | null = null;
   urlPhoto: string | null = null;
-
+  categories: Category[] = []; // Store all categories
+  dinners: Category[] | undefined = [] ;
+  meals: Category[] | undefined = [];
+  ingredient: Category[] | undefined = [];
+  occasions: Category[] | undefined = [];
+  cuisines: Category[]  | undefined = [];
+  filteredDinners: Category[] | undefined = [];
+  filteredMeals: Category[] | undefined = [];
+  filteredIngredients: Category[] | undefined = [];
+  filteredOccasions: Category[]  | undefined= [];
+  filteredCuisines: Category[]  | undefined= [];
+  recipe: Recipe | undefined; 
   isEditMode = false;
   recipeId: number | null = null;
+  subcategoriesMap: { [key: string]: any[] } = {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,12 +54,60 @@ export class RecipeAddEditComponent implements OnInit {
     private recipeService: RecipeService,
     private authService: AuthService,
     private spinnerService: SpinnerService,
+    private categoriesService: CategoriesService,
 
   ) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.getCategories();
+    }, 0);
     this.initializeForm();
     this.checkEditMode();
+    if(this.isEditMode === false){  
+      debugger
+      this.addIngredient(); 
+      this.addStep(); 
+    }
+    this.recipeForm.get('dinnerCategory')?.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => typeof value === 'string' ? value : value.name), // Get the name if the full object is selected
+      map((name) => this.filterSubcategories(this.dinners!, name || ''))
+    )
+    .subscribe(filtered => this.filteredDinners = filtered);
+
+  this.recipeForm.get('mealCategory')?.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => typeof value === 'string' ? value : value.name),
+      map((name) => this.filterSubcategories(this.meals!, name || ''))
+    )
+    .subscribe(filtered => this.filteredMeals = filtered);
+
+  this.recipeForm.get('ingredientCategory')?.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => typeof value === 'string' ? value : value.name),
+      map((name) => this.filterSubcategories(this.ingredient!, name || ''))
+    )
+    .subscribe(filtered => this.filteredIngredients = filtered);
+
+  this.recipeForm.get('occasionCategory')?.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => typeof value === 'string' ? value : value.name),
+      map((name) => this.filterSubcategories(this.occasions!, name || ''))
+    )
+    .subscribe(filtered => this.filteredOccasions = filtered);
+
+  this.recipeForm.get('cuisineCategory')?.valueChanges
+    .pipe(
+      startWith(''),
+      map((value) => typeof value === 'string' ? value : value.name),
+      map((name) => this.filterSubcategories(this.cuisines!, name || ''))
+    )
+    .subscribe(filtered => this.filteredCuisines = filtered);
   }
   
   get isLoggedIn(): boolean {
@@ -67,15 +129,17 @@ export class RecipeAddEditComponent implements OnInit {
             recipeId: [0]
         }),
         tags: [''],
-        mealType: [null],
-        cuisine: [null],
+        dinnerCategory: [''],
+        mealCategory: [''],
+        ingredientCategory: [''],
+        occasionCategory: [''],
+        cuisineCategory: [''],
         dietaryRestrictions: [null],
         cookingMethod: [null],
-        mainIngredient: [null],
-        occasion: [null],
         difficultyLevel: [null],
         //otherCategories: [null],
         informationTime: this.formBuilder.group({
+            id:[0],
             prepTime: [null],
             cookTime: [null],
             standTime: [null],
@@ -83,15 +147,15 @@ export class RecipeAddEditComponent implements OnInit {
             servings: [null]
         }),
         nutritionFacts: this.formBuilder.group({
+            id:[0],
             calories: [null],
             fat: [null],
             carbs: [null],
-            protein: [null]
+            protein: [null],
+            recipeId:[null],
         })
     });
-
-    this.addIngredient(); 
-    this.addStep(); 
+ 
 }
 
   createIngredient(): FormGroup {
@@ -162,57 +226,109 @@ addIngredient() {
 
   checkEditMode(): void {
     this.route.params.subscribe(params => {
-      if (params['id'] && params['slug']) {
-        this.isEditMode = true;
-        this.recipeId = +params['id'];
-        const slug = params['slug'];  // Get the slug from route parameters
-        
-        this.recipeService.getRecipeByIdAndSlug(this.recipeId, slug).subscribe(
-          (recipe: Recipe) => {
-            this.recipeForm.patchValue({
-              title: recipe.title,
-              description: recipe.description,
-              tags: recipe.tags,
-              mealType: recipe.mealType,
-              cuisine: recipe.cuisine,
-              dietaryRestrictions: recipe.dietaryRestrictions,
-              cookingMethod: recipe.cookingMethod,
-              mainIngredient: recipe.mainIngredient,
-              occasion: recipe.occasion,
-              difficultyLevel: recipe.difficultyLevel,
-              //otherCategories: recipe.otherCategories
-            });
-  
-            const ingredientsArray = this.ingredients;
-            recipe.ingredientsTotal.ingredients.forEach((ingredient: Ingredient) => {
-              ingredientsArray.push(this.formBuilder.group(ingredient));
-            });
-  
-            const stepsArray = this.steps;
-            recipe.instructions.steps.forEach((step: Step) => {
-              stepsArray.push(this.formBuilder.group(step));
-            });
-          },
-          (error) => {
-            console.error('Error fetching recipe:', error);
-          }
-        );
-      }
+        if (params['id'] && params['slug']) {
+            this.isEditMode = true;
+            this.recipeId = +params['id'];
+            const slug = params['slug'];
+
+            if (this.recipeId && slug) {
+                this.recipeService.getRecipeByIdAndSlug(this.recipeId, slug).subscribe(
+                    (recipe: Recipe) => {
+                      console.log(recipe)
+                      // Populate form fields with recipe data
+                      this.recipeForm.patchValue({
+                        title: recipe.title,
+                        description: recipe.description,
+                        tags: recipe.tags,
+                        //dinnerCategory: recipe.dinnerCategoryId,
+                        mealCategory: recipe.mealTypeId,
+                        //ingredientCategory: recipe.ingredientCategoryId!,
+                        occasionCategory: recipe.occasionId,
+                        cuisineCategory: recipe.cuisineId,
+                        dietaryRestrictions: recipe.dietaryRestrictions,
+                        //cookingMethod: recipe.cookingMethod,
+                        difficultyLevel: recipe.difficultyLevel,
+                        // instructionsId,
+                        informationTime: {
+                          id: recipe.informationTime?.id!,
+                          prepTime: recipe.informationTime!.prepTime,
+                          cookTime: recipe.informationTime!.cookTime,
+                          standTime: recipe.informationTime!.standTime,
+                          totalTime: recipe.informationTime!.totalTime,
+                          servings: recipe.informationTime!.servings,
+                        },
+                        nutritionFacts: {
+                          id: recipe.nutritionFacts!.id!,
+                          calories: recipe.nutritionFacts!.calories,
+                          fat: recipe.nutritionFacts!.fat,
+                          carbs: recipe.nutritionFacts!.carbs,
+                          protein: recipe.nutritionFacts!.protein,
+                          recipeId: recipe.nutritionFacts!.recipeId,
+                        },
+                        ingredientsTotal:{
+                          id: recipe.ingredientsTotal.id,
+                          recipeId: recipe.ingredientsTotal.id
+                        },
+                        instructions: {
+                          id: recipe.instructions.id
+                        },
+                        
+                      });
+                      
+                      this.recipe = recipe;
+                      // Populate ingredients array
+                      const ingredientsArray = this.ingredients;
+                      ingredientsArray.clear(); // Clear any existing controls
+                        recipe.ingredientsTotal.ingredients.forEach((ingredient: Ingredient) => {
+                            ingredientsArray.push(this.formBuilder.group({
+                                id: ingredient.id,
+                                ingredientsTotalId: ingredient.ingredientsTotalId,
+                                name: ingredient.name,
+                                quantity: ingredient.quantity,
+                            }));
+                        });
+
+                        // Populate steps array
+                        const stepsArray = this.steps;
+                        stepsArray.clear(); // Clear any existing controls
+                        recipe.instructions.steps.forEach((step: Step, index: number) => {
+                            stepsArray.push(this.formBuilder.group({
+                                stepNumber: index + 1, // Ensure step numbers are sequential
+                                description: step.description,
+                            }));
+                        });
+                    },
+                    (error) => {
+                        console.error('Error fetching recipe:', error);
+                    }
+                );
+            }
+        }
     });
-  }
-  
+}
+
 
   onSubmit(): void {
     this.spinnerService.show();
 
+    console.log(this.recipeForm.value)
     if (this.recipeForm.invalid) {
         this.spinnerService.hide();
         return;
     }
 
     const recipe: Recipe = this.recipeForm.value;
+    const selectedSubcategories = [
+      this.recipeForm.get('dinnerCategory')?.value?.id,
+      this.recipeForm.get('mealCategory')?.value?.id,
+      this.recipeForm.get('ingredientCategory')?.value?.id,
+      this.recipeForm.get('occasionCategory')?.value?.id,
+      this.recipeForm.get('cuisineCategory')?.value?.id,
+    ].filter(id => id != null); // Filter out any null values
+    recipe.selectedSubcategories = selectedSubcategories;
     if (this.isEditMode && this.recipeId) {
         recipe.id = this.recipeId;
+        recipe.applicationUserId = this.recipe?.applicationUserId;
         this.updateRecipe(recipe);
         this.spinnerService.hide();
     } else {
@@ -304,6 +420,52 @@ createRecipe(recipe: Recipe): void {
     this.selectedFile = null;
     this.newImageUrl = null;
   }
-   
 
+  getCategories(): void {
+    this.categoriesService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+
+      this.categories.forEach(sub => {
+        if (!sub.parentCategoryId) {
+          switch (sub.slug) {
+            case "dinners":
+              this.dinners = sub.subcategories;
+              break;
+            case "cuisines":
+              this.cuisines = sub.subcategories;
+              break;
+            case "meals":
+              this.meals = sub.subcategories;
+              break;
+            case "ingredients":
+              this.ingredient = sub.subcategories;
+              break;
+            case "occasions":
+              this.occasions = sub.subcategories;
+              break;
+            default:
+              break;
+          }
+        }
+      });
+
+      // Initialize filtered lists to show all options initially
+      this.filteredDinners = this.dinners;
+      this.filteredMeals = this.meals;
+      this.filteredIngredients = this.ingredient;
+      this.filteredOccasions = this.occasions;
+      this.filteredCuisines = this.cuisines;
+    });
+  }
+
+  private filterSubcategories(subcategories: Category[], searchText: string): any[] {
+    const filterValue = searchText.toLowerCase();
+    return subcategories.filter(subcategory => subcategory.name.toLowerCase().includes(filterValue));
+  }
+
+  displayCategoryName(category: any): string {
+    return category ? category.name : '';
+  }
 }
+
+
