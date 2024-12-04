@@ -45,9 +45,10 @@ jobs:
 
       # Log in to Azure using the Service Principal
       - name: Azure Login
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} # Using creds from GitHub Secrets
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Using creds from GitHub Secrets,
+          enable-AzPSSession: true
 
       # Log in to Azure Container Registry (ACR)
       - name: Azure Container Registry Login
