@@ -1,11 +1,35 @@
 <mat-card class="recipe-card">
   <!-- Card Header -->
-  <mat-card-header style="display: flex; justify-content: center;">
-    <p class="recipe-title">{{ recipe?.title }}</p>
-  </mat-card-header>
+<!-- First Mat-Card-Header -->
+<mat-card-header style="display: flex; justify-content: center; margin-bottom: -30px;">
+  <p class="recipe-title">{{ recipe?.title }}</p>
+</mat-card-header>
+
+<!-- Second Mat-Card-Header -->
+<mat-card-header style="display: flex; justify-content: center;">
+  <div class="row mt-2">
+    <div class="col-12">
+      <mat-card-content style="letter-spacing: 2.5px; margin-top: -25px;">
+        <div *ngIf="recipe?.mostHelpfulPositiveComment?.rating" class="rating">
+          <ng-container *ngFor="let star of stars">
+            <mat-icon [ngClass]="getStarClass(star, recipe?.averageRating) ">star</mat-icon>
+          </ng-container>
+          <p>
+            <a (click)="scrollToComments()" style="cursor: pointer; margin-left: 4px;">
+              <u><b>{{ recipe?.averageRating?.toPrecision(3) }}</b></u>
+            </a>
+            ({{ recipe?.ratingsNumber }})
+          </p>
+        </div>
+      </mat-card-content>
+    </div>
+  </div>
+</mat-card-header>
+
   <!-- <mat-divider></mat-divider> -->
   <!-- <button *ngIf="isOwner" (click)="onEdit()">Edit</button> -->
   <!-- Description Section -->
+
   <div class="row mt-4">
     <div class="col-12">
       <mat-card-header>

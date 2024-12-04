@@ -16,18 +16,20 @@
   flex-direction: column;
   align-items: center; /* Center content horizontally */
   margin-top: 40px; /* Push content down from the top */
+  box-sizing: border-box !important;
+  box-shadow: 0 4px 20px #0003 !important;
+  border-radius: 12px !important;
+
 }
 
 /* Content Card */
 .content-card {
   background: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 950px; /* Increased max width for larger card */
-  box-sizing: border-box;
-  margin-top: 20px; /* Space above the card */
+  padding: 40px !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  max-width: 950px !important; /* Increased max width for larger card */
+  margin-top: 20px !important; /* Space above the card */
 }
 
 /* Profile Info Section */
@@ -269,5 +271,30 @@
     min-width: 100px;
     padding: 6px 12px;
     font-size: 0.9rem;
+  }
+}
+.mat-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.mat-ripple::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  width: 20px;
+  height: 20px;
+  animation: ripple-animation 0.4s ease-out;
+}
+
+@keyframes ripple-animation {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(4);
   }
 }

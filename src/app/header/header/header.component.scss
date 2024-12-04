@@ -128,9 +128,10 @@
   }
 }
 
-/* Right-align text for logged-in state */
+/* Right-align text for logged-in stateA */
 .logged-in {
   text-align: right;
+  margin: 0 1px 0px 3px;
 }
 
 /* Reduce padding around the logo */
@@ -320,3 +321,7 @@
   top: 50%; /* Centered vertically */
   transform: translateY(-50%); /* Adjust to center */
 }
+
+// .form-control::placeholder{
+//   color:white
+// }

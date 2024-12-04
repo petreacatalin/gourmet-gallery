@@ -7,7 +7,9 @@ import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 
 @Component({
   selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html'
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss']
+
 })
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;

@@ -23,14 +23,14 @@
       <!-- Filtering Control -->
       <div class="col-12 col-md-4 mb-3 mb-md-0 position-relative">
         <label for="filterInput" class="form-label">Filter</label>
-        <input type="text" id="filterInput" class="form-control" placeholder="Search by name" [(ngModel)]="filterText" (input)="applyFilter()">
+        <input type="text" id="filterInput" class="form-control" placeholder="Search by recipe name" [(ngModel)]="filterText" (input)="applyFilter()">
         
         <!-- X reset button -->
         <button *ngIf="filterText" type="button" class="reset-button" (click)="clearFilter()">&#x2716;</button>
       </div>
       <!-- Items per Page Control -->
       <div class="col-12 col-md-4">
-        <label for="itemsPerPageSelect" class="form-label">Items per page</label>
+        <label for="itemsPerPageSelect" class="form-label">Recipes per page</label>
         <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage($event)">
           <option value="8">8</option>
           <option value="12">12</option>

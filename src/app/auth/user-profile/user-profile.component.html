@@ -1,9 +1,9 @@
 <!-- User Profile Page -->
 <div class="user-profile-container">
   <!-- Main Content Area -->
-  <div class="main-content">
+  <div #tabHeader class="main-content mat-tab-header">
     <mat-card class="content-card">
-      <mat-tab-group>
+      <mat-tab-group  #tabGroup [(selectedIndex)]="selectedIndex">
         <mat-tab label="Personal Info">
           <div class="profile-info">
             <br>
@@ -27,7 +27,7 @@
                 </button>
               </div>
             </div>
-            <p><strong>Name:</strong> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
+            <p><strong>Display Name:</strong> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
             <p><strong>Email:</strong> {{ currentUser?.email }}</p>
           </div>
         </mat-tab>

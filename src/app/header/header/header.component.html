@@ -31,15 +31,17 @@
     </div>
 
     <ng-template #loggedIn>
+      <i class="fas fa-user"></i> 
       <div class="logged-in text-end text-white">
-        Hello,
-        <u><a routerLink="/user-profile" class="text-white">
-            {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }}
-          </a></u>
+        <!-- Hello, -->
+        <a [routerLink]="'/user-profile'" class="text-white">
+          <!-- {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }} -->
+          My Account
+        </a>
         <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
       </div>
     </ng-template>
-  </div>
+    </div>
 
   <!-- Side Menu (Hidden by Default) -->
   <nav class="side-menu" [ngClass]="{'open': menuOpen}" (click)="onMenuClick($event)">

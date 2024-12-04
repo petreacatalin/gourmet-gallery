@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from './user-profile.service';
 import { AuthService } from '../auth.service';
 import { ApplicationUser } from 'src/app/models/applicationUser.interface';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { Router } from '@angular/router';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,6 +23,11 @@ export class UserProfileComponent implements OnInit {
   newPassword: string = '';
   newImageUrl: string | ArrayBuffer | null = null;
   userRecipes: any[] = [];
+  @ViewChild('tabGroup') tabGroup: any; // Access to mat-tab-group
+  @ViewChild('tabHeader', { read: ElementRef }) tabHeader: ElementRef | undefined; // Access to mat-tab-header
+
+  selectedIndex = 0; // Track the currently selected tab
+  chevrons: NodeListOf<HTMLElement> | undefined; // Store chevron elements
 
   constructor(
     private userProfileService: UserProfileService, 
@@ -38,6 +44,54 @@ export class UserProfileComponent implements OnInit {
     setTimeout(() => {
       this.loadUserPublishedRecipes();
     }, 100);
+  }
+
+  
+  ngAfterViewInit(): void {
+    if (this.tabHeader) {
+      // Locate chevron elements in the mat-tab-header
+      this.chevrons = this.tabHeader.nativeElement.querySelectorAll(
+        '.mat-tab-header-pagination-chevron'
+      );
+
+      if (this.chevrons!.length === 2) {
+        this.chevrons![0].addEventListener('click', (event: MouseEvent) => this.handleChevronClick(event, 'left'));
+        this.chevrons![1].addEventListener('click', (event: MouseEvent) => this.handleChevronClick(event, 'right'));
+
+        this.chevrons!.forEach((chevron: HTMLElement) => {
+          chevron.classList.add('mat-ripple');
+          chevron.setAttribute('matRipple', '');
+          chevron.setAttribute('matRippleColor', '#cccccc');
+        });
+      }
+    }
+  }
+
+  // Handles chevron clicks and overrides their default behavior
+  handleChevronClick(event: MouseEvent, direction: 'left' | 'right'): void {
+    event.preventDefault(); // Prevent default scrolling behavior
+
+    if (direction === 'left') {
+      this.goToPreviousTab(); // Go to the previous tab
+    } else if (direction === 'right') {
+      this.goToNextTab(); // Go to the next tab
+    }
+  }
+
+  // Navigate to the next tab
+  goToNextTab(): void {
+    if (this.tabGroup && this.selectedIndex < this.tabGroup._tabs.length - 1) {
+      this.selectedIndex++;
+      this.tabGroup.selectedIndex = this.selectedIndex;
+    }
+  }
+
+  // Navigate to the previous tab
+  goToPreviousTab(): void {
+    if (this.tabGroup && this.selectedIndex > 0) {
+      this.selectedIndex--;
+      this.tabGroup.selectedIndex = this.selectedIndex;
+    }
   }
 
   openModal() {
