@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies and build Angular app
       run: |
         npm install
-        npm run build -- --prod
+        npm run build -- --configuration production
 
     # Build the Docker image
     - name: Build Docker image for Angular app
