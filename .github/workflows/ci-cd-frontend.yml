@@ -3,10 +3,10 @@ name: Build and Deploy Angular App to Azure
 on:
   push:
     branches:
-      - main # Trigger on push to the main branch
+      - master # Trigger on push to the main branch
   pull_request:
     branches:
-      - main # Trigger on pull requests to the main branch
+      - master # Trigger on pull requests to the main branch
   workflow_dispatch: # Manual trigger
 
 jobs:
