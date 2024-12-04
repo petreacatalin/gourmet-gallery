@@ -1,0 +1,50 @@
+name: Build and Deploy Angular App to Azure
+
+on:
+  push:
+    branches:
+      - master # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - master # Trigger on pull requests to the main branch
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout repository
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '21' # Adjust to match your Node.js version
+
+    # Install dependencies and build Angular app
+    - name: Install dependencies and build Angular app
+      run: |
+        npm install
+        npm run build -- --configuration production
+
+    # Build the Docker image
+    - name: Build Docker image for Angular app
+      run: |
+        docker build -t gourmetgallery.azurecr.io/gourmet-gallery-fe:latest .
+
+    # Log in to Azure
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    # Push Docker image to Azure Container Registry (ACR)
+    - name: Push Docker image to Azure Container Registry
+      run: |
+        docker tag gourmetgallery.azurecr.io/gourmet-gallery-fe:latest
+        docker push gourmetgallery.azurecr.io/gourmet-gallery-fe:latest
