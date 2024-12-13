@@ -3,48 +3,62 @@ name: Build and Deploy Angular App to Azure
 on:
   push:
     branches:
-      - master # Trigger on push to the main branch
+      - master # Trigger on push to the master branch
   pull_request:
     branches:
-      - master # Trigger on pull requests to the main branch
+      - master # Trigger on pull requests to the master branch
   workflow_dispatch: # Manual trigger
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout repository
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    # Set up Node.js
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '21' # Adjust to match your Node.js version
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21' # Adjust to match your Node.js version
 
-    # Install dependencies and build Angular app
-    - name: Install dependencies and build Angular app
-      run: |
-        npm install
-        npm run build -- --configuration production
+      # Clean up node_modules and build directories
+      - name: Clean up node_modules and build
+        run: |
+          rm -rf node_modules
+          rm -rf dist
 
-    # Build the Docker image
-    - name: Build Docker image for Angular app
-      run: |
-        docker build -t gourmetgallery.azurecr.io/gourmet-gallery-fe:latest .
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-    # Log in to Azure
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      # Build the Angular app for production
+      - name: Build Angular app
+        run: npm run build -- --configuration production
 
-    # Push Docker image to Azure Container Registry (ACR)
-    - name: Push Docker image to Azure Container Registry
-      run: |
-        docker tag gourmetgallery.azurecr.io/gourmet-gallery-fe:latest
-        docker push gourmetgallery.azurecr.io/gourmet-gallery-fe:latest
+      # Build the Docker image for the Angular app
+      - name: Build Docker image for Angular app
+        run: |
+          docker build -t gourmetgallery.azurecr.io/gourmet-gallery-fe:latest .
+
+      # Log in to Azure using the Service Principal
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Using creds from GitHub Secrets,
+          enable-AzPSSession: true
+
+      # Log in to Azure Container Registry (ACR)
+      - name: Azure Container Registry Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: gourmetgallery.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      # Push Docker image to Azure Container Registry (ACR)
+      - name: Push Docker image to Azure Container Registry
+        run: |
+          docker push gourmetgallery.azurecr.io/gourmet-gallery-fe:latest
