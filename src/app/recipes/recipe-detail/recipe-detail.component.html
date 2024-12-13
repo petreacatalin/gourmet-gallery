@@ -269,6 +269,13 @@
               alt="{{ comment.user?.email }}">
           </div>
           <mat-card-title class="user-name">{{ comment.user?.firstName }} {{ comment.user?.lastName }}</mat-card-title>
+          <div class="user-badges">
+            <img *ngFor="let badge of comment.user!.badges" 
+                 [src]="badge.iconUrl" 
+                 [title]="badge.name + '-' +  badge.description + ' - ' + badge.points + 'XP' " 
+                 alt="{{ badge.name }}" 
+                 class="badge-icon" />
+          </div>
           <mat-card-subtitle *ngIf="!comment.isEdited"> <small>Submitted at {{ comment.submitted | date:'short' }}</small></mat-card-subtitle>
           <mat-card-subtitle *ngIf="comment.isEdited"> <small> Edited at {{ comment.updated | date:'short' }} </small></mat-card-subtitle>
         </mat-card-header>

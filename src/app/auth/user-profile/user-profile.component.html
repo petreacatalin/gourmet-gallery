@@ -7,8 +7,10 @@
         <mat-tab label="Personal Info">
           <div class="profile-info">
             <br>
-            <h2>Personal Info</h2>
             <div class="profile-picture-container">
+              <br>
+              <h2>Personal Info</h2>
+              <br>
               <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-input">
               <!-- <input type="file" (change)="onFileSelected($event)"> -->
               <img *ngIf="this.newImageUrl" [src]="this.newImageUrl" alt="Profile Picture" class="profile-picture">
@@ -25,12 +27,23 @@
                 </button>
                 <button (click)="uploadProfilePicture()" class="btn-save-changes" [disabled]="this.selectedFile === null">Save changes
                 </button>
-              </div>
+              </div>  
+              <br>
+              <br>
+              <div class="info-container">
+              <p style="max-width: 50px;"><strong>About&nbsp;&nbsp;</strong></p>
+              <p> {{ currentUser?.about }}</p>
+              <p><strong>Display Name&nbsp;&nbsp;</strong> </p>
+              <p>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
+              <p><strong>Email &nbsp;&nbsp;</strong> </p>
+              <p>{{ currentUser?.email }}</p>
+       
+              <app-user-badges></app-user-badges>
             </div>
-            <p><strong>Display Name:</strong> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
-            <p><strong>Email:</strong> {{ currentUser?.email }}</p>
+            </div>
           </div>
         </mat-tab>
+
         <mat-tab label="Change Password">
           <div class="change-password">
             <br>
@@ -53,7 +66,7 @@
         <mat-tab label="Favorite Recipes">
           <div class="saved-recipes-container">
             <br>
-            <h2>Saved Recipes</h2>
+            <h2 style="align-self: center !important;">Saved Recipes</h2>
             <div class="recipe-grid">
               <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
                 <div class="card h-100 shadow position-relative" (click)="navigateToRecipe(recipe.id!, recipe.slug!)">

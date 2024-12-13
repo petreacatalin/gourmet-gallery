@@ -1,7 +1,7 @@
 :host {
     display: block;
     padding: 1rem; /* Add padding for spacing */
-    background-color: #f8f9fa; /* Light background color */
+    background-color: #f0f2f5;
     border-bottom: 1px solid #e9ecef; /* Border to separate from content */
     border-radius: 0.5rem; /* Rounded corners */
 }
@@ -13,6 +13,7 @@
     padding: 0; /* Reset default padding */
     list-style: none; /* Remove default list style */
     font-family: 'Lora', serif; /* Font family */
+    background-color: #f0f2f5 !important;
 }
 
 .breadcrumb-item {

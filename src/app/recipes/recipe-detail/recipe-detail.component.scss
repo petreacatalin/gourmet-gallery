@@ -105,6 +105,7 @@
   font-weight: 500;
 }
 
+
 /* Comments Section */
 .comments {
   margin-top: 20px;
@@ -219,6 +220,24 @@
       }
     }
   }
+}
+
+// User badges 
+
+.user-badges {
+  display: flex;
+  gap: 5px;
+}
+
+.badge-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.badge-icon:hover {
+  transform: scale(1.2);
 }
 
 /* Custom Stepper */

@@ -126,17 +126,40 @@
   .rating-stars {
     font-size: 1rem; /* Smaller stars on small screens */
   }
+  .ratings-count{
+    margin-top: 1px !important;
+  }
+  .bi-clock{
+    margin-top: 5px !important;
+
+  }
 }
 
 @media (min-width: 768px) {
   .rating-stars {
     font-size: 1.25rem;
   }
+  .ratings-count{
+    margin-top: 1px !important;
+  } 
+  .bi-clock{
+    margin-top: 5px !important;
+
+  }
 }
 
 @media (min-width: 992px) {
   .rating-stars {
     font-size: 1.5rem;
+
+  }
+  .ratings-count{
+    margin-top: 1px !important;
+  }
+  
+  .bi-clock{
+    margin-top: 5px !important;
+
   }
 }
 

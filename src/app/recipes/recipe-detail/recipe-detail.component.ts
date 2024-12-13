@@ -247,7 +247,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   
   
   toggleReplyForm(comment: Comments | null): void {
-    debugger
     this.replyForm.reset();
 
     this.replyingToComment = this.replyingToComment === comment ? null : comment;

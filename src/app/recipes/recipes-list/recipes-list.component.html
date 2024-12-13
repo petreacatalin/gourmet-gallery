@@ -41,7 +41,7 @@
     </div>
     
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-5 g-4">
       <div class="col" *ngFor="let recipe of displayedRecipes">
         <div class="card h-100 shadow position-relative" (click)="navigateToRecipe(recipe.id!, recipe.slug!)">
           <img [src]="recipe.imageUrl" class="card-img-top" alt="{{ recipe.title }}">
@@ -55,13 +55,13 @@
               <ng-container *ngFor="let star of getStars(recipe.averageRating)">
                 <i class="bi" [ngClass]="{'bi-star-fill': star === 1, 'bi-star': star === 0}"></i>
               </ng-container>
-              <p class="ratings-count mb-0" style="font-size: 14px; opacity: 0.75; margin-left: 5px;"> {{recipe.ratingsNumber}} Ratings</p>
+              <p class="ratings-count mb-0" style="font-size: 14px; opacity: 0.75; margin-left: 5px; margin-top: 4px !important;"> {{recipe.ratingsNumber}} Ratings</p>
             </div>
              
         <!-- Stylish Clock Icon with Total Time -->
         <div class="time-icon d-flex align-items-center">
           <i class="bi bi-clock"></i>
-          <span class="ms-2">{{ recipe.informationTime?.totalTime }} mins</span>
+          <span class="ms-2" style="margin-top: 4px;">{{ recipe.informationTime?.totalTime }} mins</span>
         </div>
           </div>
           <div *ngIf="this.currentUser" class="favorite-icon position-absolute top-0 end-0 m-2"

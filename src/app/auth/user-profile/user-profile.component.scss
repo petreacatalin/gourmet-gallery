@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-start; /* Align items to the top of the container */
   min-height: 100vh; /* Ensure full viewport height */
-  background-color: #f7f9fc; /* Background color similar to forgot-password */
+  background-color: #dfe2e5; /* Background color similar to forgot-password */
   padding: 20px;
 }
 
@@ -19,8 +19,9 @@
   box-sizing: border-box !important;
   box-shadow: 0 4px 20px #0003 !important;
   border-radius: 12px !important;
-
+  background-color: #e7e8e9;
 }
+
 
 /* Content Card */
 .content-card {
@@ -29,9 +30,36 @@
   border-radius: 12px !important;
   width: 100% !important;
   max-width: 950px !important; /* Increased max width for larger card */
-  margin-top: 20px !important; /* Space above the card */
+  background-color: #e7e8e9;
+}
+.info-container {
+  font-size:20px;
+  max-width: 700px;
+  max-height: fit-content;
+  font-family: 'Roboto', Arial, sans-serif; /* Modern and clean font family */
+  color: #333; /* Neutral dark color for text */
+  line-height: 1.6; /* Improve readability with proper line spacing */
+  padding: 10px 0;
 }
 
+.info-container p {
+  margin: 0; /* Remove default margin for cleaner layout */
+  padding: 5px 0; /* Add consistent spacing between lines */
+  font-size: 16px; /* Adjust text size for readability */
+}
+
+.info-container p strong {
+  font-weight: bold; /* Emphasize labels */
+  color: #2f2e2e; /* Slightly lighter than text for contrast */
+}
+
+.info-container .section-header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase; /* Optional for section titles */
+  color: #222;
+}
 /* Profile Info Section */
 .profile-info, .change-password, .saved-recipes-container, .my-reviews {
   margin-bottom: 20px;
@@ -127,13 +155,15 @@
   border-radius: 5px;
   padding: 10px;
   width: 100%;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   font-size: 1rem;
+  background-color: #e6e9ec;
 }
 
 .form-control:focus {
   border-color: #007bff;
   outline: none;
+  border: 1px;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
 }
 
@@ -158,20 +188,24 @@
 
 /* Recipe Grid */
 .recipe-grid {
-  display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Three columns for the first row */
+  margin-top: 20px;
+  margin-left: 20px;
+  justify-self: center;
 }
 
 /* Recipe Card */
 .recipe-card {
   flex: 1 1 calc(33.333% - 40px);
-  max-width: 300px;
+  max-width: 200px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  background-color: #e7e8e9;
 }
 
 .recipe-image {
@@ -224,6 +258,7 @@
 .card {
   transition: transform 0.2s ease-in-out;
   border-radius: 8px;
+  background-color: #e7e8e9;
 }
 
 .card:hover {
@@ -233,9 +268,65 @@
 /* For smaller screens, adjust the width for better responsiveness */
 @media (max-width: 768px) {
   .change-password .form-group {
-    width: 80%; /* Reduce the width on tablets */
+    width: 80%;
+    /* Reduce the width on tablets */
+  }
+
+  /* Content Card */
+  .content-card {
+    background: #ffffff;
+    padding: 40px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 950px !important;
+    /* Increased max width for larger card */
+    margin-top: 20px !important;
+    background-color: #e7e8e9;
+
+    /* Space above the card */
+  }
+
+  .main-content {
+    background: #ffffff;
+    border-radius: 12px !important;
+    width: 100% !important;
+    height: 100%;
+    max-width: 950px !important;
+    /* Increased max width for larger card */
+    margin-top: 20px !important;
+    /* Space above the card */
+    background-color: #e7e8e9;
+
+  }
+
+  .recipe-card {
+    flex: 2 2 calc(33.333% - 40px);
+    max-width: 200px;
+    max-height: 200px;
+    font-size: medium;
+    font-style: normal;
+    /* Recipe Grid */
+   
+  }
+  .recipe-grid {
+    flex-wrap: wrap;
+    gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Three columns for the first row */
+    margin-top: 20px;
+    /* Three columns for the first row */
+    margin-top: 20px;
+    margin-left: 20px;
+    justify-self: center;
+  }
+  .recipe-image {
+    width: 100%;
+    height: 150px;
+    max-height: 150px;
+    object-fit: cover;
   }
 }
+/* Recipe Card */
 
 @media (max-width: 576px) {
   .change-password .form-group {

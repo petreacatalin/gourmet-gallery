@@ -1,0 +1,89 @@
+<div class="badge-create-container">
+    <h2>Create New Badge</h2>
+    
+    <form [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Badge Name</label>
+        <input id="name" formControlName="name" type="text" class="form-control" />
+        <div *ngIf="badgeForm.get('name')!.invalid && badgeForm.get('name')!.touched" class="error-message">
+          Badge name is required and cannot exceed 100 characters.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input id="description" formControlName="description" type="text" class="form-control" />
+        <div *ngIf="badgeForm.get('description')!.invalid && badgeForm.get('description')!.touched" class="error-message">
+          Description is required and cannot exceed 250 characters.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="iconUrl">Icon URL</label>
+        <input id="iconUrl" formControlName="iconUrl" type="url" class="form-control" />
+        <div *ngIf="badgeForm.get('iconUrl')!.invalid && badgeForm.get('iconUrl')!.touched" class="error-message">
+          Please enter a valid URL for the badge icon.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="points">Points</label>
+        <input id="points" formControlName="points" type="number" class="form-control" />
+        <div *ngIf="badgeForm.get('points')!.invalid && badgeForm.get('points')!.touched" class="error-message">
+          Points are required and must be a non-negative number.
+        </div>
+      </div>
+  
+      <!-- <div class="form-group">
+        <label for="isActive">Active</label>
+        <input id="isActive" formControlName="isActive" type="checkbox" class="form-control" />
+      </div> -->
+  
+      <div class="form-group">
+        <label for="condition">Condition</label>
+        <input id="condition" formControlName="condition" type="number" class="form-control" />
+        <div *ngIf="badgeForm.get('condition')!.invalid && badgeForm.get('condition')!.touched" class="error-message">
+          Condition is required.
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="badgeForm.invalid" class="btn btn-primary">Create Badge</button>
+    </form>
+  </div>
+  
+
+  <div class="container badges">
+  <div class="badge-list">
+
+    <h2>Badges</h2>
+  
+    <!-- Badge Items -->
+    <div *ngFor="let badge of badges" class="badge-item">
+      <div class="badge-icon">
+        <img [src]="badge.iconUrl" alt="{{badge.name}} Icon" class="badge-icon-img" />
+      </div>
+      <div class="badge-info">
+        <h3 class="badge-name">{{ badge.name }}</h3>
+        <p class="badge-description">{{ badge.description }}</p>
+        <p class="badge-condition">
+          <strong>Condition:</strong> {{ getConditionDescription(badge.condition) }}
+        </p>
+        <p class="badge-points"><strong>Points:</strong> {{ badge.points }}</p>
+        <p class="badge-status" [class.active]="badge.isActive" [class.inactive]="!badge.isActive">
+          {{ badge.isActive ? 'Active' : 'Inactive' }}
+        </p>
+      </div>
+    </div>
+  
+    <!-- Pagination -->
+    <mat-paginator [length]="totalBadges"
+                   [pageSize]="badgesPerPage"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+  
+  
+  

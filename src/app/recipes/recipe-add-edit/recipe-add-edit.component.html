@@ -33,7 +33,7 @@
 
   <div class="container fade-in" *ngIf="isLoggedIn">
     <div class="form-container">
-      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="recipeForm">
         <mat-card class="custom-card">
           <mat-card-title>Publish your Recipe </mat-card-title>
           <mat-card-content class="custom-card-content">
@@ -69,7 +69,8 @@
                 </div>
               <div class="button-container">
                 <button type="file" id="fileInput" (click)="triggerFileInput()" class="btn-select-picture">Select
-                  Picture</button>
+                  Picture
+                </button>
               </div>
             </mat-card>
             <!-- Ingredients Card -->
@@ -266,7 +267,7 @@
 
           </mat-card-content>
           <mat-card-actions>
-            <button type="submit" class="btn-publish-recipe">Publish Recipe</button>
+            <button type="submit" class="btn-publish-recipe" (click)="onSubmit()">Publish Recipe</button>
           </mat-card-actions>
         </mat-card>
       </form>

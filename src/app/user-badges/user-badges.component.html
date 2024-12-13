@@ -1,0 +1,34 @@
+<div class="badge-container">
+  <h2>My Badges</h2>
+
+  <div class="badge-section">
+    <div class="badge-grid">
+      <div
+        *ngFor="let badge of badges"
+        class="badge-item"
+        [ngClass]="{ 'awarded': badge.isActive, 'not-awarded': !badge.isActive }"
+      >
+        <div
+          class="badge-icon"
+          [ngStyle]="{ 'background-image': 'url(' + badge.iconUrl + ')' }"
+          (mouseover)="showBadgeDetails(badge)"
+          (mouseout)="hideBadgeDetails()"
+        ></div>
+
+        <!-- Tooltip for badge details -->
+        <div class="badge-tooltip" *ngIf="activeBadge === badge">
+          <div class="tooltip-content">
+            <h4 style="overflow-wrap: break-word;"><strong>{{ badge.name }}</strong></h4>
+            <p>{{ badge.description }}.</p>
+            <p><strong></strong> {{ badge.points }} points</p>
+            <p
+              [ngClass]="{ 'earned': badge.isActive, 'unearned': !badge.isActive }"
+            >
+              {{ badge.isActive ? 'Earned' : 'Not Earned' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

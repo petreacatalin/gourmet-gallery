@@ -1,0 +1,115 @@
+.badge-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.badge-section {
+  margin-bottom: 40px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.badge-grid {
+  display: grid;
+  align-items: center;
+  justify-self: center;
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 15px;
+}
+
+.badge-item {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.badge-item.awarded {
+  background-color: #4caf50; /* Green for earned badges */
+}
+
+.badge-item.not-awarded {
+  background-color: #ccc; /* Grey for unearned badges */
+  opacity: 0.7;
+}
+
+.badge-item:hover {
+  transform: scale(1.35);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.badge-icon {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.badge-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: normal;
+  text-align: center;
+  width: 150px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.badge-item:hover .badge-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tooltip-content h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.tooltip-content p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.earned {
+  color: green;
+  font-weight: bold;
+}
+
+.unearned {
+  color: red;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .badge-grid {
+    display: grid;
+    justify-content: center; /* Center the content horizontally */
+    max-width: 90%;
+    height: auto;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 15px;
+    border-radius: 12px;
+    margin: 20px auto; /* Center image with automatic left and right margins */
+  }
+}

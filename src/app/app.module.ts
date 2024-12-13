@@ -53,6 +53,9 @@ import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.componen
 import { SocialActionButtonsComponent } from './recipes/social-action-buttons/social-action-buttons.component';
 import { ScrollTopComponent } from './utils/scroll-top/scroll-top.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UserBadgesComponent } from './user-badges/user-badges.component';
+import { BadgesComponent } from './badges/badges.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -86,6 +89,8 @@ export function tokenGetter() {
     ForbiddenPageComponent,
     SocialActionButtonsComponent,
     ScrollTopComponent,
+    UserBadgesComponent,
+    BadgesComponent,
   ],
   imports: [
     BrowserModule,
@@ -122,6 +127,7 @@ export function tokenGetter() {
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'
     }),
+    ScrollingModule
     
   ],
   providers: [

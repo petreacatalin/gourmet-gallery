@@ -65,7 +65,6 @@ export class RecipeAddEditComponent implements OnInit {
     this.initializeForm();
     this.checkEditMode();
     if(this.isEditMode === false){  
-      debugger
       this.addIngredient(); 
       this.addStep(); 
     }
@@ -311,7 +310,6 @@ addIngredient() {
   onSubmit(): void {
     this.spinnerService.show();
 
-    console.log(this.recipeForm.value)
     if (this.recipeForm.invalid) {
         this.spinnerService.hide();
         return;
