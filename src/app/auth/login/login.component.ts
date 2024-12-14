@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
-import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +15,15 @@ export class LoginComponent implements OnInit {
   showForgotPasswordForm = false;
   submitted = false;
   showInvalidLogin: boolean = false;
+  emailNotConfirmed: boolean = false;
+  isGoogleButtonRendered = false;  // Track if the Google button is rendered or not
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private ngZone: NgZone,
   ) {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
@@ -30,9 +33,11 @@ export class LoginComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    // Initialize any settings if needed
+   // this.initializeGoogleSignIn();
   }
-
+  ngAfterViewInit(): void {
+    this.initializeGoogleSignIn();
+  }
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
@@ -49,8 +54,13 @@ export class LoginComponent implements OnInit {
         },
         error => {
           console.error('Login failed', error);
-          if(!error.result)
+          if(!error.result && !(error.error.errors[0].includes("Email not confirmed"))){
             this.showInvalidLogin = true;
+          }
+          if(!error.result && (error.error.errors[0].includes("Email not confirmed"))){
+            this.showInvalidLogin = false;
+            this.emailNotConfirmed = true;
+          }
           this.spinnerService.hide();
         }
       );
@@ -76,26 +86,35 @@ export class LoginComponent implements OnInit {
   get formControls() {
     return this.loginForm.controls;
   }
+ 
 
-  loginWithGoogle(): void {
-    this.authService.loginWithGoogle().subscribe(
-      (response) => {
-        this.router.navigate(['/mainpage']);
-      },
-      (error) => {
-        console.error('Google login failed', error);
-      }
+  // Initialize Google Sign-In button
+  initializeGoogleSignIn(): void {
+    google.accounts.id.initialize({
+      client_id: '699433768038-tip0u2mr5q20vhkm41gjkk5cdk0j6hs2.apps.googleusercontent.com',  
+      callback: (response: any) => this.handleGoogleSignIn(response)
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById('google-sign-in-button')!, 
+      { theme: 'outline', size: 'large' }
     );
   }
 
-  // loginWithFacebook(): void {
-  //   this.authService.loginWithFacebook().subscribe(
-  //     (response) => {
-  //       this.router.navigate(['/mainpage']);
-  //     },
-  //     (error) => {
-  //       console.error('Facebook login failed', error);
-  //     }
-  //   );
-  // }
+  // Handle the Google Sign-In response
+  handleGoogleSignIn(response: any): void {
+    if (response?.credential) {
+      // Send the ID token to the backend for validation
+      this.authService.googleLogin(response.credential).subscribe(
+        (result) => {
+          this.ngZone.run(() => {
+            this.router.navigate(['/mainpage']);  // Redirect after successful login
+          });
+        },
+        (error) => {
+          console.error('Google login failed', error);
+        }
+      );
+    }
+  }
 }

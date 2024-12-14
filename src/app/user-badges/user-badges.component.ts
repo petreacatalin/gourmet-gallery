@@ -35,14 +35,12 @@ export class UserBadgesComponent implements OnInit {
   fetchBadges(): void {
     this.badgeService.getBadges().subscribe((badges) => {
       this.badges = badges;
-      console.log(this.badges)
     });
   }
 
   fetchUserBadges(): void {
     this.badgeService.getUserBadges().subscribe((badges) => {
       this.userBadges = badges;
-      console.log(this.userBadges)
 
     });
    this.filterUserBadges();
@@ -83,7 +81,6 @@ export class UserBadgesComponent implements OnInit {
           });
     
           this.badges = combinedBadges; 
-          console.log(this.badges);
         });
       });
     }

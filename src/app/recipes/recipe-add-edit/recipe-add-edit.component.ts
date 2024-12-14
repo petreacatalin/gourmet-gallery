@@ -233,7 +233,6 @@ addIngredient() {
             if (this.recipeId && slug) {
                 this.recipeService.getRecipeByIdAndSlug(this.recipeId, slug).subscribe(
                     (recipe: Recipe) => {
-                      console.log(recipe)
                       // Populate form fields with recipe data
                       this.recipeForm.patchValue({
                         title: recipe.title,

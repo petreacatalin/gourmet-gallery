@@ -60,7 +60,6 @@ export class RecipeService {
   uploadImage(file: File): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);
-    console.log(formData)
     return this.http.post<string>(`${environment.baseUrl}/upload/upload`, formData, {
       responseType: 'text' as 'json' 
     }); 

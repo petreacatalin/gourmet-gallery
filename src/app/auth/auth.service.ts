@@ -7,7 +7,7 @@ import { AuthResponse } from '../models/authResponse.interface';
 import { Login } from '../models/login';
 import { jwtDecode } from 'jwt-decode';
 import { ResetPassword } from '../models/resetPassword.interface';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';  // Import this
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,9 @@ export class AuthService {
   public userCurrently?: ApplicationUser | undefined | null;
   private isloggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient,socialAuthService: SocialAuthService) {
+
+
+  constructor(private http: HttpClient,private socialAuthService: SocialAuthService) {
     this.initializeUserState();
   }
 
@@ -59,51 +61,19 @@ export class AuthService {
     );
   }
 
-  loginWithGoogle(): Observable<AuthResponse> {
-    return new Observable<AuthResponse>((observer) => {
-      // this.socialAuthService.signIn(SocialAuthService.GOOGLE).then(user => {
-      //   const loginData = {
-      //     email: user.email,
-      //     token: user.idToken
-      //   };
-      //   this.http.post<AuthResponse>(`${this.baseUrl}/Account/social-login`, loginData).subscribe(
-      //     (response) => {
-      //       localStorage.setItem(this.tokenKey, response.token); // Store the JWT token
-      //       this.isloggedIn.next(true);
-      //       this.loadUserDetails();
-      //       observer.next(response);
-      //       observer.complete();
-      //     },
-      //     (error) => {
-      //       observer.error(error);
-      //     }
-      //   );
-      // });
-    });
+  googleLogin(idToken: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/Account/google-login`, { idToken }).pipe(
+      map((response) => {        
+          localStorage.setItem(this.tokenKey, response.token); // Store JWT token in local storage
+        
+          this.isloggedIn.next(true);
+          this.loadUserDetails();
+          this.loadProfileData();
+          this.userSubject.next(this.userCurrently!)
+        return response;
+      }));
   }
-  // // Same for Facebook login, adjust accordingly.
-  // loginWithFacebook(): Observable<AuthResponse> {
-  //   return new Observable<AuthResponse>((observer) => {
-  //     this.socialAuthService.signIn(SocialAuthService.FACEBOOK).then(user => {
-  //       const loginData = {
-  //         email: user.email,
-  //         token: user.authToken
-  //       };
-  //       this.http.post<AuthResponse>(`${this.baseUrl}/Account/social-login`, loginData).subscribe(
-  //         (response) => {
-  //           localStorage.setItem(this.tokenKey, response.token); // Store the JWT token
-  //           this.isloggedIn.next(true);
-  //           this.loadUserDetails();
-  //           observer.next(response);
-  //           observer.complete();
-  //         },
-  //         (error) => {
-  //           observer.error(error);
-  //         }
-  //       );
-  //     });
-  //   });
-  // }
+  
 
   hasRole(role: string): boolean {
     const token = this.getToken();

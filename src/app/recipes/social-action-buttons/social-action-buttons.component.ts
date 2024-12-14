@@ -34,7 +34,6 @@ export class SocialActionButtonsComponent implements OnInit {
       this.loadFavorites(this.user.id);
     }
     this.currentUrl = this.frontEndUrl + this.router.url;
-    console.log(this.currentUrl)
   }
 
   toggleShareOptions() {
