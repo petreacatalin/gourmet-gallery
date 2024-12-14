@@ -56,6 +56,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UserBadgesComponent } from './user-badges/user-badges.component';
 import { BadgesComponent } from './badges/badges.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MealPlanComponent } from './meal-plan/meal-plan.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; // Import FullCalendar module
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+
+
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -91,6 +96,7 @@ export function tokenGetter() {
     ScrollTopComponent,
     UserBadgesComponent,
     BadgesComponent,
+    MealPlanComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,12 +133,34 @@ export function tokenGetter() {
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'
     }),
-    ScrollingModule
+    ScrollingModule,
+    FullCalendarModule  // Import t
     
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    AuthGuard
+    AuthGuard,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        // Configure your social login providers here (Google, Facebook, etc.)
+        autoLogin: false,
+        providers: [
+          {
+            id: 'GOOGLE',
+            provider: new GoogleLoginProvider(
+              '699433768038-tip0u2mr5q20vhkm41gjkk5cdk0j6hs2.apps.googleusercontent.com'  // Replace with your Google Client ID
+            )
+          },
+          {
+            id: 'FACEBOOK',
+            provider: new FacebookLoginProvider(
+              'YOUR_FACEBOOK_APP_ID'  // Replace with your Facebook App ID
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
   ],
   
   bootstrap: [AppComponent]

@@ -48,6 +48,10 @@
       <button type="submit" class="btn btn-primary">Log In
         <i class="fas fa-arrow-right arrow"></i>
       </button>
+      <div *ngIf="!isLoggedIn">
+        <button (click)="loginWithGoogle()">Login with Google</button>
+      <!-- <button (click)="signInWithFacebook()">Login with Facebook</button> -->
+      </div>
       <div class="register-link">
         Don't have an account? <a [routerLink]="['/register']">Register here!</a>
       </div>

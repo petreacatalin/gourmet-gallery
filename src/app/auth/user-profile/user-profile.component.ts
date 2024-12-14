@@ -43,7 +43,7 @@ export class UserProfileComponent implements OnInit {
     this.loadSavedRecipes();
     setTimeout(() => {
       this.loadUserPublishedRecipes();
-    }, 100);
+    }, 1000);
   }
 
   

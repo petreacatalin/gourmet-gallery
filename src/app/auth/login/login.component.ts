@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
+import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -53,7 +54,8 @@ export class LoginComponent implements OnInit {
           this.spinnerService.hide();
         }
       );
-    } else {
+    } 
+    else {
       this.markFormGroupTouched(this.loginForm);
       this.spinnerService.hide();
 
@@ -74,4 +76,26 @@ export class LoginComponent implements OnInit {
   get formControls() {
     return this.loginForm.controls;
   }
+
+  loginWithGoogle(): void {
+    this.authService.loginWithGoogle().subscribe(
+      (response) => {
+        this.router.navigate(['/mainpage']);
+      },
+      (error) => {
+        console.error('Google login failed', error);
+      }
+    );
+  }
+
+  // loginWithFacebook(): void {
+  //   this.authService.loginWithFacebook().subscribe(
+  //     (response) => {
+  //       this.router.navigate(['/mainpage']);
+  //     },
+  //     (error) => {
+  //       console.error('Facebook login failed', error);
+  //     }
+  //   );
+  // }
 }

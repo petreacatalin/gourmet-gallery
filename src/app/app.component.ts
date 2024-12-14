@@ -7,6 +7,8 @@ import { RouterOutlet } from '@angular/router';
 import { trigger, transition, style, animate, query, group } from '@angular/animations';
 import { SidebarService } from './sidebar/sidebar.service';
 import { filter } from 'rxjs/operators';
+import dayGridPlugin from '@fullcalendar/daygrid'; // Import plugins
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +39,14 @@ export class AppComponent implements OnInit {
   isSidebarVisible: boolean = false; // Controls if sidebar is visible (for mobile)
   isSidebarCollapsed: boolean = false; // Controls sidebar collapse/expand on all devices
   isMobile: boolean = window.innerWidth < 768; // To check if the screen is mobile-sized
-
+   
+     calendarOptions = {
+       initialView: 'dayGridMonth',
+       plugins: [dayGridPlugin, interactionPlugin],
+       editable: true,
+       selectable: true
+     };
+   
   constructor(private authService: AuthService, private sidebarService: SidebarService, private router: Router) {}
 
   ngOnInit(): void {
@@ -75,5 +84,11 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  handleDateClick(arg: any) {
+
+    alert('date click! ' + arg.dateStr)
+
   }
 }

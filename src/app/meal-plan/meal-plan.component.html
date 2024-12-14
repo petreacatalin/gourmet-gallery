@@ -1,0 +1,23 @@
+<full-calendar [options]="calendarOptions"
+  (dateClick)="handleDateClick($event)">
+</full-calendar>
+
+
+<div *ngIf="selectedDate">
+  <h3>Plan Meal for {{ selectedDate }}</h3>
+  <form (ngSubmit)="addMeal()">
+    <label for="mealType">Meal Type:</label>
+    <select id="mealType" [(ngModel)]="meal.mealType" name="mealType">
+      <option value="Breakfast">Breakfast</option>
+      <option value="Lunch">Lunch</option>
+      <option value="Dinner">Dinner</option>
+    </select>
+
+    <label for="recipe">Recipe:</label>
+    <select id="recipe" [(ngModel)]="meal.recipeId" name="recipe">
+      <option *ngFor="let recipe of recipes" [value]="recipe.id">{{ recipe.title }}</option>
+    </select>
+
+    <button type="submit">Add Meal</button>
+  </form>
+</div>
