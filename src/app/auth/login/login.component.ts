@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 import { NgZone } from '@angular/core';
+import { ToastService } from 'src/app/utils/toast/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private spinnerService: SpinnerService,
     private ngZone: NgZone,
+    private toastService: ToastService
   ) {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
@@ -50,6 +52,9 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value).subscribe(
         response => {
           this.spinnerService.hide();
+          this.triggerSuccess('Welcome back!');
+          this.triggerSuccess('You’re now logged in!');
+          
           this.router.navigate(['/mainpage']);
         },
         error => {
@@ -87,6 +92,9 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
  
+  triggerSuccess(text?: string): void {
+    this.toastService.showToast(text!, 'success');
+  }
 
   // Initialize Google Sign-In button
   initializeGoogleSignIn(): void {
@@ -109,6 +117,8 @@ export class LoginComponent implements OnInit {
         (result) => {
           this.ngZone.run(() => {
             this.router.navigate(['/mainpage']);  // Redirect after successful login
+            this.triggerSuccess('Welcome back!');
+            this.triggerSuccess('You’re now logged in!');
           });
         },
         (error) => {

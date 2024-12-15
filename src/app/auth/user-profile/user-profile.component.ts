@@ -6,6 +6,7 @@ import { Recipe } from 'src/app/models/recipe.interface';
 import { Router } from '@angular/router';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 import { MatTabGroup } from '@angular/material/tabs';
+import { ToastService } from 'src/app/utils/toast/toast.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -34,6 +35,7 @@ export class UserProfileComponent implements OnInit {
     private authService: AuthService,
     private router:Router,
     private spinnerService: SpinnerService,
+    private toastService: ToastService
   ) {
     
    }
@@ -132,7 +134,9 @@ export class UserProfileComponent implements OnInit {
     if (this.selectedFile) {
       this.userProfileService.uploadProfilePicture(this.selectedFile).subscribe(() => {
         this.loadProfileData(); // Reload profile to get new picture URL
+        this.toastService.showToast("Your profile picture has been updated successfully",'success')
       });
+
       this.selectedFile = null;
       this.newImageUrl = null;
       this.authService.loadProfileData();

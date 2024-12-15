@@ -8,6 +8,7 @@ import { Login } from '../models/login';
 import { jwtDecode } from 'jwt-decode';
 import { ResetPassword } from '../models/resetPassword.interface';
 import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login';
+import { ToastService } from '../utils/toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,11 @@ export class AuthService {
 
 
 
-  constructor(private http: HttpClient,private socialAuthService: SocialAuthService) {
+  constructor(
+    private http: HttpClient,
+    private toastService: ToastService,
+  ) 
+    {
     this.initializeUserState();
   }
 
@@ -143,6 +148,7 @@ export class AuthService {
     this.isloggedIn.next(false);
     this.userCurrently = null;
     this.userSubject.next(null);
+    this.toastService.showToast("You’ve been logged out. See you next time!",'error')
   }
  
 
