@@ -80,9 +80,10 @@ export class AuthService {
 
     if (!token) return false;
     const decodedToken: any = jwtDecode(this.getToken()!);
-
-    //console.log(decodedToken.role)
-    return decodedToken.role === role;
+    
+    const roles=  decodedToken.role as string[];
+   
+    return roles.includes(role);
   }
 
   loggedIn(): Observable<boolean> {

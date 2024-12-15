@@ -23,12 +23,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAndLoadProfileData();
+   
   }
 
   onSearch() {
     if (this.searchText.trim()) {
       this.router.navigate(['/recipes/list'], { queryParams: { search: this.searchText } });
     }
+  }
+
+  hasRoleAdmin(): boolean {
+    return this.authService.hasRole('Admin');
   }
 
   checkAndLoadProfileData(): void {
