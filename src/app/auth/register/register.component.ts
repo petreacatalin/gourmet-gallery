@@ -54,19 +54,25 @@ export class RegisterComponent {
         },
         error => {
           console.error('Registration failed', error);
-          if (error.status === 400 || error.error) {
+          debugger
+          if (error.status === 400 || error.status) {
             const errorArray = error.error;
             if (Array.isArray(errorArray)) {
+              alert()
               errorArray.forEach(err => {
                 if (err.code === 'DuplicateUserName') {
                   this.registerForm.get('email')?.setErrors({ duplicateUserName: true });
-                } else {
+                } 
+                else {
                   const errorMessage = this.errorMessages[err.code];
                   if (errorMessage) {
                     this.registerForm.get('password')?.setErrors({ backendError: errorMessage });
                     this.registerForm.get('confirmPassword')?.setErrors({ backendError: errorMessage });
                   }
                 }
+                if (error.error.text.includes('Registration successful')) {
+                  this.router.navigate(['/login']);
+                } 
               });
               this.registerForm.updateValueAndValidity(); // Trigger validation checks
             }
