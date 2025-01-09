@@ -16,7 +16,10 @@ export class ResetPasswordComponent implements OnInit {
   token: string | null = '';
   email: string | null = '';
   showTokenExpired: boolean = false;
-
+  passwordErrorCodes: string[] = ["PasswordRequiresNonAlphanumeric","PasswordRequiresLower","PasswordRequiresUpper"];
+  passwordValidationMessage: string = '';
+  tokenInvalidCode: string[] = ["InvalidToken"];
+  showPasswordIncorrect: boolean = false;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -52,13 +55,25 @@ export class ResetPasswordComponent implements OnInit {
       this.authService.resetPassword(this.email,this.token, resetDto ).subscribe(
         response => {
           this.spinnerService.hide();
-          this.router.navigate(['/reset-password-message']);
+          this.router.navigate(['/reset-password-successfuly']);
         },
         error => {
           this.spinnerService.hide();
-          if(error){
-            this.showTokenExpired = true;
+          var errors = error.error.errors;
+          if (errors) {
+            if (this.passwordErrorCodes.some(code => errors.includes(code))) {
+              debugger
+              this.showPasswordIncorrect = true;              
+              this.passwordValidationMessage = error.error.message
+              .split('.')
+              .filter((sentence: string) => sentence.trim().length > 0); // Explicitly declare the type
+            
+            }
+            if (this.tokenInvalidCode.some(code => errors.includes(code))) {
+              this.showTokenExpired = true;
+            }
           }
+
         }
       );
     }

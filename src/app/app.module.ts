@@ -59,6 +59,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; // Import FullCalendar module
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { ResetPasswordSuccessfulyComponent } from './auth/password/reset-password-successfuly/reset-password-successfuly.component';
 
 
 export function tokenGetter() {
@@ -97,6 +98,7 @@ export function tokenGetter() {
     UserBadgesComponent,
     BadgesComponent,
     MealPlanComponent,
+    ResetPasswordSuccessfulyComponent,
   ],
   imports: [
     BrowserModule,

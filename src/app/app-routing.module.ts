@@ -15,6 +15,7 @@ import { ResetPasswordMessageComponent } from './auth/password/reset-password-me
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { MealPlanComponent } from './meal-plan/meal-plan.component';
+import { ResetPasswordSuccessfulyComponent } from './auth/password/reset-password-successfuly/reset-password-successfuly.component';
 
 const routes: Routes = [
   { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Admin Panel', animation: 'admin-panel', role: 'Admin' } },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent, data: { breadcrumb: 'Forgot Password', animation: 'forgot-password' }},
   { path: 'reset-password', component: ResetPasswordComponent, data: { breadcrumb: 'Reset Password', animation: 'reset-password' }},
   { path: 'reset-password-message', component: ResetPasswordMessageComponent, data: { breadcrumb: 'Reset Password Message', animation: 'reset-password-message' }},
+  { path: 'reset-password-successfuly', component: ResetPasswordSuccessfulyComponent, data: { breadcrumb: 'Reset Password Successfuly', animation: 'reset-password-successfuly' }},
   { path: 'forbidden', component: ForbiddenPageComponent },
   { path: 'meal-plan', component: MealPlanComponent, data: { breadcrumb: 'Meal Plan', animation: 'meal-plan' }},
   { path: '', redirectTo: 'mainpage', pathMatch: 'full', data: { breadcrumb:'mainpage', animation: 'mainpage' }},
