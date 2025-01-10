@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   showInvalidLogin: boolean = false;
   emailNotConfirmed: boolean = false;
+  confirmationSent: boolean = false;
   isGoogleButtonRendered = false;  // Track if the Google button is rendered or not
 
   constructor(
@@ -76,6 +77,27 @@ export class LoginComponent implements OnInit {
 
     }
   }
+
+  onResendConfirmation():void{
+    this.spinnerService.show();
+    if (this.loginForm.valid) {
+      this.authService.resendConfirmationEmail(this.loginForm.value).subscribe(
+        response => {
+            this.spinnerService.hide();
+            if(response.code === 200){
+              this.showInvalidLogin = false;
+              this.emailNotConfirmed = false;
+              this.confirmationSent = true;
+            }
+          },
+          error => {
+            this.spinnerService.hide();
+            console.log(error)
+          }
+        );}
+      }
+
+  
 
   markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {

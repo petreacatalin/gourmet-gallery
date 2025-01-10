@@ -24,7 +24,7 @@
       <div class="form-group">
         <label for="userName">Email</label>
         <input id="userName" formControlName="userName" type="text" class="form-control" placeholder="Enter your e-mail">
-        <div class="alert-validation" *ngIf="loginForm.get('userName')?.invalid && (loginForm.get('userName')?.dirty || loginForm.get('userName')?.touched)">
+        <div class="alert alert-danger" *ngIf="loginForm.get('userName')?.invalid && (loginForm.get('userName')?.dirty || loginForm.get('userName')?.touched)">
           <div *ngIf="loginForm.get('userName')?.errors?.['required']">
             Email is required.
           </div>
@@ -36,17 +36,22 @@
       <div class="form-group">
         <label for="password">Password</label>
         <input id="password" formControlName="password" type="password" class="form-control" placeholder="Enter your password">
-        <div class="alert-validation" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+        <div class="alert alert-danger" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
           <div *ngIf="loginForm.get('password')?.errors?.['required']">
             Password is required.
           </div>
         </div>
-        <div class="alert-validation" *ngIf="showInvalidLogin">
-            Email or password is invalid!
+        <div class="alert alert-danger" *ngIf="showInvalidLogin">
+            Invalid email or password.
         </div>
-        <div class="alert-validation" *ngIf="emailNotConfirmed">
-          The Email for this account has not been confirmed yet. Please check your inbox!
-       </div>
+        <div class="alert alert-danger" *ngIf="emailNotConfirmed">
+          The Email for this account has not been confirmed yet. Please check your inbox or
+          <u><a (click)="onResendConfirmation()" style="cursor: pointer;">click here to resend the confirmation link!</a></u>
+        </div>
+        <div class="alert alert-success" *ngIf="confirmationSent">
+          The confirmation link has been successfully sent to your email. The link will remain active for 1 hour.
+        </div>
+        
       </div>
       <button type="submit" (click)="onSubmit()" class="btn btn-primary">Log In
         <i class="fas fa-arrow-right arrow"></i>

@@ -29,7 +29,7 @@
         <input id="email" formControlName="email" type="email" class="form-control" placeholder=" ">
         <label for="email">Email</label>
       </div>
-      <div class="alert-validation" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+      <div class="alert alert-danger" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
         <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
         <div *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
         <div *ngIf="registerForm.get('email')?.errors?.['duplicateUserName']">This email is already registered. Please <a [routerLink]="['/login']">login</a> or choose another.</div>
@@ -42,7 +42,7 @@
         <input id="firstName" formControlName="firstName" class="form-control" placeholder=" ">
         <label for="firstName">First Name</label>
       </div>
-      <div class="alert-validation" *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
+      <div class="alert alert-danger" *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
         <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First Name is required.</div>
         <div *ngIf="registerForm.get('firstName')?.errors?.['firstName']">Please enter your First Name.</div>
       </div>
@@ -54,7 +54,7 @@
         <input id="lastName" formControlName="lastName" type="text" class="form-control" placeholder=" ">
         <label for="lastName">Last Name</label>
       </div>
-      <div class="alert-validation" *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
+      <div class="alert alert-danger" *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
         <div *ngIf="registerForm.get('lastName')?.errors?.['required']">Last Name is required.</div>
         <div *ngIf="registerForm.get('lastName')?.errors?.['lastName']">Please enter your Last Name.</div>
       </div>
@@ -67,7 +67,7 @@
     <label for="password">Password</label>
     <i (click)="togglePasswordVisibility()" class="far" [ngClass]="hidePassword ? 'fa-eye-slash' : 'fa-eye'" style="cursor: pointer;"></i>
   </div>
-  <div class="alert-validation" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+  <div class="alert alert-danger" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
     <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
     <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
     <div *ngIf="registerForm.get('password')?.errors?.['backendError']">{{ registerForm.get('password')?.errors?.['backendError'] }}</div>
@@ -81,7 +81,7 @@
     <label for="confirmPassword">Confirm Password</label>
     <i (click)="toggleConfirmPasswordVisibility()" class="far" [ngClass]="hideConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" style="cursor: pointer;"></i>
   </div>
-  <div class="alert-validation" *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+  <div class="alert alert-danger" *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
     <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</div>
     <div *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</div>
     <div *ngIf="registerForm.get('confirmPassword')?.errors?.['backendError']">{{ registerForm.get('confirmPassword')?.errors?.['backendError'] }}</div>

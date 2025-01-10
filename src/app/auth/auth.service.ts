@@ -161,6 +161,11 @@ export class AuthService {
     );
   }
 
+  resendConfirmationEmail(login: Login): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Account/resend-confirmation-email`,login);
+  
+  }
+
   getProfile(): Observable<ApplicationUser> {
     return this.http.get<ApplicationUser>(`${this.baseUrl}/Account/profile`);
   }
