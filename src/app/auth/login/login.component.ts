@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   emailNotConfirmed: boolean = false;
   confirmationSent: boolean = false;
   isGoogleButtonRendered = false;  // Track if the Google button is rendered or not
-
+  requestLimiter:boolean = false;
+  alertMessage:string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -46,56 +47,138 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Show spinner to indicate a loading state
     this.spinnerService.show();
-    this.submitted = true;
 
+    // Set initial state for flags
+    this.submitted = true;
+    this.resetStateFlags();
+
+    // Proceed if the form is valid
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
-        response => {
-          this.spinnerService.hide();
-          this.triggerSuccess('Welcome back!');
-          this.triggerSuccess('You’re now logged in!');
-          
-          this.router.navigate(['/mainpage']);
-        },
-        error => {
-          console.error('Login failed', error);
-          if(!error.result && !(error.error.errors[0].includes("Email not confirmed"))){
-            this.showInvalidLogin = true;
-          }
-          if(!error.result && (error.error.errors[0].includes("Email not confirmed"))){
-            this.showInvalidLogin = false;
+        this.authService.login(this.loginForm.value).subscribe({
+            next: (response) => this.handleLoginSuccess(),
+            error: (error) => this.handleLoginError(error),
+            complete: () => this.spinnerService.hide()
+        });
+    } else {
+        // If the form is invalid, mark all fields as touched
+        this.markFormGroupTouched(this.loginForm);
+        this.spinnerService.hide();
+    }
+}
+
+/**
+ * Reset all state flags for the login process
+ */
+private resetStateFlags(): void {
+    this.showInvalidLogin = false;
+    this.emailNotConfirmed = false;
+    this.confirmationSent = false;
+}
+
+/**
+ * Handle successful login
+ */
+private handleLoginSuccess(): void {
+    this.spinnerService.hide();
+    this.triggerSuccess('Welcome back!');
+    this.triggerSuccess('You’re now logged in!');
+    this.router.navigate(['/mainpage']);
+}
+
+/**
+ * Handle login error
+ * @param error - Error object from the login request
+ */
+private handleLoginError(error: any): void {
+    console.error('Login failed', error);
+    this.spinnerService.hide();
+
+    if (!error.result) {
+        const errorMessage = error.error.errors?.[0] || '';
+
+        if (errorMessage.includes("Email not confirmed")) {
             this.emailNotConfirmed = true;
-          }
+            this.showInvalidLogin = false;
+        } else {
+            this.showInvalidLogin = true;
+        }
+    }
+}
+
+
+
+      onResendConfirmation(): void {
+        // Show the spinner at the start of the operation
+        this.spinnerService.show();
+
+        // Ensure the login form is valid
+        if (this.loginForm.valid) {
+          this.authService.resendConfirmationEmail(this.loginForm.value).subscribe({
+            next: (response) => {
+              this.handleSuccessResponse(response);
+            },
+            error: (error) => {
+              this.handleErrorResponse(error);
+            },
+            complete: () => {
+              // Always hide the spinner when the operation is complete
+              this.spinnerService.hide();
+            }
+          });
+        } else {
+          // Hide the spinner if the form is invalid
           this.spinnerService.hide();
         }
-      );
-    } 
-    else {
-      this.markFormGroupTouched(this.loginForm);
-      this.spinnerService.hide();
-
-    }
-  }
-
-  onResendConfirmation():void{
-    this.spinnerService.show();
-    if (this.loginForm.valid) {
-      this.authService.resendConfirmationEmail(this.loginForm.value).subscribe(
-        response => {
-            this.spinnerService.hide();
-            if(response.code === 200){
-              this.showInvalidLogin = false;
-              this.emailNotConfirmed = false;
-              this.confirmationSent = true;
-            }
-          },
-          error => {
-            this.spinnerService.hide();
-            console.log(error)
-          }
-        );}
       }
+
+      /**
+       * Handle the successful response from the resend confirmation API
+       */
+      private handleSuccessResponse(response: any): void {
+        this.spinnerService.hide();
+        if (response.code === 200) {
+          this.showInvalidLogin = false;
+          this.emailNotConfirmed = false;
+          this.confirmationSent = true;
+        } else {
+          this.confirmationSent = false;
+        }
+      }
+
+      private handleErrorResponse(error: any): void {
+        this.spinnerService.hide();
+    
+        if (error.status === 429) {
+            // Handle rate-limiting errors
+            this.requestLimiter = true;
+            this.confirmationSent = false;
+    
+            // Extract and format the time from the error message
+            const waitTime = this.extractTimeFromError(error.error);
+            this.alertMessage = waitTime
+                ? `You need to wait ${waitTime} before resending the confirmation email.`
+                : "You have reached the rate limit. Please try again later.";
+        } else {
+            // Handle other errors
+            this.alertMessage = "An unexpected error occurred. Please try again.";
+            this.requestLimiter = false;
+        }
+    }
+
+      private extractTimeFromError(errorMessage: string): string | null {
+        const timeMatch = errorMessage?.match(/(\d{2}:\d{2}:\d{2})/);
+
+        if (timeMatch) {
+          const dynamicTime = timeMatch[1]; // Extracted time, e.g., "00:15:00"
+          return `${dynamicTime} minutes`; // Return the formatted time
+        }
+
+        console.error("Time not found in the error message.");
+        return null;
+      }
+
 
   
 

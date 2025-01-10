@@ -51,6 +51,9 @@
         <div class="alert alert-success" *ngIf="confirmationSent">
           The confirmation link has been successfully sent to your email. The link will remain active for 1 hour.
         </div>
+        <div class="alert alert-danger" *ngIf="requestLimiter">
+          {{this.alertMessage}}
+        </div>
         
       </div>
       <button type="submit" (click)="onSubmit()" class="btn btn-primary">Log In
