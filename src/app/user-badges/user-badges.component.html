@@ -18,7 +18,7 @@
         <!-- Tooltip for badge details -->
         <div class="badge-tooltip" *ngIf="activeBadge === badge">
           <div class="tooltip-content">
-            <h4 style="overflow-wrap: break-word;"><strong>{{ badge.name }}</strong></h4>
+            <h4 style="overflow-wrap: break-word;"><strong>{{ badge.name | titlecase }}</strong></h4>
             <p>{{ badge.description }}.</p>
             <p><strong></strong> {{ badge.points }} points</p>
             <p

@@ -60,6 +60,7 @@ import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; // Import FullCalendar module
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ResetPasswordSuccessfulyComponent } from './auth/password/reset-password-successfuly/reset-password-successfuly.component';
+import { TitleCasePipe } from './utils/title-case.pipe';
 
 
 export function tokenGetter() {
@@ -99,6 +100,7 @@ export function tokenGetter() {
     BadgesComponent,
     MealPlanComponent,
     ResetPasswordSuccessfulyComponent,
+    TitleCasePipe  
   ],
   imports: [
     BrowserModule,
@@ -136,7 +138,7 @@ export function tokenGetter() {
       headerName: 'X-XSRF-TOKEN'
     }),
     ScrollingModule,
-    FullCalendarModule  // Import t
+    FullCalendarModule ,
     
   ],
   providers: [
