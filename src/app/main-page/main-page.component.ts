@@ -92,7 +92,5 @@ export class MainPageComponent implements OnInit {
     }
     return results;
   }
-  onSubscribe(){
 
-  }
 }

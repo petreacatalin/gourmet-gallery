@@ -10,4 +10,5 @@ export interface ApplicationUser {
     role?: string;
     badges?: Badge[];
     about?: string;
+    isSubscribedToNewsletter?: boolean;
   }

@@ -1,0 +1,46 @@
+  /* Newsletter Signup Section Styles */
+  .newsletter-signup {
+    background: rgba(29, 75, 59, 0.7); /* Semi-transparent dark background */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    padding: 30px; /* Padding for content */
+}
+
+.newsletter-signup h2 {
+    color: #fff;
+}
+
+.newsletter-signup p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.form-control {
+    border-radius: 30px;
+}
+
+.btn-primary {
+    background-color: #1d4b3b;
+    border-color: #1d4b3b;
+}
+
+.presentation-section {
+    margin: 0px 10px 0px 10px;
+    background: rgba(248, 249, 250, 0.8); /* Semi-transparent light background */
+    padding: 50px 15px; /* Padding for top/bottom and smaller sides */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.presentation-section h2 {
+    font-weight: bold; /* Make the heading bold */
+    font-size: 2.5rem; /* Larger font size for visibility */
+}
+
+.presentation-section p {
+    margin: 1.5em 0; /* Space out paragraphs */
+}
+
+.presentation-section .btn {
+    border-radius: 25px; /* Rounded button */
+    padding: 10px 20px; /* Increased padding for touch targets */
+}

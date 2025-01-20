@@ -1,0 +1,22 @@
+<section class="newsletter-signup hero bg-dark py-5">
+    <div class="overlay"></div> <!-- Added overlay -->
+<div class="container position-relative">
+    <h2>Join Our Recipe Newsletter</h2>
+    <p>Get delicious new recipes straight to your inbox every week!</p>
+    
+    <!-- Bind the email input to the component's email variable -->
+    <form class="d-flex justify-content-center" (ngSubmit)="subscribeToNewsletter(email)">
+      <input 
+        type="email" 
+        class="form-control w-50" 
+        placeholder="Enter your email" 
+        [(ngModel)]="email" 
+        name="email" 
+        required 
+        #emailInput="ngModel">
+      <button type="submit" class="btn btn-primary btn-rounded ms-3" [disabled]="emailInput.invalid">
+        Sign Up
+      </button>
+    </form>
+  </div>
+</section>

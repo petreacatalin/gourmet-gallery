@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { SpinnerService } from 'src/app/utils/spinner/spinner.service';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ToastService } from 'src/app/utils/toast/toast.service';
+import { NewsletterService } from 'src/app/main-page/newsletter/newsletter.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/utils/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,7 +38,9 @@ export class UserProfileComponent implements OnInit {
     private authService: AuthService,
     private router:Router,
     private spinnerService: SpinnerService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private newsletterService: NewsletterService,
+    private dialog: MatDialog
   ) {
     
    }
@@ -69,6 +74,24 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  openConfirmationDialog(isChecked: boolean): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        title: isChecked ? 'Subscribe to Newsletter' : 'Unsubscribe from Newsletter',
+        message: `Are you sure you want to ${
+          isChecked ? 'subscribe to' : 'unsubscribe from'
+        } the newsletter?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.toggleNewsletterSubscription(isChecked);
+      }
+    });
+  }
+  
   // Handles chevron clicks and overrides their default behavior
   handleChevronClick(event: MouseEvent, direction: 'left' | 'right'): void {
     event.preventDefault(); // Prevent default scrolling behavior
@@ -112,6 +135,7 @@ export class UserProfileComponent implements OnInit {
     this.spinnerService.hide();
     this.selectedFile = null;
     this.newImageUrl = null;
+
   }
 
 
@@ -200,4 +224,29 @@ export class UserProfileComponent implements OnInit {
   navigateToRecipe(recipeId: number, slug: string) {
     this.router.navigate(['/recipes', recipeId, slug]); // Add slug to the navigation
   }
+
+  toggleNewsletterSubscription(isChecked: boolean): void {
+    if (!this.currentUser || !this.currentUser.email) {
+      console.error('User is not logged in or email is missing.');
+      return;
+    }
+  
+    const action = isChecked
+      ? this.newsletterService.subscribeToNewsletter(this.currentUser.email)
+      : this.newsletterService.unsubscribeFromNewsletter(this.currentUser.email);
+  
+    action.subscribe(
+      () => {
+        // Update the local state only after successful server response
+        this.currentUser!.isSubscribedToNewsletter = isChecked;
+        const status = isChecked ? 'subscribed' : 'unsubscribed';
+        this.toastService.showToast(`Successfully ${status} to the newsletter.`,'success')
+
+      },
+      (error) => {
+        console.error('An error occurred while updating the subscription:', error);
+      }
+    );
+  }
+  
 }

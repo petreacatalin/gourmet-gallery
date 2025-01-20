@@ -61,6 +61,10 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // Import FullCalend
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ResetPasswordSuccessfulyComponent } from './auth/password/reset-password-successfuly/reset-password-successfuly.component';
 import { TitleCasePipe } from './utils/title-case.pipe';
+import { NewsletterComponent } from './main-page/newsletter/newsletter/newsletter.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './utils/confirmation-dialog/confirmation-dialog.component';
 
 
 export function tokenGetter() {
@@ -100,7 +104,9 @@ export function tokenGetter() {
     BadgesComponent,
     MealPlanComponent,
     ResetPasswordSuccessfulyComponent,
-    TitleCasePipe  
+    TitleCasePipe,
+    NewsletterComponent,
+    ConfirmationDialogComponent  
   ],
   imports: [
     BrowserModule,
@@ -115,7 +121,9 @@ export function tokenGetter() {
     MatSelectModule,
     MatFormFieldModule,
     MatCardModule,
-    MatListModule,
+    MatListModule, 
+    MatDialogModule,
+    MatCheckboxModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatDividerModule,

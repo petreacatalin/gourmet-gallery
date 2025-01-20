@@ -37,8 +37,20 @@
               <p>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
               <p><strong>Email &nbsp;&nbsp;</strong> </p>
               <p>{{ currentUser?.email }}</p>
-       
+             <!-- Newsletter Subscription -->
+             <div class="newsletter-section" *ngIf="currentUser">
+              <mat-checkbox
+                [checked]="currentUser.isSubscribedToNewsletter!"
+                color="primary"
+                (change)="openConfirmationDialog($event.checked)"
+              >
+               <p>{{ currentUser.isSubscribedToNewsletter ? 'Unsubscribe from Newsletter' : 'Subscribe to our Newsletter' }}</p> 
+              </mat-checkbox>
+            </div>
+             <!-- User badges SECTION -->
               <app-user-badges></app-user-badges>
+             <!-- User badges SECTION -->
+
             </div>
             </div>
           </div>
