@@ -20,4 +20,7 @@ export class NewsletterService {
    unsubscribeFromNewsletter(email: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/unsubscribe`, {email});
   }
+   triggerNewsletterManually(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/send-manually`, {});
+  }
 }
