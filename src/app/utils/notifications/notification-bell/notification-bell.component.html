@@ -1,0 +1,27 @@
+<div class="notification-bell">
+  <!-- Notification Button -->
+  <button mat-icon-button (click)="toggleNotifications()" aria-label="Notifications">
+    <mat-icon>notifications</mat-icon>
+    <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+  </button>
+
+  <!-- Notifications Dropdown -->
+  <div class="notifications-list" *ngIf="showNotifications">
+    <header class="notifications-header">
+      <h4>Notifications</h4>
+    </header>
+    <ul>
+      <li *ngFor="let notification of notifications" [class.unread]="!notification.isRead" (click)="markNotificationAsRead(notification)">
+        <mat-icon class="notification-icon">
+          {{ getNotificationIcon(notification.type) }}
+        </mat-icon>
+        <div class="notification-details">
+          <p class="message">{{ notification.message }}</p>
+          <span class="timestamp">{{ notification.createdAt | date: 'short' }}</span>
+        </div>
+      </li>
+    </ul>
+    <p *ngIf="notifications.length === 0" class="empty-message">You have no new notifications</p>
+    <button class="clear-all" (click)="clearAllNotifications()">Dismiss All</button>
+  </div>
+</div>

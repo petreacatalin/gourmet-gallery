@@ -65,6 +65,7 @@ import { NewsletterComponent } from './main-page/newsletter/newsletter/newslette
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './utils/confirmation-dialog/confirmation-dialog.component';
+import { NotificationBellComponent } from './utils/notifications/notification-bell/notification-bell.component';
 
 
 export function tokenGetter() {
@@ -106,7 +107,8 @@ export function tokenGetter() {
     ResetPasswordSuccessfulyComponent,
     TitleCasePipe,
     NewsletterComponent,
-    ConfirmationDialogComponent  
+    ConfirmationDialogComponent,
+    NotificationBellComponent  
   ],
   imports: [
     BrowserModule,

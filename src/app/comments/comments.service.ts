@@ -32,9 +32,9 @@ export class CommentService {
     return this.http.delete<void>(`${this.baseUrl}/${commentId}`);
   }
 
-  updateHelpfulCount(commentId: number): Observable<{ helpfulCount: number, voted: boolean }> {
+  updateHelpfulCount(commentId: number, commentUserId?: string): Observable<{ helpfulCount: number, voted: boolean }> {
    
-    return this.http.post<{ helpfulCount: number, voted: boolean }>(`${this.baseUrl}/${commentId}/helpful`, {});
+    return this.http.post<{ helpfulCount: number, voted: boolean }>(`${this.baseUrl}/${commentId}/helpful`, {commentUserId});
   }
   
   getUserVoteForComment(commentId: number): Observable<boolean> {

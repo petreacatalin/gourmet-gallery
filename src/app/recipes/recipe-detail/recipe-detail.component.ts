@@ -460,7 +460,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.commentService.getUserVoteForComment(comment.id!).subscribe({
       next: (hasVoted) => {
         // Call the backend to toggle the vote (increase or decrease helpful count)
-        this.commentService.updateHelpfulCount(comment.id!).subscribe({
+        this.commentService.updateHelpfulCount(comment.id!,comment.applicationUserId).subscribe({
           next: () => {
             if (hasVoted) {
               // If the user has already voted, decrease the helpful count, but not below 0

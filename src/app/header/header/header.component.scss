@@ -11,7 +11,7 @@
   align-items: center;
   padding: 10px 20px; /* Adjust padding as needed */
   transition: height 0.3s ease; /* Smooth transition for height changes */
-  overflow: hidden; /* Prevent overflow issues */
+  overflow: visible; /* Prevent overflow issues */
 }
 
 /* Adjusting header size on scroll */
@@ -283,6 +283,7 @@
      display: none; /* Hide search bar on extra-small devices */
 
   }
+
   .sticky-header {
     position: fixed; /* Fix the header to the top of the viewport */
     top: 0;
@@ -296,7 +297,7 @@
     align-items: center;
     padding: 10px 20px; /* Adjust padding as needed */
     transition: height 0.3s ease; /* Smooth transition for height changes */
-    overflow: hidden; /* Prevent overflow issues */
+    overflow: visible; /* Prevent overflow issues */
   }
   .auth-buttons,
   .logged-in {

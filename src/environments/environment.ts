@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   //baseUrl: 'https://gourmet-gallery-be.azurewebsites.net/api', // https
   baseUrl: 'https://localhost:7201/api',
+  apiUrlSignalR: 'https://localhost:7201',
  // baseUrl: 'https://localhost:32773/api' // Docker
 };
 /*

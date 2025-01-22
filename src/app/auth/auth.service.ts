@@ -110,8 +110,7 @@ export class AuthService {
         email: decodedToken.email,
         lastName: decodedToken.given_name,
         firstName: decodedToken.family_name,
-        role: decodedToken.role,
-        //profilePictureUrl: decodedToken.unique_name
+        role: decodedToken.role        
       };
       //this.userCurrently = userDetail;
       this.userSubject.next(userDetail);

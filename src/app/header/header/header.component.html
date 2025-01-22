@@ -31,14 +31,17 @@
     </div>
 
     <ng-template #loggedIn>
-      <i class="fas fa-user"></i> 
-      <div class="logged-in text-end text-white">
-        <!-- Hello, -->
-        <a [routerLink]="'/user-profile'" class="text-white">
-          <!-- {{ authService.userCurrently?.firstName }} {{ authService.userCurrently?.lastName }} -->
-          My Account
+      
+      <!-- Notifications Bell START -->
+      <app-notification-bell></app-notification-bell>
+      <!-- Notifications Bell END -->
+      
+      <div class="logged-in text-end text-white" >
+        <a [routerLink]="'/user-profile'" class="text-white" style="text-decoration: none;">
+          <i class="fas fa-user" style="right: 10%;"></i> 
+          Account  
         </a>
-        <button type="button" class="btn btn-outline-light ms-2" (click)="onLogout()">Logout</button>
+          <button type="button" class="btn btn-outline-light ms-2" style="padding: 5px;" (click)="onLogout()">Logout</button>
       </div>
     </ng-template>
     </div>
@@ -84,8 +87,8 @@
             aria-expanded="false">
             <img [src]="authService.userCurrently?.profilePictureUrl" alt="" width="40" height="40"
               class="rounded-circle me-4">
-            <strong>My Account</strong>
-          </a>
+              <strong>My Account</strong>
+            </a>
           <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
             <li><a class="dropdown-item" routerLink="/user-profile" (click)="closeMenu()">My Recipes</a></li>
             <li><a class="dropdown-item" routerLink="/user-profile" (click)="closeMenu()">Profile</a></li>
