@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Notification } from 'src/app/models/notification.interface';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import * as signalR from '@microsoft/signalr';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,15 +19,15 @@ export class NotificationService {
 
   // Start the SignalR connection to the hub
     startConnection(): void {
-      this.hubConnection = new HubConnectionBuilder()
+      this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${this.apiUrlSignalR}/notificationHub`, {
-        transport: HttpTransportType.WebSockets,
-        accessTokenFactory: () => {
-          const token = localStorage.getItem("token");
-          console.log(token)
-          return token ? token : '';  // Return an empty string if token is null
-        }
-      })
+        transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling,
+          accessTokenFactory: () => {
+            const token = localStorage.getItem("token");
+            return token ? token : '';  // Return empty string if token is null
+          }
+        }) 
+      .configureLogging(signalR.LogLevel.Information)
       .build();
     
       this.hubConnection
@@ -36,7 +37,7 @@ export class NotificationService {
         })
         .catch((err) => {
           console.error('Error establishing SignalR connection:', err);
-          setTimeout(() => this.startConnection(), 15000); // Reconnect after 5 seconds
+          setTimeout(() => this.startConnection(), 20000); // Reconnect after 5 seconds
         });
     
       // Listen for notifications
@@ -46,7 +47,7 @@ export class NotificationService {
     
       this.hubConnection.onclose(() => {
         console.log('SignalR connection closed.');
-        setTimeout(() => this.startConnection(), 55000); // Reconnect after 5 seconds
+        setTimeout(() => this.startConnection(), 20000); // Reconnect after 5 seconds
       });
     }
 
