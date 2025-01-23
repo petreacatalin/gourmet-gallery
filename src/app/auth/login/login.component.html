@@ -20,7 +20,7 @@
   <div class="form-wrapper">
     <form [formGroup]="loginForm"  class="login-form">
       <!-- <img src="assets/images/logo.png" class="logo" alt="Gourmet Logo"> -->
-      <h2>Log In</h2>
+      <p>Log In</p>
       <div class="form-group">
         <label for="userName">Email</label>
         <input id="userName" formControlName="userName" type="text" class="form-control" placeholder="Enter your e-mail">
@@ -59,7 +59,7 @@
       <button type="submit" (click)="onSubmit()" class="btn btn-primary">Log In
         <i class="fas fa-arrow-right arrow"></i>
         </button>
-        <p class="or-text">OR</p>
+  
         
         <!-- Google Sign-In Integration -->
         <div class="google-sign-in">

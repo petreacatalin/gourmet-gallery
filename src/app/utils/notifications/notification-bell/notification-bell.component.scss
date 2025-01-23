@@ -2,7 +2,6 @@
     position: relative;
     display: inline-block;
     margin: -11px 2px 2px 2px;
-    right: 10%;
   }
   
   .notification-bell button {
@@ -17,6 +16,7 @@
     font-size: 24px;
     color: #495057; /* Neutral dark gray */
     transition: color 0.3s ease;
+    font-size: 1.5rem;
   }
   
   .notification-bell button:hover .mat-icon {
