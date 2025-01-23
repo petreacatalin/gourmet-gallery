@@ -82,7 +82,7 @@ private resetStateFlags(): void {
  */
 private handleLoginSuccess(): void {
     this.spinnerService.hide();
-    this.triggerSuccess('Welcome back!');
+    //this.triggerSuccess('Welcome back!');
     this.triggerSuccess('You’re now logged in!');
     this.router.navigate(['/mainpage']);
 }
@@ -217,12 +217,12 @@ private handleLoginError(error: any): void {
   // Handle the Google Sign-In response
   handleGoogleSignIn(response: any): void {
     if (response?.credential) {
+      this.spinnerService.show();
       // Send the ID token to the backend for validation
       this.authService.googleLogin(response.credential).subscribe(
         (result) => {
           this.ngZone.run(() => {
             this.router.navigate(['/mainpage']);  // Redirect after successful login
-            this.triggerSuccess('Welcome back!');
             this.triggerSuccess('You’re now logged in!');
           });
         },
@@ -230,6 +230,7 @@ private handleLoginError(error: any): void {
           console.error('Google login failed', error);
         }
       );
+      this.spinnerService.hide();
     }
   }
 }

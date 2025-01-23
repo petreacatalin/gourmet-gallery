@@ -100,7 +100,9 @@
 }
 
 /* Select Picture Button */
-.btn-select-picture, .btn-save-changes {
+/* Select Picture Button */
+.btn-select-picture,
+.btn-save-changes {
   min-width: 140px;
   padding: 10px 20px;
   font-size: 1rem;
@@ -110,29 +112,32 @@
   transition: all 0.3s ease;
 }
 
+/* Neutral & Clean Look */
 .btn-select-picture {
-  color: #99a6b4;
-  background-color: #ffffff;
-  border: 2px solid #a4aeb9;
+  color: #4a5568; /* Slate Gray for text */
+  background-color: #f7fafc; /* Light Grayish White */
+  border: 2px solid #cbd5e0; /* Light Slate Gray */
 }
 
 .btn-select-picture:hover {
-  background-color: #d7dfe7;
-  color: #afaeae;
-  border-color: #a1b0bf;
-  transform: translateY(-3px);
+  background-color: #e2e8f0; /* Slightly darker Gray */
+  color: #2d3748; /* Dark Slate Gray for text on hover */
+  border-color: #a0aec0; /* Slightly darker border */
+  transform: translateY(-3px); /* Keep hover effect */
 }
 
+/* Save Changes Button - Gradient Look */
 .btn-save-changes {
-  color: #ffffff;
-  background: linear-gradient(45deg, #6b00b6, #a3009b);
+  color: #ffffff; /* White text */
+  background: linear-gradient(45deg, #4c51bf, #667eea); /* Cool Blue & Indigo Gradient */
   border: none;
 }
 
 .btn-save-changes:hover {
-  background: linear-gradient(45deg, #a3009b, #6b00b6);
+  background: linear-gradient(45deg, #3c366b, #5a67d8); /* Slightly darker gradient on hover */
   transform: translateY(-3px);
 }
+
 /* Change Password Section */
 .change-password form {
   display: flex;
