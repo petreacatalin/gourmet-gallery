@@ -1,5 +1,10 @@
+import { Recipe } from "./recipe.interface";
+
 export interface MealPlan {
-    date: string | null;
-    mealType: string;
+    id?: number;
+    date: Date;
+    mealType: any;
     recipeId: number;
+    recipe?:Recipe;
+    
 }

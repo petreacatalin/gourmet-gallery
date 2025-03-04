@@ -1,0 +1,295 @@
+.calendar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.meal-plan-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+mat-card {
+    max-width: 1300px;
+    /* Limit the width of the calendar */
+    width: 100%;
+    /* Allow the card to adjust responsively */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow */
+    border-radius: 12px;
+    align-self: center;
+    /* Smooth rounded corners */
+}
+
+.full-calendar {
+    width: 100%;
+    /* Ensure the calendar takes full width of the card */
+}
+
+.meal-form-container {
+    max-width: 600px;
+    /* Limit the width of the meal form */
+    margin: 20px auto;
+    /* Center it on the page */
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    border-radius: 12px;
+    /* Smooth rounded corners */
+}
+
+.fc {
+    font-family: 'Roboto', sans-serif;
+    /* Use a modern font */
+    color: #333;
+}
+
+/* Day Cell Styling */
+.fc-daygrid-day {
+    border-radius: 10px;
+    /* Rounded corners */
+    background-color: #f9f9f9;
+    /* Light background for the grid */
+    border: 1px solid #e0e0e0;
+    /* Subtle borders between days */
+    transition: all 0.3s ease-in-out;
+}
+
+.fc-daygrid-day:hover {
+    background-color: #e3f2fd;
+    /* Slight blue highlight on hover */
+    cursor: pointer;
+    /* Change cursor to indicate interactivity */
+}
+
+/* Highlight the current date */
+.fc-day-today {
+    background-color: #fff3e0 !important;
+    /* Light orange for today */
+    border: 2px solid #ff9800;
+    /* Orange border for emphasis */
+    font-weight: bold;
+    /* Make today stand out */
+}
+
+/* Toolbar Styling */
+.fc-toolbar {
+    background-color: #f5f5f5;
+    /* Light gray toolbar */
+    border-radius: 8px;
+    /* Smooth corners */
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+.fc-toolbar-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fc-button {
+    background-color: #2196f3;
+    /* Blue buttons */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.fc-button:hover {
+    background-color: #1976d2;
+    /* Darker blue on hover */
+}
+
+/* Event Styling */
+.fc-daygrid-event {
+    background-color: #4caf50;
+    /* Green for events */
+    color: white;
+    border-radius: 8px;
+    /* Smooth rounded events */
+    padding: 5px 10px;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.fc-daygrid-event:hover {
+    background-color: #388e3c;
+    /* Darker green on hover */
+}
+
+/* Event Text Styling */
+.fc-event-title {
+    font-weight: bold;
+}
+
+.fc-event-time {
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Day Number Styling */
+.fc-daygrid-day-number {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+
+.fc-daygrid-day-number:hover {
+    color: #1976d2;
+    /* Blue highlight on hover */
+    transform: scale(1.1);
+}
+
+/* Hidden Overflow Fix */
+.fc-scroller {
+    overflow-x: hidden;
+}
+
+/* Custom Events */
+.custom-event {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: white;
+}
+
+.meal-type {
+    font-weight: bold;
+}
+
+.recipe-title {
+    margin-top: 4px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .fc-toolbar-title {
+        font-size: 14px;
+    }
+
+    .fc-button {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .fc-daygrid-day-number {
+        font-size: 14px;
+    }
+
+    .fc-daygrid-event {
+        font-size: 12px;
+    }
+}
+
+.container-mealplans {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    margin: auto;
+}
+
+.meal-plan-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* Responsive grid with small card sizes */
+    gap: 15px;
+    /* Space between items */
+}
+
+.meal-plan-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    max-width: 300px;
+    /* Set a max width for cards */
+    margin: auto;
+}
+
+.meal-plan-card:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1.03);
+    /* Slight zoom on hover */
+}
+
+mat-card img {
+    height: 150px;
+    /* Smaller height for images */
+    width: 100%;
+    /* Ensure images take full width */
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+mat-card-content h3 {
+    font-size: 1rem;
+    /* Smaller title */
+    margin: 5px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+mat-card-content p {
+    font-size: 0.8rem;
+    /* Smaller description */
+    color: #666;
+    margin: 5px 0;
+}
+
+mat-card-actions {
+    margin-top: 10px;
+}
+
+mat-card-actions button {
+    font-size: 0.9rem;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .meal-plan-card {
+        max-width: 200px;
+        /* Smaller size for mobile */
+    }
+
+    mat-card img {
+        height: 120px;
+        /* Smaller image for mobile */
+    }
+
+    mat-card-content h3 {
+        font-size: 0.9rem;
+    }
+
+    mat-card-content p {
+        font-size: 0.75rem;
+    }
+}

@@ -1,23 +1,53 @@
-<full-calendar [options]="calendarOptions"
-  (dateClick)="handleDateClick($event)">
-</full-calendar>
+<div class="calendar-container">
+  <mat-card>
+    <full-calendar [options]="calendarOptions" (dateClick)="handleDateClick($event)">
+    </full-calendar>
+  </mat-card>
 
+  <mat-card *ngIf="selectedDate">
+    <h3>Plan Meal for {{ selectedDate }}</h3>
+    <form (ngSubmit)="addMeal()" style="margin-left: 20px;">
+      <div class="container-mealplans">
+        <mat-form-field>
+          <mat-label>Meal Type</mat-label>
+          <mat-select [(ngModel)]="meal.mealType" name="mealType">
+            <mat-option value="1">Breakfast</mat-option>
+            <mat-option value="2">Lunch</mat-option>
+            <mat-option value="3">Dinner</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-label>Recipe</mat-label>
+          <mat-select [(ngModel)]="meal.recipeId" name="recipe">
+            <mat-option *ngFor="let recipe of recipes" [value]="recipe.id">
+              {{ recipe.title }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" type="submit">Add Meal</button>
+      </div>
+    </form>
+    <h2>Meal Plans for {{ selectedDate }}</h2>
 
-<div *ngIf="selectedDate">
-  <h3>Plan Meal for {{ selectedDate }}</h3>
-  <form (ngSubmit)="addMeal()">
-    <label for="mealType">Meal Type:</label>
-    <select id="mealType" [(ngModel)]="meal.mealType" name="mealType">
-      <option value="Breakfast">Breakfast</option>
-      <option value="Lunch">Lunch</option>
-      <option value="Dinner">Dinner</option>
-    </select>
+    <div class="meal-plan-list" *ngIf="selectedDayPlans.length > 0; else noMeals">
+      <mat-card class="meal-plan-card" *ngFor="let plan of selectedDayPlans">
+        <img mat-card-image [src]="plan.recipe?.imageUrl" alt="{{ plan.recipe?.title }}" />
+        <mat-card-content>
+          <h3>{{ mealTypeMap[plan.mealType] }}: {{ plan.recipe?.title }}</h3>
+          <!-- <p>{{ plan.recipe?.description }}</p> -->
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="warn" (click)="removeMealPlan(plan.id!)">
+            Remove
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card>
 
-    <label for="recipe">Recipe:</label>
-    <select id="recipe" [(ngModel)]="meal.recipeId" name="recipe">
-      <option *ngFor="let recipe of recipes" [value]="recipe.id">{{ recipe.title }}</option>
-    </select>
-
-    <button type="submit">Add Meal</button>
-  </form>
+  <ng-template #noMeals>
+    <p>No meal plans for this day.</p>
+  </ng-template>
 </div>

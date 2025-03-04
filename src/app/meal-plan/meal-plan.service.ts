@@ -11,11 +11,13 @@ export class MealPlanService {
   constructor(private http: HttpClient) { }
 
  getMealPlans() {
-    return this.http.get<any[]>(`${environment.baseUrl}/recipes`);
+    return this.http.get<any[]>(`${environment.baseUrl}/mealplan/mealplans`);
   }
 
   addMealPlan(mealPlan:MealPlan) {
-    return this.http.post<any[]>(`${environment.baseUrl}/recipes`,{});
+    return this.http.post<any[]>(`${environment.baseUrl}/mealplan/add-mealplan`,mealPlan);
   }
-
+  deleteMealPlan(mealPlanId:number) {
+    return this.http.delete<any[]>(`${environment.baseUrl}/mealplan/${mealPlanId}`);
+  }
 }

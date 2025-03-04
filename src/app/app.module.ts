@@ -66,6 +66,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './utils/confirmation-dialog/confirmation-dialog.component';
 import { NotificationBellComponent } from './utils/notifications/notification-bell/notification-bell.component';
+import { FormFocusDirective } from './utils/form-focus/form-focus.directive';
+import { AsigurareComponent } from './asigurare/asigurare.component';
 
 
 export function tokenGetter() {
@@ -108,7 +110,9 @@ export function tokenGetter() {
     TitleCasePipe,
     NewsletterComponent,
     ConfirmationDialogComponent,
-    NotificationBellComponent  
+    NotificationBellComponent,
+    FormFocusDirective,
+    AsigurareComponent   
   ],
   imports: [
     BrowserModule,
