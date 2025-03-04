@@ -1,0 +1,101 @@
+<!-- ocr-form.component.html -->
+<div class="container">
+    <h2>Insurance Information Form</h2>
+  
+    <form [formGroup]="ocrForm">
+      <div>
+        <label>Nume:</label>
+        <input type="text" formControlName="nume">
+      </div>
+  
+      <div>
+        <label>Prenume:</label>
+        <input type="text" formControlName="prenume">
+      </div>
+  
+      <div>
+        <label>Act de Identitate:</label>
+        <input type="text" formControlName="actIdentitate">
+      </div>
+  
+      <div>
+        <label>CNP:</label>
+        <input type="text" formControlName="cnp">
+      </div>
+  
+      <div>
+        <label>Județ:</label>
+        <input type="text" formControlName="judet">
+      </div>
+  
+      <div>
+        <label>Localitate:</label>
+        <input type="text" formControlName="localitate">
+      </div>
+  
+      <div>
+        <label>Strada:</label>
+        <input type="text" formControlName="strada">
+      </div>
+  
+      <div>
+        <label>Număr:</label>
+        <input type="text" formControlName="numar">
+      </div>
+  
+      <div>
+        <label>Bloc:</label>
+        <input type="text" formControlName="bloc">
+      </div>
+  
+      <div>
+        <label>Scara:</label>
+        <input type="text" formControlName="scara">
+      </div>
+  
+      <div>
+        <label>Etaj:</label>
+        <input type="text" formControlName="etaj">
+      </div>
+  
+      <div>
+        <label>Apartament:</label>
+        <input type="text" formControlName="apartament">
+      </div>
+  
+      <div>
+        <label>Cod Postal:</label>
+        <input type="text" formControlName="codPostal">
+      </div>
+  
+      <div>
+        <label>An Obținere Permis:</label>
+        <input type="date" formControlName="anObtinerePermis">
+      </div>
+  
+      <div>
+        <label>Email:</label>
+        <input type="email" formControlName="email">
+      </div>
+  
+      <div>
+        <label>Telefon:</label>
+        <input type="text" formControlName="telefon">
+      </div>
+  
+      <div>
+        <label>Upload Image:</label>
+        <input type="file" (change)="onFileChange($event)">
+      </div>
+  
+      <div>
+        <button type="button" (click)="captureImage()">Capture Image</button>
+      </div>
+    </form>
+  
+    <div *ngIf="extractedText">
+      <h3>Extracted Text</h3>
+      <p>{{ extractedText }}</p>
+    </div>
+  </div>
+  
