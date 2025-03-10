@@ -79,18 +79,21 @@ export class AuthService {
       }));
   }
   
-
-  hasRole(role: string): boolean {
+  hasAnyRole(requiredRoles: string[]): boolean {
     const token = this.getToken();
-
     if (!token) return false;
-    const decodedToken: any = jwtDecode(this.getToken()!);
-    
-    const roles=  decodedToken.role as string[];
-   
-    return roles.includes(role);
+  
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const roles = Array.isArray(decodedToken.role) ? decodedToken.role : [decodedToken.role]; // Ensure array
+  
+      return requiredRoles.some(role => roles.includes(role));
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return false;
+    }
   }
-
+  
   loggedIn(): Observable<boolean> {
     return this.isloggedIn.asObservable();
   }

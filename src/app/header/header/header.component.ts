@@ -33,7 +33,8 @@ export class HeaderComponent implements OnInit {
   }
 
   hasRoleAdmin(): boolean {
-    return this.authService.hasRole('Admin');
+    const admin = ['Admin'];
+    return this.authService.hasAnyRole(admin);
   }
 
   checkAndLoadProfileData(): void {

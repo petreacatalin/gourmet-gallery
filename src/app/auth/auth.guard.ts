@@ -9,16 +9,17 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    debugger;
     const isLoggedIn = this.authService.isLoggedIn();
-    const requiredRole = 'Admin' as string; // Get required role from route data
+    const requiredRoles = ['Admin', 'User']; // Required roles
 
     if (isLoggedIn) {
-      // Optional: check for role
-      if (requiredRole && !this.authService.hasRole(requiredRole)) {
+      // Check if the user has at least one of the required roles
+      if (!this.authService.hasAnyRole(requiredRoles)) {
         this.router.navigate(['/forbidden']);
         return false; // User does not have the required role
       }
-      return true; // User is authenticated and has the required role (if applicable)
+      return true; // User is authenticated and has at least one required role
     } else {
       this.router.navigate(['/login']);
       return false; // User is not authenticated
